@@ -827,7 +827,7 @@
     </nav>
   </div>
 
-  <!-- 彈窗 1：身分驗證登入 (已移除測試按鈕與預填號碼) -->
+  <!-- 彈窗 1：身分驗證登入 -->
   <div id="modal-login" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 max-h-[92vh] overflow-y-auto">
       <button type="button" onclick="closeLoginModal()" class="absolute top-3.5 right-3.5 text-stone-400 hover:text-stone-700 text-base">
@@ -1288,6 +1288,9 @@
       const divinationTip = document.getElementById('divination-quota-tip');
       const usage = getTodayUsage();
 
+      const isMember = currentUser.isLoggedIn && currentUser.role === '網站會員';
+      const isMemberOrAdv = currentUser.isAdvanced || isMember;
+
       let headerText = '';
       let badgeText = '';
       let badgeClass = '';
@@ -1298,7 +1301,7 @@
         badgeText = `高階學員：提問無限制（今日已占 ${usage.count} 題）`;
         badgeClass = 'text-[10px] bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded font-bold';
         if (divinationTip) divinationTip.innerText = `高階學員無限制提問 ｜ 今日已占 ${usage.count} 題`;
-      } else if (currentUser.isLoggedIn && currentUser.role === '網站會員') {
+      } else if (isMember) {
         const remain = Math.max(0, 10 - usage.count);
         headerText = `會員剩餘: ${remain}/10`;
         badgeText = `會員今日尚餘：${remain} / 10 題`;
@@ -1329,7 +1332,7 @@
         } else {
           randBtn.disabled = false;
           randBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-          document.getElementById('random-btn-text').innerText = currentUser.isLoggedIn ? '隨機快速排卦' : '一鍵隨機取卦';
+          document.getElementById('random-btn-text').innerText = isMemberOrAdv ? '隨機快速排卦' : '一鍵隨機取卦（訪客專用）';
         }
       }
     }
@@ -1563,7 +1566,8 @@
         chk2.checked = false;
         chk3.checked = false;
         hintBanner.className = "p-2.5 rounded-xl text-xs font-serif bg-amber-50 border border-amber-300 text-amber-900";
-        hintBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-culture-gold"></i> <strong>${currentUser.isLoggedIn ? '網站會員' : '網站訪客'}自檢：</strong>起卦前請親自逐項核對並勾選以下三項原則。`;
+        const roleLabel = (currentUser.isLoggedIn && currentUser.role === '網站會員') ? '網站會員' : '網站訪客';
+        hintBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-culture-gold"></i> <strong>${roleLabel}自檢：</strong>起卦前請親自逐項核對並勾選以下三項原則。`;
       }
 
       checkLogicAuditPass();
@@ -1624,6 +1628,7 @@
       goToStep('view-divination');
     }
 
+    // ★★★ 核心修正：起卦台身分嚴格區隔 ★★★
     function applyUserPermissionsToDivinationView() {
       const banner = document.getElementById('permission-hint-banner');
       const memberDirect = document.getElementById('member-direct-inputs');
@@ -1632,8 +1637,11 @@
       const boardPermBadge = document.getElementById('board-perm-badge');
       const randomBtnText = document.getElementById('random-btn-text');
 
-      if (currentUser.isLoggedIn) {
-        if (currentUser.isAdvanced) {
+      const isMember = currentUser.isLoggedIn && currentUser.role === '網站會員';
+      const isAdvanced = currentUser.isAdvanced;
+
+      if (isAdvanced || isMember) {
+        if (isAdvanced) {
           banner.className = "p-2.5 rounded-xl text-xs font-serif bg-amber-50 border border-amber-400 text-amber-950 flex items-center justify-between";
           banner.innerHTML = `
             <span><i class="fa-solid fa-crown text-amber-600"></i> 高階學員模式：提問無限制，全教學專題解鎖</span>
@@ -1649,15 +1657,19 @@
         memberDirect.classList.remove('hidden');
         memberCoin.classList.remove('hidden');
         boardInstruction.innerText = "【六爻卦位盤面】（由下而上，可點爻切換陰陽）";
-        boardPermBadge.innerText = currentUser.isAdvanced ? "高階學員可微調" : "會員可點擊微調";
+        boardPermBadge.innerText = isAdvanced ? "高階學員可微調" : "會員可點擊微調";
         boardPermBadge.className = "text-culture-red font-semibold";
         randomBtnText.innerText = "隨機快速排卦";
       } else {
+        // 訪客（未登入 或 已登入之網站訪客）：強制隱藏手動選卦與擲硬幣
+        const isGuestLoggedIn = currentUser.isLoggedIn && currentUser.role === '網站訪客';
         banner.className = "p-2.5 rounded-xl text-xs font-serif bg-stone-100 border border-stone-300 text-stone-800 flex items-center justify-between";
-        banner.innerHTML = `
-          <span><i class="fa-solid fa-circle-info text-stone-500"></i> 網站訪客模式：每日限 5 題，僅能使用【一鍵隨機取卦】</span>
-          <button onclick="openLoginModal('member')" class="text-[10px] text-culture-red font-bold underline">會員登入</button>
-        `;
+        banner.innerHTML = isGuestLoggedIn
+          ? `<span><i class="fa-solid fa-circle-info text-stone-500"></i> 訪客【${currentUser.name}】已登入：每日限 5 題，僅能使用【一鍵隨機取卦】</span>
+             <button onclick="openLoginModal('member')" class="text-[10px] text-culture-red font-bold underline">升級會員</button>`
+          : `<span><i class="fa-solid fa-circle-info text-stone-500"></i> 網站訪客模式：每日限 5 題，僅能使用【一鍵隨機取卦】</span>
+             <button onclick="openLoginModal('member')" class="text-[10px] text-culture-red font-bold underline">會員登入</button>`;
+
         memberDirect.classList.add('hidden');
         memberCoin.classList.add('hidden');
         boardInstruction.innerText = "【六爻卦位盤面】（由下而上生成 · 訪客唯讀）";
@@ -1680,9 +1692,11 @@
       showToast("已遵循由下而上原則隨機生成六爻！");
     }
 
+    // ★★★ 核心修正：手動輸入嚴格阻擋訪客 ★★★
     function applyDirectNumbers() {
-      if (!currentUser.isLoggedIn) {
-        showToast("手動輸入卦號為會員專屬功能，請先登入！");
+      const isMemberOrAdv = currentUser.isAdvanced || (currentUser.isLoggedIn && currentUser.role === '網站會員');
+      if (!isMemberOrAdv) {
+        showToast("手動輸入卦號為會員專屬功能，訪客僅限隨機取卦！");
         return;
       }
       const upNum = parseInt(document.getElementById('select-upper-number').value, 10);
@@ -1699,9 +1713,11 @@
       showToast(`已直接載入外卦 [${upTri.nature}] 與內卦 [${lowTri.nature}]！`);
     }
 
+    // ★★★ 核心修正：投擲銅板嚴格阻擋訪客 ★★★
     function tossSingleYao() {
-      if (!currentUser.isLoggedIn) {
-        showToast("硬幣逐爻投擲為會員專屬功能！");
+      const isMemberOrAdv = currentUser.isAdvanced || (currentUser.isLoggedIn && currentUser.role === '網站會員');
+      if (!isMemberOrAdv) {
+        showToast("硬幣逐爻投擲為會員專屬功能，訪客僅限隨機取卦！");
         return;
       }
       if (isTossing) return;
@@ -1739,8 +1755,10 @@
       }, 650);
     }
 
+    // ★★★ 核心修正：手動點爻切換陰陽嚴格阻擋訪客 ★★★
     function handleYaoClick(idx) {
-      if (!currentUser.isLoggedIn) {
+      const isMemberOrAdv = currentUser.isAdvanced || (currentUser.isLoggedIn && currentUser.role === '網站會員');
+      if (!isMemberOrAdv) {
         showToast("訪客僅開放一鍵隨機取卦，手動點爻為會員專屬！");
         return;
       }
@@ -1890,9 +1908,11 @@
       let isSurpriseUpgrade = false;
       let tiersToFetch = [];
 
+      const isMember = currentUser.isLoggedIn && currentUser.role === '網站會員';
+
       if (currentUser.isAdvanced) {
         tiersToFetch = ["初階_訪客", "進階_會員", "高階_學員"];
-      } else if (currentUser.isLoggedIn && currentUser.role === '網站會員') {
+      } else if (isMember) {
         const remainingQuestions = Math.max(1, 10 - usage.count);
         const neededSurprises = 2 - (usage.surpriseGiven || 0);
         if (neededSurprises > 0 && (Math.random() < (neededSurprises / remainingQuestions) || remainingQuestions <= neededSurprises)) {
@@ -1930,14 +1950,14 @@
         badge.innerText = `高階學員 · ${currentUser.name}`;
         badge.className = "text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500 text-white font-bold block";
         if (quotaInfo) quotaInfo.innerText = `提問無限制（今日第 ${usage.count} 題）`;
-      } else if (currentUser.isLoggedIn && currentUser.role === '網站會員') {
+      } else if (isMember) {
         const remain = Math.max(0, 10 - usage.count);
         badge.innerText = `網站會員 · ${currentUser.name}`;
         badge.className = "text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-700 text-white font-bold block";
         if (quotaInfo) quotaInfo.innerText = `今日尚餘 ${remain} / 10 題`;
       } else {
         const remain = Math.max(0, 5 - usage.count);
-        badge.innerText = `網站訪客`;
+        badge.innerText = currentUser.isLoggedIn ? `網站訪客 · ${currentUser.name}` : `網站訪客`;
         badge.className = "text-[11px] px-2.5 py-0.5 rounded-full bg-stone-200 text-stone-700 font-serif block";
         if (quotaInfo) quotaInfo.innerText = `今日尚餘 ${remain} / 5 題`;
       }
@@ -1969,7 +1989,7 @@
         let finalHtml = '';
 
         if (isSurpriseUpgrade) {
-          const unlockedTierName = currentUser.isLoggedIn ? "高階學員級別 · 奧義推演" : "網站會員級別 · 實戰對策";
+          const unlockedTierName = isMember ? "高階學員級別 · 奧義推演" : "網站會員級別 · 實戰對策";
           finalHtml += `
             <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-stone-950 font-bold text-xs font-serif shadow-lg border-2 border-yellow-200 animate-pulse flex items-center justify-between">
               <span class="flex items-center gap-2">
@@ -2158,7 +2178,7 @@
             if (unlockText) unlockText.innerText = "尚未起卦，請先前往起卦台";
           }
         }
-      } else if (currentUser.isLoggedIn) {
+      } else if (currentUser.isLoggedIn && currentUser.role === '網站會員') {
         badge.innerText = "網站會員（未開通問答詳解）";
         badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-700 font-serif";
         banner.className = "p-2.5 rounded-xl text-xs font-serif bg-stone-100 border border-stone-300 text-stone-700 flex items-center justify-between";
@@ -2168,6 +2188,7 @@
         `;
         setupVideoAuditHint(hint, isGuaComplete);
       } else {
+        // 訪客（未登入 或 訪客登入）
         badge.innerText = "網站訪客（未開通）";
         badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-500 font-serif";
         banner.className = "p-2.5 rounded-xl text-xs font-serif bg-red-50 border border-red-200 text-red-900 flex items-center justify-between";
@@ -2245,7 +2266,7 @@
       goToResultPage();
     }
 
-    // 開啟登入視窗：清空輸入框，完全交由使用者自行輸入帳號
+    // 開啟登入視窗
     function openLoginModal(targetTier = 'member') {
       currentLoginModalTier = targetTier;
       const modal = document.getElementById('modal-login');
@@ -2344,7 +2365,7 @@
       document.getElementById('modal-register').classList.add('hidden');
     }
 
-    // 帳號申請：自動傳入當前網站網址供後台回信使用
+    // 帳號申請
     async function handleRegistrationSubmit(e) {
       e.preventDefault();
       const submitBtn = document.getElementById('reg-submit-btn');
@@ -2398,7 +2419,7 @@
         pill.className = "whitespace-nowrap text-culture-gold";
         indicator.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
       } else {
-        pill.innerText = `網站訪客`;
+        pill.innerText = currentUser.isLoggedIn ? `${currentUser.name} (訪客)` : `網站訪客`;
         pill.className = "whitespace-nowrap text-stone-300";
         indicator.className = "w-2 h-2 rounded-full bg-stone-400";
       }
