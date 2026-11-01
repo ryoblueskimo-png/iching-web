@@ -183,7 +183,7 @@
 
           <!-- 入口身分選擇與註冊 -->
           <div class="p-4 bg-culture-cream border-t border-dashed border-culture-border space-y-3">
-            <!-- 最新快報展示區 (全新放大醒目卡片設計：支援後台動態即時同步) -->
+<!-- 最新快報展示區 (全新放大醒目卡片設計：支援後台動態即時同步) -->
             <a id="latest-news-banner" href="https://www.facebook.com/profile.php?id=100057076734888" target="_blank" rel="noopener noreferrer" class="w-full p-4 rounded-2xl bg-gradient-to-br from-[#241a12] via-[#1c140e] to-[#2c1e14] text-white border-2 border-culture-gold shadow-lg block hover:border-amber-300 hover:shadow-xl transition-all duration-300 group active:scale-[0.99] cursor-pointer">
               <div class="flex items-start justify-between gap-3">
                 <div class="flex-grow space-y-1.5">
@@ -2850,7 +2850,7 @@
     }
 
     
-    // 動態向後台試算表獲取最新快訊
+   // 動態向後台試算表獲取最新快訊
     async function fetchLatestNews() {
       try {
         const fetchUrl = `${GOOGLE_SHEETS_WEBAPP_URL}?action=getLatestNews&t=${Date.now()}`;
@@ -2872,17 +2872,17 @@
           }
         }
       } catch (e) {
-        // 連線異常或後台尚未設定 API 時維持預設粉專首頁
-        console.warn("無法取得最新快報動態資訊，維持預設連結");
+        console.warn("維持預設粉專連結");
       }
     }
 
-window.onload = function () {
+    window.onload = function () {
       buildHexGrid();
       selectHexInLibrary("1,5");
       renderBoardYaoSlots();
       checkGuaCompletionStatus();
       updateRoleDisplay();
+      fetchLatestNews(); // ★★★ 加入這行啟動連線 ★★★
     };
   </script>
 </body>
