@@ -2853,7 +2853,7 @@
    // 動態向後台試算表獲取最新快訊
     async function fetchLatestNews() {
       try {
-        const fetchUrl = `${GOOGLE_SHEETS_WEBAPP_URL}?action=getLatestNews&t=${Date.now()}`;
+       const fetchUrl = `${CLASSIC_API_URL}?action=getLatestNews&t=${Date.now()}`;
         const res = await fetch(fetchUrl);
         const data = await res.json();
         if (data && data.success && data.news) {
