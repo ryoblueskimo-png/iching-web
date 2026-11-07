@@ -2230,6 +2230,12 @@ function closeCoinEssenceModal() {
       usage.count += 1;
       saveTodayUsage(usage);
       updateDailyQuotaDisplay();
+     // 【新增】：背景同步回報試算表累計該領域發問次數
+      if (currentUser && currentUser.isLoggedIn && (currentUser.phone || currentUser.email)) {
+        const userAccount = currentUser.phone || currentUser.email;
+        const trackUrl = `${GOOGLE_SHEETS_WEBAPP_URL}?action=recordQuestion&account=${encodeURIComponent(userAccount)}&category=${encodeURIComponent(selectedCategory)}`;
+        fetch(trackUrl).catch(err => console.warn("同步發問次數失敗:", err));
+      } 
 
       document.getElementById('result-gua-title').innerHTML = `
         ${guaInfo.name} 卦
