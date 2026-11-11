@@ -163,6 +163,18 @@
           </div>
         </div>
 
+                <!-- 【系統教學操作引導按鈕專區】：免大圖像、點擊直接看完整教學 -->
+        <div class="rounded-2xl p-3.5 bg-gradient-to-r from-[#fefbf6] via-[#fbf5eb] to-[#f8ede0] border-2 border-amber-300/80 shadow-md space-y-2 font-serif">
+          <a href="https://www.youtube.com/watch?v=FSbHLJ7ZOa4" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-3 rounded-xl bg-gradient-to-r from-red-600 via-culture-red to-red-700 hover:from-red-700 hover:to-red-800 text-white font-serif font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition cursor-pointer">
+            <i class="fa-brands fa-youtube text-base text-white"></i>
+            <span>▶ 觀看系統使用說明完整教學影片 ➔</span>
+          </a>
+          <p class="text-[11px] text-culture-red font-bold text-center tracking-wide flex items-center justify-center gap-1">
+            <i class="fa-solid fa-circle-exclamation text-[10px]"></i>
+            <span>第一次進來的朋友一定要先看看唷！</span>
+          </p>
+        </div>
+
         <!-- 三大信任背書 -->
         <div class="grid grid-cols-3 gap-2 text-center font-serif">
           <div class="p-2.5 bg-culture-cream rounded-xl border border-culture-border shadow-xs">
@@ -1193,6 +1205,55 @@
     </nav>
   </div>
 
+    <!-- 彈窗 0-1：精選解卦手記全文閱讀（含字體縮放與前往 FB 粉絲團） -->
+  <div id="modal-handnote-detail" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 max-h-[92vh] overflow-y-auto font-serif">
+      <button type="button" onclick="closeHandnoteDetailModal()" class="absolute top-3.5 right-3.5 text-stone-400 hover:text-stone-700 text-base cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center pt-1 border-b border-culture-border pb-2.5">
+        <div class="flex items-center justify-center gap-1.5 mb-1">
+          <span id="hn-modal-tag" class="text-[10px] bg-red-100 text-culture-red px-2 py-0.5 rounded-full font-mono font-bold border border-culture-red/30">風控策略</span>
+          <span class="text-[10px] text-stone-400 font-serif">· 熟客實戰案例</span>
+        </div>
+        <h3 id="hn-modal-title" class="text-base font-serif font-bold text-stone-900 mt-0.5 leading-snug">
+          案例手記全文
+        </h3>
+      </div>
+
+      <!-- 字體縮放與控制條 -->
+      <div class="flex items-center justify-between bg-stone-100 p-2 rounded-xl border border-stone-300 text-xs">
+        <span class="text-stone-700 font-bold flex items-center gap-1">
+          <i class="fa-solid fa-book-open-reader text-culture-gold"></i>
+          <span>內文詳細推演</span>
+        </span>
+        <div class="flex items-center gap-1">
+          <span class="text-[11px] text-stone-500 mr-1">文字大小:</span>
+          <button type="button" onclick="changeHnFontSize(-1.5)" class="px-2 py-0.5 rounded bg-white hover:bg-stone-200 text-stone-800 border border-stone-300 text-[11px] font-bold shadow-xs active:scale-95 transition">A-</button>
+          <span id="hn-font-size-indicator" class="text-[11px] font-mono font-bold text-stone-700 min-w-[28px] text-center">15px</span>
+          <button type="button" onclick="changeHnFontSize(1.5)" class="px-2 py-0.5 rounded bg-culture-gold hover:bg-amber-600 text-stone-950 border border-culture-gold text-[11px] font-bold shadow-xs active:scale-95 transition">A+</button>
+        </div>
+      </div>
+
+      <!-- 全文內容容器 -->
+      <div id="hn-modal-content-area" class="space-y-2.5 leading-relaxed text-stone-800 font-serif" style="font-size: 15px; line-height: 1.68;">
+        <!-- 動態帶入全文 -->
+      </div>
+
+      <!-- 底部按鈕區：前往 FB 粉絲團討論與關閉 -->
+      <div class="space-y-2 pt-2 border-t border-dashed border-stone-300 font-sans">
+        <a id="hn-modal-fb-btn" href="https://www.facebook.com/profile.php?id=100057076734888" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-3 rounded-xl bg-[#1877f2] hover:bg-[#1464cc] text-white font-serif font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition cursor-pointer">
+          <i class="fa-brands fa-facebook"></i>
+          <span>前往 Facebook 粉絲專頁參與討論 / 追蹤 ➔</span>
+        </a>
+        <button type="button" onclick="closeHandnoteDetailModal()" class="w-full py-2 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-700 font-serif text-xs transition">
+          返回首頁
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- 彈窗 0：四大領域心法導引專題 -->
   <div id="modal-guidance" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 max-h-[90vh] overflow-y-auto">
@@ -1625,6 +1686,15 @@
 
   <!-- JavaScript 核心腳本 -->
   <script>
+        // ==========================================
+    // 【首頁直式教學影片設定】：錄好後將 YouTube 網址貼在引號內即可
+    // 支援格式：https://youtube.com/shorts/xxx 或 https://youtu.be/xxx
+    // ==========================================
+    const YOUTUBE_TUTORIAL_URL = "https://www.youtube.com/watch?v=FSbHLJ7ZOa4"; 
+
+    let currentHnFontSize = 15;
+    let cachedFeaturedHandnotes = [];
+
     const CLASSIC_DATABASE = {"乾為天": {"bianhao": "1-1", "becheng": "盈為欠之兆", "xiangyi": "六龍御天之卦廣大包容之象", "panyue": "乾者,健也。大哉乾元,蔭覆无偏,元運造化,萬物資始,雲行雨施,變化不言,東西任意,南北安然。", "guaci": "元亨利貞。", "daxiang": "天行健，君子以自強不息。", "tuan": "大哉乾元，萬物資始，乃統天。雲行雨施，品物流形。大明終始，六位時成，時乘六龍以御天。乾道變化，各正性命，保合太和，乃利貞。首出庶物，萬國咸寧。", "yaoci": "初爻：初九，潛龍勿用。\n二爻：九二，見龍在田，利見大人。\n三爻：九三，君子終日乾乾，夕惕若，厲无咎。\n四爻：九四，或躍在淵，无咎。\n五爻：九五，飛龍在天，利見大人。\n上爻：上九，亢龍有悔。\n用爻：用九，見群龍无首，吉。"}, "天澤履": {"bianhao": "1-2", "becheng": "踏虎之尾", "xiangyi": "如履虎尾之卦安中防危之象", "panyue": "履者,禮也。如履虎尾,防慮宜深,堅冰之患,戒慎兢兢,安中防危,憂中望喜。眇而能視,跛而能履。", "guaci": "履虎尾，不咥人，亨。", "daxiang": "上天下澤，履。君子以辯上下，定民志。", "tuan": "履，柔履剛也。說而應乎乾，是以履虎尾，不咥人，亨。剛中正，履帝位而不疚，光明也。", "yaoci": "初爻：初九，素履，往无咎。\n二爻：九二，履道坦坦，幽人貞吉。\n三爻：六三，眇能視，跛能履，履虎尾咥人，凶。武人為于大君。\n四爻：九四，履虎尾，愬愬終吉。\n五爻：九五，夬履，貞厲。\n上爻：上九，視履考祥，其旋元吉。"}, "天火同人": {"bianhao": "1-3", "becheng": "求友", "xiangyi": "遊魚從水之卦管鮑分金之象", "panyue": "同人者,親也。同心之言,其臭如蘭;二人同心,其利斷金。所求皆得,无不稱心。", "guaci": "同人于野，亨。利涉大川，利君子貞。", "daxiang": "天與火，同人。君子以類族辨物。", "tuan": "同人，柔得位得中，而應乎乾，曰同人。同人曰：同人于野，亨，利涉大川，乾行也。文明以健，中正而應，君子正也。唯君子為能通天下之志。", "yaoci": "初爻：初九，同人于門，无咎。\n二爻：六二，同人于宗，吝。\n三爻：九三，伏戎于莽，升其高陵，三歲不興。\n四爻：九四，乘其墉，弗克攻，吉。\n五爻：九五，同人，先號咷而後笑，大師克相遇。\n上爻：上九，同人于郊，无悔。"}, "天風姤": {"bianhao": "1-5", "becheng": "女王蜂", "xiangyi": "風雲相濟之卦君臣會合之象", "panyue": "姤者,遇也。以陰遇陽,以柔遇剛,本无所望,而卒然值之,不期而遇,占者得之,所謀无不吉也。", "guaci": "女壯，勿用取女。", "daxiang": "天下有風，姤。后以施命誥四方。", "tuan": "姤，遇也，柔遇剛也。勿用取女，不可與長也。天地相遇，品物咸章也。剛遇中正，天下大行也。姤之時義大矣哉！", "yaoci": "初爻：初六，繫于金柅，貞吉。有攸往，見凶，羸豕孚蹢躅。\n二爻：九二，包有魚，无咎，不利賓。\n三爻：九三，臀无膚，其行次且，厲，无大咎。\n四爻：九四，包有魚，起凶。\n五爻：九五，以杞包瓜，含章，有隕自天。\n上爻：上九，姤其角，吝，无咎。"}};
     
       // 內容核心資料庫（統整：三層次詳解、古文原典、解卦手記、心法導引）
@@ -1710,21 +1780,25 @@
       if (!container) return;
 
       try {
-        // 正確對接 CLASSIC_API_URL，並加入時間戳記防快取
         const fetchUrl = `${CLASSIC_API_URL}?action=getHandnotes&_t=${Date.now()}`;
         const res = await fetch(fetchUrl);
         const data = await res.json();
 
         if (data && data.success && Array.isArray(data.handnotes) && data.handnotes.length > 0) {
-          container.innerHTML = data.handnotes.map(note => `
-            <div class="p-2.5 bg-white rounded-xl border border-stone-200 text-xs space-y-1 shadow-2xs">
-              <div class="flex justify-between items-start">
-                <span class="font-bold text-[11.5px] text-stone-900">${note.title}</span>
-                <span class="text-[10px] ${note.tagColor || 'text-culture-red'} font-bold flex-shrink-0 ml-1">${note.tag || '案例解析'}</span>
+          cachedFeaturedHandnotes = data.handnotes;
+          container.innerHTML = cachedFeaturedHandnotes.map((note, idx) => `
+            <div onclick="openHandnoteDetailModal(${idx})" class="p-3 bg-white rounded-xl border border-stone-200 hover:border-culture-gold text-xs space-y-1.5 shadow-2xs cursor-pointer transition active:scale-[0.99] group">
+              <div class="flex justify-between items-start gap-1">
+                <span class="font-bold text-[11.5px] text-stone-900 group-hover:text-culture-red transition">${note.title}</span>
+                <span class="text-[10px] ${note.tagColor || 'text-culture-red'} font-bold flex-shrink-0 ml-1 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">${note.tag || '案例解析'}</span>
               </div>
-              <p class="text-[10px] text-stone-600 leading-relaxed font-serif">
+              <p class="text-[10.5px] text-stone-600 leading-relaxed font-serif">
                 ${note.summary}
               </p>
+              <div class="pt-1 flex items-center justify-between text-[10px] text-culture-gold font-bold">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-book-open"></i> 點此閱讀全文推演與對策</span>
+                <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </div>
             </div>
           `).join('');
           return;
@@ -1733,25 +1807,132 @@
         console.warn("雲端調取手記稍候重試");
       }
 
-      // 雲端連線異常時的備用卡片
-      container.innerHTML = `
-        <div class="p-2.5 bg-white rounded-xl border border-stone-200 text-xs space-y-1 shadow-2xs">
-          <div class="flex justify-between items-start">
-            <span class="font-bold text-[11.5px] text-stone-900">【商業合夥】合夥人要求增資？占得〈水雷屯〉變卦</span>
-            <span class="text-[10px] text-culture-red font-bold flex-shrink-0 ml-1">風控策略</span>
+      // 備用展示資料（點擊同樣可彈窗閱讀全文）
+      cachedFeaturedHandnotes = [
+        {
+          title: "【商業合夥】合夥人要求增資？占得〈澤風大過〉",
+          tag: "風控策略",
+          tagColor: "text-culture-red",
+          summary: "資本與話語權不對等的合夥，增資擴張就是合法洗牌的開始。占得〈澤風大過〉棟橈負重，貪求以小搏大，最終資金斷鏈、鋌而走險。",
+          content: "【商業合夥硬邊界與局勢剖析】\n\n資本與話語權不對等的合夥，增資擴張就是合法洗牌的開始。占得〈澤風大過〉棟橈負重，貪求以小搏大，最終資金斷鏈、鋌而走險。\n\n在商場博弈中，很多創業者常誤將「情誼」視為合夥的護身符，卻忽略了商業本質是一場精密的權力與資本算計。當大股東提出增資要求時，表面上是擴張版圖，實質上若小股東無力跟進，股權立刻被大幅稀釋，經營話語權當場喪失。\n\n大過卦之時，棟橈之象，象徵客觀支撐已無法承載過重負擔。此時切忌盲目借貸跟進，認清不可逆的資本硬邊界，及時設立停損斷點，方能在變易中保全元氣。",
+          fbUrl: "https://www.facebook.com/profile.php?id=100057076734888"
+        },
+        {
+          title: "【職涯抉擇】四十歲跨領域轉職：用爻辭看清硬邊界",
+          tag: "時機推演",
+          tagColor: "text-blue-700",
+          summary: "四十歲的轉型不是重新開始，而是過往資源的重構。透過爻辭剖析不可逆的客觀現實，在變局中找到進退的最佳平衡點。",
+          content: "【中年轉職的客觀邊界診斷】\n\n四十歲的轉型不是重新開始，而是過往資源的重構。很多人在職場遇到瓶頸時，總想著徹底打掉重練，卻忽略了年齡、家庭、經濟負擔等不可逆的「不易」硬邊界。\n\n易經告訴我們：善易者不徒勞對抗天道定律。中年轉職的關鍵在於「簡易」的大道循環與「變易」的見招拆招——不是盲目跳槽到陌生領域從零做起，而是將您過往累積數十年的核心競爭力，轉移並應用在具有上升趨勢的載體上。看清局勢硬邊界，穩健落子，方能化危機為轉機。",
+          fbUrl: "https://www.facebook.com/profile.php?id=100057076734888"
+        }
+      ];
+
+      container.innerHTML = cachedFeaturedHandnotes.map((note, idx) => `
+        <div onclick="openHandnoteDetailModal(${idx})" class="p-3 bg-white rounded-xl border border-stone-200 hover:border-culture-gold text-xs space-y-1.5 shadow-2xs cursor-pointer transition active:scale-[0.99] group">
+          <div class="flex justify-between items-start gap-1">
+            <span class="font-bold text-[11.5px] text-stone-900 group-hover:text-culture-red transition">${note.title}</span>
+            <span class="text-[10px] ${note.tagColor || 'text-culture-red'} font-bold flex-shrink-0 ml-1 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">${note.tag || '案例解析'}</span>
           </div>
-          <p class="text-[10px] text-stone-600 leading-relaxed font-serif">
-            動態拆解：客觀資源未到位前的冒進代價，如何透過條約邊界避開資金斷鏈。
+          <p class="text-[10.5px] text-stone-600 leading-relaxed font-serif">
+            ${note.summary}
           </p>
+          <div class="pt-1 flex items-center justify-between text-[10px] text-culture-gold font-bold">
+            <span class="flex items-center gap-1"><i class="fa-solid fa-book-open"></i> 點此閱讀全文推演與對策</span>
+            <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+          </div>
         </div>
-        <div class="p-2.5 bg-white rounded-xl border border-stone-200 text-xs space-y-1 shadow-2xs">
-          <div class="flex justify-between items-start">
-            <span class="font-bold text-[11.5px] text-stone-900">【職涯抉擇】四十歲跨領域轉職：用爻辭看清硬邊界</span>
-            <span class="text-[10px] text-blue-700 font-bold flex-shrink-0 ml-1">時機推演</span>
+      `).join('');
+    }
+
+    // 彈窗手記全文閱讀與字體縮放
+    function openHandnoteDetailModal(idx) {
+      const note = cachedFeaturedHandnotes[idx];
+      if (!note) return;
+
+      const modal = document.getElementById('modal-handnote-detail');
+      const titleEl = document.getElementById('hn-modal-title');
+      const tagEl = document.getElementById('hn-modal-tag');
+      const contentEl = document.getElementById('hn-modal-content-area');
+      const fbBtn = document.getElementById('hn-modal-fb-btn');
+
+      titleEl.innerText = note.title || "案例手記解析";
+      tagEl.innerText = note.tag || "實戰推演";
+
+      const fullText = note.content || note.summary || "暫無全文內容。";
+      const paragraphs = fullText.split(/\n\n|\n/).map(p => p.trim()).filter(p => p.length > 0);
+      contentEl.innerHTML = paragraphs.map(p => `<p class="leading-relaxed pl-0.5">${p}</p>`).join('');
+
+      if (fbBtn) {
+        fbBtn.href = note.fbUrl || note.url || "https://www.facebook.com/profile.php?id=100057076734888";
+      }
+
+      applyHnFontSize();
+      modal.classList.remove('hidden');
+    }
+
+    function closeHandnoteDetailModal() {
+      const modal = document.getElementById('modal-handnote-detail');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function changeHnFontSize(delta) {
+      currentHnFontSize = Math.min(24, Math.max(13, Math.round((currentHnFontSize + delta) * 10) / 10));
+      applyHnFontSize();
+    }
+
+    function applyHnFontSize() {
+      const contentEl = document.getElementById('hn-modal-content-area');
+      const ind = document.getElementById('hn-font-size-indicator');
+      if (contentEl) {
+        contentEl.style.fontSize = currentHnFontSize + 'px';
+        contentEl.style.lineHeight = (currentHnFontSize * 1.68) + 'px';
+      }
+      if (ind) ind.innerText = currentHnFontSize + 'px';
+    }
+
+    // 渲染首頁直式手機影片
+    function renderTutorialVideo() {
+      const container = document.getElementById('tutorial-video-container');
+      if (!container) return;
+
+      const rawUrl = (typeof YOUTUBE_TUTORIAL_URL === 'string') ? YOUTUBE_TUTORIAL_URL.trim() : '';
+
+      if (!rawUrl) {
+        container.innerHTML = `
+          <div class="w-full py-8 px-4 rounded-xl bg-gradient-to-br from-[#fcfbf9] to-[#f7f0e3] border border-dashed border-culture-gold/60 text-center space-y-2">
+            <div class="w-12 h-12 mx-auto rounded-full bg-amber-100 text-culture-red flex items-center justify-center text-xl shadow-inner">
+              <i class="fa-solid fa-clapperboard"></i>
+            </div>
+            <h4 class="font-bold text-xs text-stone-900 tracking-wider">手機實戰操作錄影 籌備中</h4>
+            <p class="text-[11px] text-stone-500 leading-relaxed font-serif">
+              陳老師正在為各位錄製最新直式操作示範，敬請期待！
+            </p>
           </div>
-          <p class="text-[10px] text-stone-600 leading-relaxed font-serif">
-            動態拆解：如何辨識「不易」的現實框架，在「變易」中找到最適落點與進退節奏。
-          </p>
+        `;
+        return;
+      }
+
+      let videoId = '';
+      if (rawUrl.includes('shorts/')) {
+        videoId = rawUrl.split('shorts/')[1].split('?')[0].split('&')[0];
+      } else if (rawUrl.includes('youtu.be/')) {
+        videoId = rawUrl.split('youtu.be/')[1].split('?')[0].split('&')[0];
+      } else if (rawUrl.includes('watch?v=')) {
+        videoId = rawUrl.split('watch?v=')[1].split('&')[0];
+      } else {
+        videoId = rawUrl;
+      }
+
+      container.innerHTML = `
+        <div class="w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden shadow-lg border-2 border-stone-800 bg-black relative">
+          <iframe 
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/${videoId}?rel=0&playsinline=1" 
+            title="陳亮易經互動網操作說明" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
         </div>
       `;
     }   
@@ -1787,12 +1968,22 @@
     }
 
     function goToStep(viewId) {
+      // 1. 全面身分門禁：未登入者僅開放首頁 (p1-home) 與 登入頁 (p2-login)
+      if (!currentUser.isLoggedIn && viewId !== 'p1-home' && viewId !== 'p2-login') {
+        showToast("進入自學排卦系統前，請先選擇身分登入！");
+        goToStep('p2-login');
+        openLoginModal('guest');
+        return;
+      }
+
+      // 2. 領域選定檢查
       if ((viewId === 'view-divination' || viewId === 'view-result' || viewId === 'p3-principles') && !selectedCategory) {
         showToast("請先在「四大領域」中選定一個問題類別！");
         goToStep('p2-categories');
         return;
       }
 
+      // 3. 發問邏輯檢驗檢查
       if (viewId === 'view-divination' && !hasVerifiedLogic) {
         showToast("請先詳讀易學三義心法並通過發問邏輯檢驗！");
         goToStep('p3-principles');
@@ -1800,6 +1991,7 @@
         return;
       }
 
+      // 4. 問答解析與心法檢驗檢查
       if (viewId === 'view-result' && !currentUser.isAdvanced && !hasConfirmedVideo) {
         showToast("起卦完成！請由頂部詳讀問答解析，並於底端確認勾選看完。");
         goToStep('view-videos');
@@ -2888,6 +3080,11 @@ async function submitUserLogin() {
 
           rememberedMemberData = { account: rawInput, role: u.role };
 
+          // 儲存登入憑證至手機端，下次開啟免重複輸入
+          try {
+            localStorage.setItem('iching_auth_user', JSON.stringify(currentUser));
+          } catch(e) {}
+
           if (u.role === '高階學員') {
             hasConfirmedVideo = true;
             showToast(`【高階學員】${u.name} 驗證成功！`);
@@ -3429,6 +3626,18 @@ async function handleRegistrationSubmit(e) {
     }
 
     window.onload = function () {
+      // 1. 自動恢復上次登入狀態
+      try {
+        const savedAuth = localStorage.getItem('iching_auth_user');
+        if (savedAuth) {
+          const u = JSON.parse(savedAuth);
+          if (u && u.isLoggedIn) {
+            currentUser = u;
+            hasVerifiedLogic = currentUser.isAdvanced;
+          }
+        }
+      } catch (err) {}
+
       buildHexGrid();
       selectHexInLibrary("1,5");
       renderBoardYaoSlots();
@@ -3436,6 +3645,7 @@ async function handleRegistrationSubmit(e) {
       updateRoleDisplay();
       loadFeaturedHandnotes();
       loadGeneralRules();
+      // renderTutorialVideo removed for pure button
     };
   </script>
 </body>
