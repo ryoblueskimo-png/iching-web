@@ -1959,7 +1959,7 @@
       if (!container) return;
 
       try {
-        const fetchUrl = `${CLASSIC_API_URL}?action=getTopicGuidance&domain=general&role=guest`;
+        const fetchUrl = `${CLASSIC_API_URL}?action=getTopicGuidance&domain=general&role=guest`;&token=${encodeURIComponent(currentUser.token || "")}
         const res = await fetch(fetchUrl);
         const data = await res.json();
 
@@ -3299,7 +3299,7 @@ async function handleRegistrationSubmit(e) {
       modal.classList.remove('hidden');
 
       try {
-        const fetchUrl = `${CLASSIC_API_URL}?action=getTopicGuidance&domain=${encodeURIComponent(domainKey)}&role=${encodeURIComponent(roleCode)}`;
+        const fetchUrl = `${CLASSIC_API_URL}?action=getTopicGuidance&token=${encodeURIComponent(currentUser.token || "")}&domain=${encodeURIComponent(domainKey)}&role=${encodeURIComponent(roleCode)}`;
         const res = await fetch(fetchUrl);
         const data = await res.json();
 
@@ -3413,7 +3413,7 @@ async function handleRegistrationSubmit(e) {
       `;
 
       try {
-        const fetchUrl = `${CLASSIC_API_URL}?action=getClassicText&hexName=${encodeURIComponent(h.name)}&hexId=${u}-${l}`;
+        const fetchUrl = `${CLASSIC_API_URL}?action=getClassicText&token=${encodeURIComponent(currentUser.token || "")}&hexName=${encodeURIComponent(h.name)}&hexId=${u}-${l}`;
         const res = await fetch(fetchUrl);
         const data = await res.json();
 
