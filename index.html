@@ -1322,7 +1322,7 @@
           </label>
           <input type="password" id="input-login-pin" maxlength="6" inputmode="numeric" placeholder="請輸入您的 6 位數通行碼" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white focus:outline-none focus:ring-1 focus:ring-culture-gold font-mono tracking-widest text-xs">
         </div>
-
+</div>
       <div class="grid grid-cols-2 gap-2 pt-1">
         <button type="button" onclick="closeLoginModal()" class="py-2.5 rounded-xl bg-stone-200 text-stone-700 font-serif text-xs hover:bg-stone-300 transition">取消</button>
         <button type="button" onclick="submitUserLogin()" class="py-2.5 rounded-xl bg-culture-red text-white font-serif font-bold text-xs shadow hover:bg-culture-redHover transition">確認登入</button>
@@ -1958,8 +1958,8 @@
       const container = document.getElementById('general-rules-content');
       if (!container) return;
 
-      try {
-        const fetchUrl = `${CLASSIC_API_URL}?action=getTopicGuidance&domain=general&role=guest`;&token=${encodeURIComponent(currentUser.token || "")}
+try {
+        const fetchUrl = `${CLASSIC_API_URL}?action=getTopicGuidance&domain=general&role=guest`;
         const res = await fetch(fetchUrl);
         const data = await res.json();
 
