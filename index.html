@@ -93,8 +93,16 @@
       0%, 100% { border-color: rgba(197, 155, 39, 0.4); box-shadow: 0 2px 8px rgba(197, 155, 39, 0.15); }
       50% { border-color: rgba(229, 192, 101, 0.95); box-shadow: 0 4px 14px rgba(197, 155, 39, 0.35); }
     }
-    .box-light-shine { animation: lightShine 3s infinite ease-in-out; }
-  </style>
+  .box-light-shine { animation: lightShine 3s infinite ease-in-out; }
+    /* 防整篇複製保護層 */
+    .protected-text-zone {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+  </style> 
 </head>
 <body class="min-h-screen flex justify-center selection:bg-culture-gold selection:text-white">
 
@@ -1301,12 +1309,18 @@
 
       <div id="login-device-hint" class="p-2.5 rounded-xl text-[10.5px] font-serif border"></div>
 
-      <div class="space-y-2 text-xs">
+<div class="space-y-2.5 text-xs">
         <div>
           <label class="block font-serif font-semibold text-stone-800 mb-1">
             電子信箱 或 手機號碼 <span class="text-culture-red">*</span>
           </label>
           <input type="text" id="input-login-account" placeholder="例如：0912345678 或 yourname@example.com" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white focus:outline-none focus:ring-1 focus:ring-culture-gold font-sans text-xs">
+        </div>
+        <div id="login-pin-wrapper" class="hidden">
+          <label class="block font-serif font-semibold text-amber-900 mb-1">
+            高階學員 6 位數專屬通行碼 <span class="text-culture-red">*</span>
+          </label>
+          <input type="password" id="input-login-pin" maxlength="6" inputmode="numeric" placeholder="請輸入老師核發之 6 位數通行碼" class="w-full px-3 py-2.5 rounded-lg border-2 border-amber-400 bg-amber-50/40 focus:outline-none focus:ring-1 focus:ring-amber-600 font-mono tracking-widest text-xs">
         </div>
       </div>
 
@@ -2355,17 +2369,26 @@ function closeCoinEssenceModal() {
       return 1;
     }
 
+  function embedInvisibleWatermark(text) {
+      if (!text) return '';
+      const tail = (currentUser.phone || "0000").slice(-4);
+      const zwMap = { '0':'\u200B', '1':'\u200C', '2':'\u200D', '3':'\uFEFF', '4':'\u200B\u200C', '5':'\u200C\u200D', '6':'\u200D\uFEFF', '7':'\u200B\u200D', '8':'\u200C\uFEFF', '9':'\u200B\uFEFF' };
+      const mark = tail.split('').map(c => zwMap[c] || '\u200B').join('');
+      return text.replace(/。/g, '。' + mark);
+    }
+
     async function fetchSingleTierContent(guaName, tierSheet, category) {
-      const fetchUrl = `${GUA_DETAIL_API_URL}?gua=${encodeURIComponent(guaName)}&tier=${encodeURIComponent(tierSheet)}&category=${encodeURIComponent(category)}`;
+      const tokenParam = encodeURIComponent(currentUser.token || "");
+      const fetchUrl = `${GUA_DETAIL_API_URL}?gua=${encodeURIComponent(guaName)}&tier=${encodeURIComponent(tierSheet)}&category=${encodeURIComponent(category)}&token=${tokenParam}`;
       try {
         const res = await fetch(fetchUrl);
         const data = await res.json();
-        return { tier: tierSheet, success: data.success, content: data.content || '' };
+        const watermarked = embedInvisibleWatermark(data.content || '');
+        return { tier: tierSheet, success: data.success, content: watermarked };
       } catch (err) {
         return { tier: tierSheet, success: false, content: '連線逾時或暫時無法取得該層級內容，請檢查網路連線。' };
       }
     }
-
     async function goToResultPage() {
       const isComplete = currentYaoLines.every(v => v !== null);
       if (!isComplete) {
@@ -3008,27 +3031,33 @@ function closeCoinEssenceModal() {
       }
     }
 
-    function openLoginModal(targetTier = 'member') {
+function openLoginModal(targetTier = 'member') {
       currentLoginModalTier = targetTier;
       const modal = document.getElementById('modal-login');
       const title = document.getElementById('login-modal-title');
       const sub = document.getElementById('login-modal-sub');
       const hint = document.getElementById('login-device-hint');
       const inputAccount = document.getElementById('input-login-account');
+      const pinWrapper = document.getElementById('login-pin-wrapper');
+      const inputPin = document.getElementById('input-login-pin');
 
       inputAccount.value = rememberedMemberData.account || "";
+      if (inputPin) inputPin.value = "";
 
       if (targetTier === 'guest') {
+        if (pinWrapper) pinWrapper.classList.add('hidden');
         title.innerText = "1. 網站訪客登入";
         sub.innerText = "請輸入已登記之電子信箱或手機號碼";
         hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-stone-100 border border-stone-300 text-stone-800";
         hint.innerHTML = `<i class="fa-solid fa-circle-info text-stone-600"></i> 請輸入您申請時填寫的手機或信箱進行訪客登入。`;
       } else if (targetTier === 'advanced') {
+        if (pinWrapper) pinWrapper.classList.remove('hidden');
         title.innerText = "3. 高階學員登入";
-        sub.innerText = "請輸入您已開通之高階學員專屬帳號";
+        sub.innerText = "請輸入高階學員帳號與 6 位數專屬通行碼";
         hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-amber-50 border border-amber-300 text-amber-900";
-        hint.innerHTML = `<i class="fa-solid fa-crown text-amber-600"></i> <strong>高階學員專屬入口：</strong>需先向陳老師確認開通權限後方可登入。`;
+        hint.innerHTML = `<i class="fa-solid fa-crown text-amber-600"></i> <strong>高階學員安全驗證：</strong>需輸入手機/信箱＋6 位數專屬通行碼（連續錯誤 3 次將暫時鎖定 1 小時）。`;
       } else {
+        if (pinWrapper) pinWrapper.classList.add('hidden');
         title.innerText = "2. 網站會員登入";
         sub.innerText = "請輸入年費會員登記之電子信箱或手機號碼";
         hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-red-50 border border-red-200 text-culture-red";
@@ -3041,31 +3070,43 @@ function closeCoinEssenceModal() {
       document.getElementById('modal-login').classList.add('hidden');
     }
 
-async function submitUserLogin() {
-      // 1. 去除空白並轉為小寫，解決 Email 大小寫比對失敗的問題
+    async function submitUserLogin() {
       const rawInput = document.getElementById('input-login-account').value.trim();
       const inputVal = rawInput.toLowerCase(); 
+      const pinVal = (document.getElementById('input-login-pin')?.value || "").trim();
       
       if (!inputVal) {
         showToast("請輸入您登記之手機號碼或電子信箱！");
         return;
       }
-      showToast("正在向雲端資料庫驗證帳號身分中...");
+      if (currentLoginModalTier === 'advanced' && !pinVal) {
+        showToast("高階學員請輸入 6 位數專屬通行碼！");
+        return;
+      }
+
+      showToast("正在向雲端資料庫進行安全驗證...");
 
       try {
-        const verifyUrl = `${GOOGLE_SHEETS_WEBAPP_URL}?action=checkUser&account=${encodeURIComponent(inputVal)}`;
+        let verifyUrl = `${GOOGLE_SHEETS_WEBAPP_URL}?action=checkUser&account=${encodeURIComponent(inputVal)}`;
+        if (pinVal) {
+          verifyUrl += `&pin=${encodeURIComponent(pinVal)}`;
+        }
         const res = await fetch(verifyUrl);
-        
-        // 2. 先轉成純文字，避免直接解析 JSON 發生 unexpected token '<' 報錯
         const textData = await res.text();
         
         if (textData.trim().startsWith('<')) {
-          console.error("後台回傳了 HTML 錯誤網頁：", textData);
           showToast("資料庫權限異常，請確認 GAS 是否部署為「所有人」。");
           return;
         }
 
         const data = JSON.parse(textData);
+
+        if (!data.success && data.requirePin) {
+          const pinWrapper = document.getElementById('login-pin-wrapper');
+          if (pinWrapper) pinWrapper.classList.remove('hidden');
+          showToast(data.message || "請輸入您的 6 位數專屬通行碼！");
+          return;
+        }
 
         if (data.success && data.user) {
           const u = data.user;
@@ -3074,20 +3115,20 @@ async function submitUserLogin() {
             phone: u.phone,
             email: u.email,
             role: u.role,
+            token: data.token || "",
             isLoggedIn: true,
             isAdvanced: (u.role === '高階學員')
           };
 
           rememberedMemberData = { account: rawInput, role: u.role };
 
-          // 儲存登入憑證至手機端，下次開啟免重複輸入
           try {
             localStorage.setItem('iching_auth_user', JSON.stringify(currentUser));
           } catch(e) {}
 
           if (u.role === '高階學員') {
             hasConfirmedVideo = true;
-            showToast(`【高階學員】${u.name} 驗證成功！`);
+            showToast(`【高階學員】${u.name} 安全驗證成功！`);
           } else if (u.role === '網站會員') {
             showToast(`【網站會員】${u.name} 登入成功！`);
           } else {
@@ -3106,7 +3147,7 @@ async function submitUserLogin() {
           goToStep('p2-categories');
           return;
         } else {
-          showToast(data.message || "名冊中查無此帳號！請確認輸入是否正確，或點擊下方申請開通。");
+          showToast(data.message || "名冊中查無此帳號或驗證失敗！");
           return;
         }
       } catch (err) {
@@ -3643,9 +3684,21 @@ async function handleRegistrationSubmit(e) {
       renderBoardYaoSlots();
       checkGuaCompletionStatus();
       updateRoleDisplay();
-      loadFeaturedHandnotes();
+     loadFeaturedHandnotes();
       loadGeneralRules();
-      // renderTutorialVideo removed for pure button
+
+      // 針對解析內容、64卦古文與手記彈窗啟用防複製保護
+      ['result-tiered-content-container', 'hex-detail-panel', 'hn-modal-content-area'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add('protected-text-zone');
+          el.addEventListener('contextmenu', e => e.preventDefault());
+          el.addEventListener('copy', e => {
+            e.preventDefault();
+            showToast("為保護智慧財產權，系統已限制整段複製！");
+          });
+        }
+      });
     };
   </script>
 </body>
