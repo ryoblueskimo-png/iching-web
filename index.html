@@ -776,13 +776,39 @@
            【新增】：課程與留言區分頁
            ========================================== -->
       <section id="view-courses" class="view-panel hidden space-y-4">
-        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-3 font-serif">
-          <div class="border-b border-culture-border pb-2 flex justify-between items-center">
-            <h3 class="font-bold text-sm text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-culture-gold"></i> 易經教學課程大綱</h3>
-            <button onclick="loadCoursesFrontEnd()" class="text-[10px] text-culture-gold hover:text-amber-700"><i class="fa-solid fa-rotate"></i> 重新整理</button>
+        
+        <!-- 課程大綱與 FB 看板 -->
+        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4 font-serif">
+          
+          <!-- FB 導流大看板 -->
+          <div class="bg-gradient-to-br from-[#1877f2] to-[#0c5a9e] p-4 rounded-xl shadow-inner text-white relative overflow-hidden">
+            <i class="fa-brands fa-facebook absolute -right-3 -bottom-4 text-7xl text-white/10 transform -rotate-12"></i>
+            <div class="relative z-10 space-y-2.5">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-full bg-white text-[#1877f2] flex items-center justify-center text-xl font-bold shadow-sm">陳</div>
+                <div>
+                  <h3 class="font-bold text-sm tracking-wide">陳亮老師易經占卜教室</h3>
+                  <p class="text-[10px] text-blue-100 mt-0.5">易經時事點評 · 實體講義搶先看</p>
+                </div>
+              </div>
+              <p class="text-[11px] text-blue-50 leading-relaxed font-serif">
+                想掌握最新開課資訊、觀看上課實況側拍，或與老師即時互動？強烈建議追蹤我們的官方 Facebook！
+              </p>
+              <a href="https://www.facebook.com/profile.php?id=100057076734888" target="_blank" class="block w-full py-2.5 bg-white text-[#1877f2] font-bold text-center text-xs rounded-lg shadow-sm hover:bg-blue-50 transition active:scale-95 flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-thumbs-up"></i> 點此一鍵前往粉絲專頁按讚
+              </a>
+            </div>
           </div>
-          <div id="courses-list-container" class="space-y-3 text-xs">
-            <div class="text-center text-stone-500 py-4"><i class="fa-solid fa-spinner fa-spin"></i> 載入課程中...</div>
+
+          <!-- 課程大綱列表 -->
+          <div>
+            <div class="border-b border-culture-border pb-1.5 mb-2.5 flex justify-between items-center">
+              <h3 class="font-bold text-sm text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-culture-gold"></i> 教學課程大綱</h3>
+              <button onclick="loadCoursesFrontEnd()" class="text-[10px] text-culture-gold hover:text-amber-700"><i class="fa-solid fa-rotate"></i> 重新整理</button>
+            </div>
+            <div id="courses-list-container" class="space-y-3 text-xs">
+              <div class="text-center text-stone-500 py-4"><i class="fa-solid fa-spinner fa-spin"></i> 載入課程中...</div>
+            </div>
           </div>
         </div>
 
@@ -847,7 +873,7 @@
       </div>
       <div id="hn-modal-content-area" class="space-y-2.5 leading-relaxed text-stone-800 font-serif protected-text-zone" style="font-size: 15px; line-height: 1.68;"></div>
       <div class="space-y-2 pt-2 border-t border-dashed border-stone-300 font-sans">
-        <button onclick="closeHandnoteDetailModal()" class="w-full py-2.5 rounded-xl bg-stone-800 text-culture-cream font-bold text-xs shadow">返回首頁</button>
+        <button onclick="closeHandnoteDetailModal()" class="w-full py-2.5 rounded-xl bg-stone-800 text-culture-cream font-bold text-xs shadow">返回</button>
       </div>
     </div>
   </div>
@@ -873,12 +899,12 @@
       </div>
       <div id="login-device-hint" class="p-2.5 rounded-xl text-[10.5px] font-serif border"></div>
       <div class="space-y-2.5 text-xs">
-        <input type="text" id="input-login-account" placeholder="手機或 Email" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white outline-none">
-        <input type="password" id="input-login-pin" maxlength="6" inputmode="numeric" placeholder="6 位數通行碼" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white tracking-widest outline-none">
+        <input type="text" id="input-login-account-modal" placeholder="手機或 Email" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white outline-none">
+        <input type="password" id="input-login-pin-modal" maxlength="6" inputmode="numeric" placeholder="6 位數通行碼" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white tracking-widest outline-none">
       </div>
       <div class="grid grid-cols-2 gap-2 pt-1">
         <button onclick="closeLoginModal()" class="py-2.5 rounded-xl bg-stone-200 text-stone-700 text-xs font-bold">取消</button>
-        <button onclick="submitUserLogin()" class="py-2.5 rounded-xl bg-culture-red text-white font-bold text-xs">確認登入</button>
+        <button onclick="submitUserLoginModal()" class="py-2.5 rounded-xl bg-culture-red text-white font-bold text-xs">確認登入</button>
       </div>
     </div>
   </div>
@@ -1150,7 +1176,6 @@
           <div class="p-3 bg-white rounded-xl border border-stone-200">
             <h4 class="font-bold text-sm text-culture-dark">${c.id} - ${c.name}</h4>
             <div class="text-stone-600 mt-1.5 whitespace-pre-wrap text-xs leading-relaxed">${c.outline}</div>
-            ${c.link ? `<a href="${c.link}" target="_blank" class="block mt-2 text-culture-red font-bold underline text-xs"><i class="fa-solid fa-link"></i> 講義試閱</a>` : ''}
           </div>
         `).join('');
       } catch(e) {}
@@ -1467,7 +1492,7 @@
         `;
 
         const renderText = (t) => {
-          let s = t.replace(/^\s+|\s+$/g, '');
+          let s = (t || '').replace(/^\s+|\s+$/g, '');
           s = s.replace(/ 【深層奧義與推演】[：:]/g, "\n\n【深層奧義與推演】：");
           s = s.replace(/ 實戰見招拆招策略[：:]/g, "\n\n【實戰見招拆招策略】：");
           s = s.replace(/ 氣場與時機法則[：:]/g, "\n\n【氣場與時機法則】：");
@@ -1514,7 +1539,7 @@
     }
 
     // ==========================================
-    // 登入與會員驗證系統 (修復的 3 顆按鈕登入)
+    // 登入與會員驗證系統 (已修復 3 個按鈕登入與防呆)
     // ==========================================
     function openLoginModal(targetTier = 'member') {
       const title = document.getElementById('login-modal-title');
@@ -1534,16 +1559,16 @@
         hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-red-50 border border-red-200 text-culture-red";
         hint.innerHTML = `<i class="fa-solid fa-id-card text-culture-red"></i> <strong>網站會員入口：</strong>連續錯 3 次將暫時鎖定。`;
       }
-      document.getElementById('input-login-pin').value = ""; 
+      document.getElementById('input-login-pin-modal').value = ""; 
       document.getElementById('modal-login').classList.remove('hidden');
     }
     function closeLoginModal() { document.getElementById('modal-login').classList.add('hidden'); }
     function openRegisterModal() { document.getElementById('modal-register').classList.remove('hidden'); updateRegNotice(); }
     function closeRegisterModal() { document.getElementById('modal-register').classList.add('hidden'); }
 
-    async function submitUserLogin() {
-      const acc = document.getElementById('input-login-account').value.trim();
-      const pin = document.getElementById('input-login-pin').value.trim();
+    async function submitUserLoginModal() {
+      const acc = document.getElementById('input-login-account-modal').value.trim();
+      const pin = document.getElementById('input-login-pin-modal').value.trim();
       if (!acc || !pin) { showToast("請輸入帳號與通行碼！"); return; }
       showToast("驗證中...");
       try {
@@ -1626,7 +1651,6 @@
     }
     
     function closeRegSuccessModal() { document.getElementById('modal-reg-success-line').classList.add('hidden'); }
-    function handleDirectLineClick(e) { /* 行動端直接開LINE */ }
 
     // ==========================================
     // 每日額度與檢驗系統
@@ -1776,7 +1800,7 @@
         const res = await fetch(`${CLASSIC_API_URL}?action=getClassicText&token=${encodeURIComponent(currentUser.token || "")}&hexName=${encodeURIComponent(h.name)}`);
         const data = await res.json();
         if(data.success) { CLASSIC_DATABASE[h.name] = data; renderClassicPanel(h, parts[0], parts[1], data); }
-        else { panel.innerHTML = `<div class="text-center text-red-500 py-4">查無資料</div>`; }
+        else { panel.innerHTML = `<div class="text-center text-red-500 py-4">查無資料或權限不足，請登入有效會員。</div>`; }
       } catch(e) { panel.innerHTML = `<div class="text-center text-red-500 py-4">連線失敗</div>`; }
     }
     
@@ -1830,6 +1854,8 @@
     function closeCoinEssenceModal() { document.getElementById('modal-coin-essence').classList.add('hidden'); }
     function openQrModal() { document.getElementById('modal-qrcode').classList.remove('hidden'); }
     function closeQrModal() { document.getElementById('modal-qrcode').classList.add('hidden'); }
+    function closeHandnoteDetailModal() { document.getElementById('modal-handnote-detail').classList.add('hidden'); }
+    function closeGuidanceModal() { document.getElementById('modal-guidance').classList.add('hidden'); }
 
     let toastTimer = null;
     function showToast(text) {
