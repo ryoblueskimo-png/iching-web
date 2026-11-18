@@ -50,11 +50,14 @@
     .taiji-card-icon { width: 40px !important; height: 40px !important; flex-shrink: 0; }
     .yang-bar { height: 18px; background: linear-gradient(90deg, #c59b27, #e5c065, #c59b27); border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
     .yin-segment { height: 18px; background: linear-gradient(90deg, #6c6358, #887e74, #6c6358); border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+    @keyframes tossCoin { 0% { transform: rotateY(0deg) scale(0.9); } 50% { transform: rotateY(1080deg) scale(1.15); } 100% { transform: rotateY(2160deg) scale(1); } }
+    .coin-animating { animation: tossCoin 0.65s cubic-bezier(0.2, 0.8, 0.2, 1); }
     .rendered-dynamic-content { word-break: break-word; overflow-wrap: break-word; }
     @keyframes goldPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(197, 155, 39, 0.7); transform: scale(1); } 50% { box-shadow: 0 0 10px 3px rgba(197, 155, 39, 0.5); transform: scale(1.02); } }
     .btn-gold-pulse { animation: goldPulse 2.2s infinite ease-in-out; }
+    @keyframes lightShine { 0%, 100% { border-color: rgba(197, 155, 39, 0.4); box-shadow: 0 2px 8px rgba(197, 155, 39, 0.15); } 50% { border-color: rgba(229, 192, 101, 0.95); box-shadow: 0 4px 14px rgba(197, 155, 39, 0.35); } }
+    .box-light-shine { animation: lightShine 3s infinite ease-in-out; }
     .protected-text-zone { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; }
-    /* 專欄抽屜樣式 */
     details > summary { list-style: none; }
     details > summary::-webkit-details-marker { display: none; }
   </style> 
@@ -65,7 +68,7 @@
 
     <!-- 頂部 Header -->
     <header class="sticky top-0 z-40 bg-culture-dark text-culture-cream shadow-md border-b border-culture-gold/40 px-3.5 h-14 flex items-center justify-between flex-shrink-0">
-      <div class="flex items-center gap-2 cursor-pointer" onclick="goToStep('view-columns')">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="goToStep('p1-home')">
         <svg class="taiji-header-icon text-culture-gold" viewBox="0 0 100 100" fill="currentColor">
           <circle cx="50" cy="50" r="48" fill="#1c140e" stroke="#c59b27" stroke-width="4"/>
           <path d="M 50 2 A 48 48 0 0 1 50 98 A 24 24 0 0 1 50 50 A 24 24 0 0 0 50 2 Z" fill="#c59b27"/>
@@ -80,11 +83,11 @@
 
       <div class="flex items-center gap-1.5">
         <div id="header-quota-pill" class="text-[10px] bg-stone-900 border border-culture-gold/40 px-2 py-0.5 rounded-full font-mono text-culture-goldLight font-bold whitespace-nowrap">
-          未登入
+          剩餘: 5/5
         </div>
         <div id="role-pill" onclick="goToStep('p2-login')" class="text-[11px] bg-culture-card border border-culture-gold/50 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 text-culture-goldLight cursor-pointer">
           <span class="w-2 h-2 rounded-full bg-stone-400" id="role-indicator"></span>
-          <span id="role-text" class="whitespace-nowrap">訪客中心</span>
+          <span id="role-text" class="whitespace-nowrap">網站訪客</span>
         </div>
       </div>
     </header>
@@ -93,10 +96,9 @@
     <main class="flex-grow p-4 space-y-4 pb-20">
 
       <!-- ==========================================
-           【分頁一】：研究與專欄 (首頁)
+           【第一頁】：首頁 (100%保留原本所有區塊與手記)
            ========================================== -->
-      <section id="view-columns" class="view-panel space-y-4">
-        
+      <section id="p1-home" class="view-panel space-y-4">
         <!-- 主視覺 Hero Banner -->
         <div class="rounded-2xl p-5 bg-gradient-to-br from-stone-900 via-stone-800 to-culture-dark text-white border-2 border-culture-gold/60 shadow-xl space-y-3.5 text-center">
           <div class="space-y-1">
@@ -104,7 +106,12 @@
             <h1 class="text-xl font-serif font-bold text-culture-cream tracking-wide leading-snug">
               以理性拆解迷局<br>用易經推演生機
             </h1>
-            <p class="text-xs text-amber-200/90 font-serif font-semibold mt-1">工科邏輯 × 人文視野 × 三十年易學實踐</p>
+            <p class="text-xs text-amber-200/90 font-serif font-semibold mt-1">
+              工科邏輯 × 人文視野 × 三十年易學實踐
+            </p>
+            <p class="text-[11px] text-stone-300 font-serif leading-relaxed pt-1">
+              不談怪力亂神・專注客觀邊界診斷與重大決策推演
+            </p>
           </div>
           <div class="grid grid-cols-2 gap-2 pt-1 font-sans">
             <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" rel="noopener noreferrer" class="py-2.5 px-2 rounded-xl bg-[#06c755] hover:bg-[#05b34c] text-white font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition cursor-pointer">
@@ -116,7 +123,129 @@
           </div>
         </div>
 
-        <div class="bg-culture-cream p-3.5 rounded-2xl border border-culture-border shadow-sm space-y-3 font-serif">
+        <div class="rounded-2xl p-3.5 bg-gradient-to-r from-[#fefbf6] via-[#fbf5eb] to-[#f8ede0] border-2 border-amber-300/80 shadow-md space-y-2 font-serif">
+          <a href="https://www.youtube.com/watch?v=FSbHLJ7ZOa4" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-3 rounded-xl bg-gradient-to-r from-red-600 via-culture-red to-red-700 hover:from-red-700 hover:to-red-800 text-white font-serif font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition cursor-pointer">
+            <i class="fa-brands fa-youtube text-base text-white"></i>
+            <span>▶ 觀看系統使用說明完整教學影片 ➔</span>
+          </a>
+          <p class="text-[11px] text-culture-red font-bold text-center tracking-wide flex items-center justify-center gap-1">
+            <i class="fa-solid fa-circle-exclamation text-[10px]"></i> <span>第一次進來的朋友一定要先看看唷！</span>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-center font-serif">
+          <div class="p-2.5 bg-culture-cream rounded-xl border border-culture-border shadow-xs">
+            <div class="w-6 h-6 mx-auto mb-1 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h4 class="font-bold text-[11px] text-stone-900">臺大跨界底蘊</h4>
+            <p class="text-[9.5px] text-stone-500 mt-0.5 leading-tight">工科邏輯取代宿命<br>實事求是看因果</p>
+          </div>
+          <div class="p-2.5 bg-culture-cream rounded-xl border border-culture-border shadow-xs">
+            <div class="w-6 h-6 mx-auto mb-1 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-[10px] font-bold"><i class="fa-solid fa-compass"></i></div>
+            <h4 class="font-bold text-[11px] text-stone-900">30年研驗實證</h4>
+            <p class="text-[9.5px] text-stone-500 mt-0.5 leading-tight">局勢剖析與應期<br>拒絕模稜兩可</p>
+          </div>
+          <div class="p-2.5 bg-culture-cream rounded-xl border border-culture-border shadow-xs">
+            <div class="w-6 h-6 mx-auto mb-1 rounded-full bg-red-100 text-culture-red flex items-center justify-center text-[10px] font-bold"><i class="fa-solid fa-network-wired"></i></div>
+            <h4 class="font-bold text-[11px] text-stone-900">親研數位系統</h4>
+            <p class="text-[9.5px] text-stone-500 mt-0.5 leading-tight">64卦三層次結構庫<br>古典與現代轉譯</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-[#fbf7f0] to-[#f4ebe0] border-2 border-amber-400/80 shadow-md space-y-3 font-serif">
+          <div class="flex items-center gap-2 border-b border-amber-300/60 pb-2">
+            <span class="w-7 h-7 rounded-full bg-culture-red text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-sm"><i class="fa-solid fa-quote-left"></i></span>
+            <div>
+              <h3 class="font-bold text-xs text-stone-900">為什麼臺大工・法・文跨界學者，專注易經占卜三十年？</h3>
+              <p class="text-[10px] text-amber-800 font-sans">工科邏輯 × 政治博弈 × 人類學田野觀察</p>
+            </div>
+          </div>
+          <p class="text-[11.5px] text-stone-700 leading-relaxed">
+            在臺大求學階段，我橫跨了三座截然不同的學術領域：在<strong>工學院機械系</strong>，我學會用嚴密因果律拆解複雜系統；在<strong>法學院政治系</strong>，我理解了人際博弈與局勢權衡的本質；在<strong>文學院人類系</strong>，我養成了細緻觀察人性心理與文化脈絡的敏銳度。
+          </p>
+          <div class="grid grid-cols-1 gap-2 pt-0.5 text-xs">
+            <div class="p-2 rounded-xl bg-white/90 border border-amber-200 space-y-0.5">
+              <span class="font-bold text-[11px] text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-mountain text-stone-700 text-[10px]"></i> 1. 機械思維看「不易」</span>
+              <p class="text-[10.5px] text-stone-600">辨識出客觀不可逆的現實硬邊界，不徒勞對抗天道定律。</p>
+            </div>
+            <div class="p-2 rounded-xl bg-white/90 border border-amber-200 space-y-0.5">
+              <span class="font-bold text-[11px] text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced text-amber-700 text-[10px]"></i> 2. 政治思維看「變易」</span>
+              <p class="text-[10.5px] text-stone-600">在商業競爭與合夥十字路口，精算利益得失與博弈進退對策。</p>
+            </div>
+            <div class="p-2 rounded-xl bg-white/90 border border-amber-200 space-y-0.5">
+              <span class="font-bold text-[11px] text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-eye text-culture-red text-[10px]"></i> 3. 人類學思維看「自修」</span>
+              <p class="text-[10.5px] text-stone-600">看清當事人性格盲區，好話直說、實話實說，助人化解盲點。</p>
+            </div>
+          </div>
+          <p class="text-[11px] text-culture-red font-bold text-center pt-1 border-t border-dashed border-amber-300/80">「算的準不難，能幫助人才是真本事。」</p>
+        </div>
+
+        <div class="bg-culture-cream p-3.5 rounded-2xl border border-culture-border shadow-sm space-y-2.5 font-serif">
+          <div class="border-b border-culture-border pb-1.5 flex justify-between items-center">
+            <h3 class="font-bold text-xs text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-bullseye text-culture-red"></i> 核心一對一諮詢項目</h3>
+            <span class="text-[10px] text-amber-700 font-sans font-semibold">電話 / LINE 預約</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-xl bg-white border border-amber-200/80 shadow-xs flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-xs flex-shrink-0 mt-0.5 border border-amber-200"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="leading-tight">
+                <strong class="text-stone-900 font-bold block text-[11.5px]">事業投資與合夥風控</strong>
+                <p class="text-[10.5px] text-amber-900/90 font-medium mt-1 leading-snug">合夥拆夥、資金擴張、專案成敗、危機停損斷點評估。</p>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white border border-amber-200/80 shadow-xs flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-amber-50 text-blue-700 flex items-center justify-center text-xs flex-shrink-0 mt-0.5 border border-amber-200"><i class="fa-solid fa-arrows-split-up-and-left"></i></div>
+              <div class="leading-tight">
+                <strong class="text-stone-900 font-bold block text-[11.5px]">職涯十字路口的取捨</strong>
+                <p class="text-[10.5px] text-amber-900/90 font-medium mt-1 leading-snug">跳槽轉職、中年轉型、時機推演、辨識不易硬邊界。</p>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white border border-amber-200/80 shadow-xs flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-amber-50 text-culture-red flex items-center justify-center text-xs flex-shrink-0 mt-0.5 border border-amber-200"><i class="fa-solid fa-scale-balanced"></i></div>
+              <div class="leading-tight">
+                <strong class="text-stone-900 font-bold block text-[11.5px]">重大決策與人生格局診斷</strong>
+                <p class="text-[11px] text-culture-red font-bold mt-1 tracking-wide leading-snug">✨ 紫微斗數一生健檢與流年解析</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 這裡就是您截圖說不見的精選解卦手記，我幫您無損還原了！ -->
+        <div class="bg-culture-cream p-3.5 rounded-2xl border border-culture-border shadow-sm space-y-2 font-serif">
+          <div class="border-b border-culture-border pb-1.5 flex justify-between items-center">
+            <h3 class="font-bold text-xs text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-book-bookmark text-culture-gold"></i> 精選解卦手記（熟客分享）</h3>
+            <span class="text-[10px] text-culture-red font-semibold">實戰案例解析 · 雲端同步</span>
+          </div>
+          <div id="featured-handnotes-container" class="space-y-2">
+            <div class="py-6 text-center text-stone-500 font-serif text-xs">
+              <i class="fa-solid fa-spinner fa-spin text-culture-gold text-sm mb-1 block"></i>
+              <span>正在從雲端載入最新解卦手記...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-1">
+          <button type="button" onclick="goToStep('p2-categories')" class="w-full py-3 rounded-xl bg-gradient-to-r from-stone-900 via-stone-800 to-culture-dark text-culture-cream font-serif font-bold text-xs shadow-md border border-culture-gold/60 flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
+            <i class="fa-solid fa-arrow-right text-culture-gold"></i>
+            <span>進入自學排卦系統 · 身分登入與預約專區 ➔</span>
+          </button>
+        </div>
+
+        <footer class="p-3.5 rounded-2xl bg-culture-cream/90 border border-culture-border text-[11px] text-stone-600 font-serif space-y-1.5 leading-relaxed">
+          <div class="font-bold text-stone-900 flex items-center justify-between border-b border-stone-200 pb-1">
+            <span>陳亮老師易經占卜教室</span>
+            <span class="text-[10px] text-culture-red font-mono">易經占卜・紫微斗數・教學</span>
+          </div>
+          <p><strong>核心服務：</strong>一對一易經占卜決策諮詢、紫微斗數一生健檢與流年解析、略筮法實戰占卜教學、周易六十四卦線上互動排卦。</p>
+          <p><strong>教學中心：</strong>新北市鶯歌區福昌街七巷五號 ｜ <strong>預約專線：</strong><a href="tel:0961411357" class="underline font-mono text-stone-800">0961-411357</a></p>
+          <p><strong>官方 LINE：</strong><span class="font-mono font-bold text-emerald-800">@129uiadu</span>（歡迎加入預約問事或洽詢課程）</p>
+        </footer>
+      </section>
+
+      <!-- ==========================================
+           【新增】：研究與專欄分頁
+           ========================================== -->
+      <section id="view-columns" class="view-panel hidden space-y-4">
+        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-3 font-serif">
           <div class="border-b border-culture-border pb-1.5 flex justify-between items-center">
             <h3 class="font-bold text-sm text-stone-900 flex items-center gap-1.5">
               <i class="fa-solid fa-newspaper text-culture-red"></i> 易學研究與最新專欄
@@ -134,115 +263,403 @@
       </section>
 
       <!-- ==========================================
-           【分頁二】：一鍵略筮占卜 (領域選擇 -> 起卦台 -> 解答)
+           【第二頁】：排卦系統入口與登入中心（原 P2 Login）
            ========================================== -->
-      <!-- 領域選擇 -->
+      <section id="p2-login" class="view-panel hidden space-y-4">
+        <div class="bg-culture-cream rounded-2xl shadow-md border-2 border-culture-gold/40 overflow-hidden">
+          <div class="bg-gradient-to-r from-[#fdfbf7] to-[#f4ebe0] px-4 py-3 flex items-center gap-3 border-b-2 border-culture-gold">
+            <svg class="taiji-card-icon text-culture-gold" viewBox="0 0 100 100" fill="currentColor">
+              <circle cx="50" cy="50" r="48" fill="#1c140e" stroke="#c59b27" stroke-width="4"/>
+              <path d="M 50 2 A 48 48 0 0 1 50 98 A 24 24 0 0 1 50 50 A 24 24 0 0 0 50 2 Z" fill="#c59b27"/>
+              <circle cx="50" cy="26" r="7" fill="#1c140e"/>
+              <circle cx="50" cy="74" r="7" fill="#c59b27"/>
+            </svg>
+            <div>
+              <h2 class="text-base font-serif font-bold text-culture-dark tracking-wide">會員與訪客登入中心</h2>
+              <p class="text-[11px] text-culture-red font-bold mt-0.5 tracking-wider">易經占卜 · 紫微斗數 · 占卜教學</p>
+            </div>
+          </div>
+
+          <div class="p-4 space-y-3 bg-gradient-to-b from-culture-cream to-[#f8f2e7] text-xs font-serif text-stone-700">
+            <div class="border-b border-culture-border pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="text-xl font-bold tracking-wider text-culture-dark">陳 亮</span>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-100 text-culture-red border border-culture-red/30">老師</span>
+              </div>
+              <div class="mt-2 p-2 rounded-xl bg-gradient-to-r from-amber-50 via-yellow-100/80 to-amber-50 border border-amber-300 text-amber-950 text-[11px] leading-relaxed shadow-xs space-y-1">
+                <div class="font-bold flex items-center gap-1.5 text-stone-900">
+                  <i class="fa-solid fa-award text-culture-gold text-xs"></i>
+                  <span>國立臺灣大學跨界底蘊：工學院機械 × 法學院政治 × 文學院人類</span>
+                </div>
+                <p class="text-[10.5px] text-stone-600">曾任臺大、陽明、中國、文化各大學命理社團指導老師，三十年易學實證。</p>
+              </div>
+            </div>
+
+            <div class="space-y-2 leading-relaxed">
+              <div class="flex items-start justify-between flex-wrap gap-1">
+                <div>
+                  <strong class="text-stone-900">服務電話：</strong>
+                  <a href="tel:0961411357" class="font-mono font-bold text-stone-900 hover:text-culture-red underline decoration-stone-300">0961-411357</a>
+                  <span class="text-culture-red text-[11px] block sm:inline mt-0.5 sm:mt-0 font-medium">（問事請先電話預約）</span>
+                </div>
+                <a href="tel:0961411357" class="px-2 py-0.5 rounded-md bg-stone-100 hover:bg-stone-200 border border-stone-300 text-[10.5px] text-stone-700 font-sans inline-flex items-center gap-1 active:scale-95 transition">
+                  <i class="fa-solid fa-phone text-[9px] text-culture-red"></i> 撥打電話
+                </a>
+              </div>
+              <div><strong class="text-stone-900">教學中心：</strong>新北市鶯歌區福昌街七巷五號</div>
+              <div><strong class="text-stone-900">E-mail：</strong><span class="font-mono text-stone-800">ryoblueskimo@gmail.com</span></div>
+              
+              <div class="flex items-center justify-between flex-wrap gap-1.5 pt-1 border-t border-dashed border-stone-200">
+                <div class="flex items-center gap-1.5">
+                  <strong class="text-stone-900">官方 LINE ID：</strong>
+                  <span class="font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300 text-xs">@129uiadu</span>
+                  <span class="text-culture-red text-[11px] font-medium">（問事請預約）</span>
+                </div>
+                <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" class="px-2.5 py-1 rounded-lg bg-[#06c755] hover:bg-[#05b34c] text-white text-[11px] font-sans font-bold shadow-sm inline-flex items-center gap-1.5 active:scale-95 transition cursor-pointer">
+                  <i class="fa-brands fa-line text-sm"></i> <span>一鍵加官方LINE</span>
+                </a>
+              </div>
+
+              <div class="pt-1.5 border-t border-dashed border-stone-200">
+                <button type="button" onclick="openQrModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-culture-gold to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 font-serif font-bold text-xs shadow-sm flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
+                  <i class="fa-solid fa-qrcode text-sm"></i> <span>分享本站專屬 QR Code · 邀請親友體驗起卦</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-culture-cream border-t border-dashed border-culture-border space-y-3">
+            
+            <!-- 登入表單 -->
+            <div id="login-form-area" class="space-y-3">
+              <button type="button" onclick="openRegisterModal()" class="w-full text-left p-3.5 rounded-2xl border-2 border-culture-red bg-gradient-to-r from-red-50 via-white to-red-50 hover:bg-red-100/70 shadow-sm transition active:scale-[0.98] cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl border border-culture-red/40 bg-culture-red text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-user-plus"></i>
+                  </div>
+                  <div class="leading-tight">
+                    <div class="font-bold text-xs text-culture-red flex items-center gap-1.5 flex-wrap">
+                      <span>第一次登入 請申請帳號</span>
+                      <span class="text-[10px] font-normal px-1.5 py-0.5 rounded bg-red-100 text-culture-red border border-culture-red/30">新用戶開通</span>
+                    </div>
+                    <div class="text-[10.5px] text-stone-600 font-serif mt-1">填寫姓名、手機號碼、Email 開通專屬帳號</div>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 pl-2">
+                  <span class="text-[11px] font-bold text-white bg-culture-red px-2.5 py-1.5 rounded-xl shadow-sm whitespace-nowrap block">點擊申請</span>
+                </div>
+              </button>
+
+              <button type="button" onclick="openLoginModal('guest')" class="w-full text-left p-3.5 rounded-2xl border-2 border-stone-600 bg-white hover:bg-stone-50 shadow-sm transition active:scale-[0.98] cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl border border-stone-400 bg-stone-100 text-stone-800 flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">1</div>
+                  <div class="leading-tight">
+                    <div class="font-bold text-xs text-stone-900 flex items-center gap-1.5 flex-wrap">
+                      <span>網站訪客登入</span>
+                      <span class="text-[10px] font-normal px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-300">審核享 90 天</span>
+                    </div>
+                    <div class="text-[10.5px] text-stone-500 font-serif mt-1">每日限 5 題免費發問（不可遞延），限隨機取卦</div>
+                  </div>
+                </div>
+              </button>
+
+              <button type="button" onclick="openLoginModal('member')" class="w-full text-left p-3.5 rounded-2xl border-2 border-culture-red bg-white hover:bg-red-50/50 shadow-sm transition active:scale-[0.98] cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl border border-culture-red/40 bg-red-50 text-culture-red flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">2</div>
+                  <div class="leading-tight">
+                    <div class="font-bold text-xs text-culture-red flex items-center gap-1.5 flex-wrap">
+                      <span>網站會員登入</span>
+                      <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-100 text-culture-red border border-culture-red/30">年費 2,500 元</span>
+                    </div>
+                    <div class="text-[10.5px] text-stone-600 font-serif mt-1">每日可提問 10 題，解鎖自行占卦填入與電腦隨機</div>
+                  </div>
+                </div>
+              </button>
+
+              <button type="button" onclick="openLoginModal('advanced')" class="w-full text-left p-3.5 rounded-2xl border-2 border-amber-600 bg-gradient-to-r from-amber-50/70 via-white to-amber-50/40 hover:from-amber-100/60 shadow-sm transition active:scale-[0.98] cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl border border-amber-500 bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">3</div>
+                  <div class="leading-tight">
+                    <div class="font-bold text-xs text-amber-900 flex items-center gap-1.5 flex-wrap">
+                      <span>高階學員登入</span>
+                      <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 border border-amber-400">提問無限制</span>
+                    </div>
+                    <div class="text-[10.5px] text-amber-800 font-serif mt-1">享會員全功能＋解鎖實戰決策問答專題＋老師親解</div>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <!-- 已登入狀態區 -->
+            <div id="logged-in-area" class="hidden text-center space-y-3 py-6 bg-white rounded-2xl border border-stone-200 shadow-inner">
+              <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl shadow-sm"><i class="fa-solid fa-user-check"></i></div>
+              <div>
+                <h3 class="font-bold text-stone-900 text-lg" id="profile-name">姓名</h3>
+                <p class="text-xs text-stone-500 mt-1" id="profile-role">身分</p>
+              </div>
+              <button onclick="userLogout()" class="px-6 py-2 border-2 border-culture-red text-culture-red rounded-xl text-xs font-bold hover:bg-red-50 transition active:scale-95">登出目前帳號</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           【第三頁】：四大領域與總則解說 (原 P2 Categories)
+           ========================================== -->
       <section id="p2-categories" class="view-panel hidden space-y-4">
         <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4">
+          
           <div class="border-b border-culture-border pb-2.5">
             <div class="flex justify-between items-center">
               <span class="text-[10px] font-mono text-culture-red font-semibold tracking-wider">STEP 1 / ISSUE SELECTION</span>
               <span id="daily-quota-badge" class="text-[10px] bg-stone-100 text-stone-700 px-2 py-0.5 rounded font-mono border border-stone-300 font-bold">今日額度計算中</span>
             </div>
             <h2 class="text-base font-serif font-bold text-stone-900 mt-1">請先選擇所求問之四大領域</h2>
+            <p class="text-xs text-stone-600 mt-0.5">一問一卦原則：請先選定一個具體核心問題類別，系統方能解鎖起卦權限。</p>
           </div>
 
           <div id="general-rules-card" class="bg-gradient-to-br from-[#faf6ee] to-[#f2e7d5] p-3.5 rounded-2xl border-2 border-culture-gold/70 shadow-sm space-y-2 font-serif">
             <div class="flex items-center justify-between border-b border-amber-300/60 pb-1.5">
               <span class="font-bold text-stone-900 text-xs flex items-center gap-1.5">
-                <i class="fa-solid fa-scroll text-culture-red"></i> 【總則解說】易學心法
+                <i class="fa-solid fa-scroll text-culture-red"></i> 【總則解說】易學總則與核心心法
               </span>
+              <span class="text-[10px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-mono font-bold">雲端同步</span>
             </div>
-            <div id="general-rules-content" class="text-xs leading-relaxed text-stone-700 space-y-1.5">讀取中...</div>
+            <div id="general-rules-content" class="text-xs leading-relaxed text-stone-700 space-y-1.5">
+              <div class="py-3 text-center text-stone-500 font-serif text-xs">
+                <i class="fa-solid fa-spinner fa-spin text-culture-gold text-sm mb-1 block"></i>
+                <span>正在從雲端載入總則解說文本...</span>
+              </div>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-2.5">
+          <div class="grid grid-cols-1 gap-2.5" id="category-cards-container">
             <div onclick="selectCategory('personality')" id="cat-personality" class="category-card p-3 rounded-xl border-2 border-culture-border bg-white cursor-pointer transition hover:border-culture-gold flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-amber-100 text-culture-gold flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-users"></i></div>
-                <div><h3 class="font-serif font-bold text-xs text-stone-900">個性與人情處理</h3></div>
+                <div class="w-9 h-9 rounded-lg bg-amber-100 text-culture-gold flex items-center justify-center font-bold text-sm flex-shrink-0"><i class="fa-solid fa-users"></i></div>
+                <div><h3 class="font-serif font-bold text-xs text-stone-900">個性與人情處理</h3><p class="text-[10px] text-stone-500 font-serif">好話直說、缺點轉化、人事修己心態</p></div>
               </div>
-              <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <button type="button" onclick="openGuidanceModal(event, 'personality', '個性與人情處理')" class="btn-gold-pulse px-2 py-1 rounded-lg bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 text-stone-950 font-serif font-bold text-[10px] border border-amber-600 shadow-xs flex items-center gap-1 active:scale-95 transition cursor-pointer"><span>✨ 心法導引</span></button>
+                <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              </div>
             </div>
+
             <div onclick="selectCategory('career')" id="cat-career" class="category-card p-3 rounded-xl border-2 border-culture-border bg-white cursor-pointer transition hover:border-culture-gold flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-briefcase"></i></div>
-                <div><h3 class="font-serif font-bold text-xs text-stone-900">事業與學業競爭</h3></div>
+                <div class="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm flex-shrink-0"><i class="fa-solid fa-briefcase"></i></div>
+                <div><h3 class="font-serif font-bold text-xs text-stone-900">事業與學業競爭</h3><p class="text-[10px] text-stone-500 font-serif">競爭是常態、實體經營優先、見招拆招</p></div>
               </div>
-              <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <button type="button" onclick="openGuidanceModal(event, 'career', '事業與學業競爭')" class="btn-gold-pulse px-2 py-1 rounded-lg bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 text-stone-950 font-serif font-bold text-[10px] border border-amber-600 shadow-xs flex items-center gap-1 active:scale-95 transition cursor-pointer"><span>✨ 心法導引</span></button>
+                <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              </div>
             </div>
+
             <div onclick="selectCategory('romance')" id="cat-romance" class="category-card p-3 rounded-xl border-2 border-culture-border bg-white cursor-pointer transition hover:border-culture-gold flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-red-100 text-culture-red flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-heart"></i></div>
-                <div><h3 class="font-serif font-bold text-xs text-stone-900">感情與婚姻生活</h3></div>
+                <div class="w-9 h-9 rounded-lg bg-red-100 text-culture-red flex items-center justify-center font-bold text-sm flex-shrink-0"><i class="fa-solid fa-heart"></i></div>
+                <div><h3 class="font-serif font-bold text-xs text-stone-900">感情與婚姻生活</h3><p class="text-[10px] text-stone-500 font-serif">適合不等於喜歡、實話實說、邊界清晰</p></div>
               </div>
-              <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <button type="button" onclick="openGuidanceModal(event, 'relationship', '感情與婚姻生活')" class="btn-gold-pulse px-2 py-1 rounded-lg bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 text-stone-950 font-serif font-bold text-[10px] border border-amber-600 shadow-xs flex items-center gap-1 active:scale-95 transition cursor-pointer"><span>✨ 心法導引</span></button>
+                <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              </div>
             </div>
+
             <div onclick="selectCategory('health')" id="cat-health" class="category-card p-3 rounded-xl border-2 border-culture-border bg-white cursor-pointer transition hover:border-culture-gold flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-notes-medical"></i></div>
-                <div><h3 class="font-serif font-bold text-xs text-stone-900">身體與健康</h3></div>
+                <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm flex-shrink-0"><i class="fa-solid fa-notes-medical"></i></div>
+                <div><h3 class="font-serif font-bold text-xs text-stone-900">身體與健康</h3><p class="text-[10px] text-stone-500 font-serif">醫學第一就醫為先、戒除仙丹迷信</p></div>
               </div>
-              <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <button type="button" onclick="openGuidanceModal(event, 'health', '身體與健康')" class="btn-gold-pulse px-2 py-1 rounded-lg bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 text-stone-950 font-serif font-bold text-[10px] border border-amber-600 shadow-xs flex items-center gap-1 active:scale-95 transition cursor-pointer"><span>✨ 心法導引</span></button>
+                <div class="check-icon w-5 h-5 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
+              </div>
             </div>
           </div>
 
-          <div class="pt-2">
-            <button id="btn-proceed-to-divination" onclick="proceedToDivination()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-serif font-bold text-xs tracking-wider transition cursor-not-allowed flex items-center justify-center gap-2 shadow-sm">
+          <div class="pt-2 space-y-2">
+            <button id="btn-proceed-to-principles" onclick="proceedToPrinciples()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-serif font-bold text-xs tracking-wider transition cursor-not-allowed flex items-center justify-center gap-2 shadow-sm">
               <i class="fa-solid fa-lock" id="proceed-icon"></i>
-              <span id="proceed-text">請先選擇上方領域（已鎖定）</span>
+              <span id="proceed-text">請先在上方選擇一項問題領域（已鎖定）</span>
             </button>
+            <p class="text-[10px] text-stone-500 text-center font-serif">※ 依陳亮老師教學規範：選題後須先研讀三義心法並通過發問檢驗。</p>
           </div>
         </div>
       </section>
 
-      <!-- 起卦台 -->
+      <!-- ==========================================
+           【第四頁】：實戰起卦台 (原 View Divination)
+           ========================================== -->
       <section id="view-divination" class="view-panel hidden space-y-4">
         <div class="bg-culture-card text-culture-cream p-3 rounded-xl border-l-4 border-culture-gold shadow flex items-center justify-between">
           <div class="space-y-0.5">
             <span class="text-[10px] text-culture-gold font-mono uppercase">CURRENT QUERY</span>
-            <div class="text-xs font-serif font-bold text-white flex items-center gap-1.5" id="active-category-display"><i class="fa-solid fa-folder-open text-culture-gold"></i> 尚未選取領域</div>
+            <div class="text-xs font-serif font-bold text-white flex items-center gap-1.5" id="active-category-display">
+              <i class="fa-solid fa-folder-open text-culture-gold"></i> 尚未選取領域
+            </div>
           </div>
           <button onclick="goToStep('p2-categories')" class="text-[11px] px-2.5 py-1 rounded bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-600 transition">重選類別</button>
         </div>
 
+        <div id="permission-hint-banner" class="p-2.5 rounded-xl text-xs font-serif"></div>
+
         <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4">
+          <div class="rounded-2xl p-4 bg-gradient-to-br from-stone-900 via-stone-800 to-culture-dark text-white border-2 border-culture-gold/80 shadow-md space-y-3 font-serif">
+            <div class="flex items-center justify-between border-b border-culture-gold/40 pb-2">
+              <h3 class="font-serif font-bold text-sm text-culture-goldLight flex items-center gap-2">
+                <i class="fa-solid fa-coins text-amber-400"></i> 如何自己用六個銅板起卦
+              </h3>
+              <span class="text-[9.5px] bg-culture-red text-white px-2 py-0.5 rounded-full font-mono font-bold">起卦心傳</span>
+            </div>
+            <div class="text-xs text-stone-200 leading-relaxed space-y-2.5">
+              <p class="text-[11.5px] text-amber-100 font-medium">準備 <strong>六枚一元或五元硬幣</strong>，平心靜氣專注所問之事：</p>
+              <div class="grid grid-cols-2 gap-2 text-[11px] pt-0.5">
+                <div class="p-2.5 rounded-xl bg-stone-800/90 border border-amber-400/30 space-y-1">
+                  <span class="text-culture-gold font-bold block flex items-center gap-1"><i class="fa-solid fa-circle-dot text-[9px]"></i> 1. 人頭面＝陽爻 (⚊)</span>
+                  <p class="text-[10.5px] text-stone-300 leading-snug">記為人頭面為陽 盤面為金色整條。</p>
+                </div>
+                <div class="p-2.5 rounded-xl bg-stone-800/90 border border-amber-400/30 space-y-1">
+                  <span class="text-amber-200 font-bold block flex items-center gap-1"><i class="fa-solid fa-circle text-[9px]"></i> 2. 字面(壹圓)＝陰爻 (⚋)</span>
+                  <p class="text-[10.5px] text-stone-300 leading-snug">字面為陰 盤面為兩段斷劃。</p>
+                </div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-red-950/40 border border-culture-red text-[11px] text-amber-200 space-y-0.5">
+                <strong class="text-culture-goldLight block font-bold">⚡ 排卦絕對鐵律：由下而上！</strong>
+                <p class="text-[10.5px] leading-tight text-stone-300">雙手捧起搖勻後，依序自下而上排出：初爻 ➔ 二爻 ➔ 三爻 ➔ 四爻 ➔ 五爻 ➔ 上爻。</p>
+              </div>
+              <div class="pt-1">
+                <button type="button" onclick="openCoinEssenceModal()" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 via-culture-gold to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 font-serif font-bold text-xs shadow-md flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
+                  <i class="fa-solid fa-book-open text-xs text-stone-900"></i> <span>電腦取卦跟自己占卜的差別 ➔</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="eight-trigrams-board" class="bg-gradient-to-br from-[#fbf8f2] to-[#f4ebe0] p-3 rounded-xl border border-culture-gold/60 shadow-sm space-y-2.5 font-serif">
+            <div class="flex justify-between items-center text-xs pb-1.5 border-b border-culture-border">
+              <span class="font-bold text-stone-900 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-compass text-culture-gold"></i> 八純卦速查看板</span>
+              <span class="text-[10px] bg-amber-100 text-culture-red px-2 py-0.5 rounded-full font-bold border border-amber-300">人頭＝陽（＋）｜字面＝陰（－）</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1.5 text-center text-xs">
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-culture-red text-xs block">☰ 乾 天1</span><span class="text-[10.5px] text-stone-700 block">陽陽陽</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-stone-900 text-xs block">☱ 兌 澤2</span><span class="text-[10.5px] text-stone-700 block">陰陽陽</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-stone-900 text-xs block">☲ 離 火3</span><span class="text-[10.5px] text-stone-700 block">陽陰陽</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-stone-900 text-xs block">☳ 震 雷4</span><span class="text-[10.5px] text-stone-700 block">陰陰陽</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-stone-900 text-xs block">☴ 巽 風5</span><span class="text-[10.5px] text-stone-700 block">陽陽陰</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-stone-900 text-xs block">☵ 坎 水6</span><span class="text-[10.5px] text-stone-700 block">陰陽陰</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-stone-900 text-xs block">☶ 艮 山7</span><span class="text-[10.5px] text-stone-700 block">陽陰陰</span></div>
+              <div class="p-1.5 bg-white rounded-lg border border-stone-200 shadow-xs"><span class="font-bold text-culture-dark text-xs block">☷ 坤 地8</span><span class="text-[10.5px] text-stone-700 block">陰陰陰</span></div>
+            </div>
+          </div>
+
+          <div id="member-direct-inputs" class="hidden bg-stone-100 p-3.5 rounded-xl border border-stone-300 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-serif font-bold text-culture-red flex items-center gap-1.5"><i class="fa-solid fa-keyboard"></i> 先天數手動直選（會員專屬）</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div>
+                <label class="block text-[11px] font-serif text-stone-700 mb-0.5 font-semibold">外卦 (上卦)：</label>
+                <select id="select-upper-number" onchange="applyDirectNumbers()" class="w-full p-2 bg-white rounded-lg border border-stone-300 font-serif font-bold text-stone-800">
+                  <option value="1">1 - 乾 (天)</option><option value="2">2 - 兌 (澤)</option><option value="3">3 - 離 (火)</option><option value="4">4 - 震 (雷)</option>
+                  <option value="5">5 - 巽 (風)</option><option value="6">6 - 坎 (水)</option><option value="7">7 - 艮 (山)</option><option value="8">8 - 坤 (地)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-serif text-stone-700 mb-0.5 font-semibold">內卦 (下卦)：</label>
+                <select id="select-lower-number" onchange="applyDirectNumbers()" class="w-full p-2 bg-white rounded-lg border border-stone-300 font-serif font-bold text-stone-800">
+                  <option value="1">1 - 乾 (天)</option><option value="2">2 - 兌 (澤)</option><option value="3">3 - 離 (火)</option><option value="4">4 - 震 (雷)</option>
+                  <option value="5">5 - 巽 (風)</option><option value="6">6 - 坎 (水)</option><option value="7">7 - 艮 (山)</option><option value="8">8 - 坤 (地)</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="applyDirectNumbers()" class="w-full py-1.5 rounded-lg bg-stone-800 hover:bg-stone-900 text-white font-serif text-xs transition">確認套用先天數配卦</button>
+          </div>
+
           <div class="space-y-2">
-            <!-- 統一改為「一鍵隨機取卦」 -->
-            <button id="btn-execute-random" onclick="executeRandomGua()" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 via-culture-gold to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-900 font-serif font-bold text-base tracking-wider shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
-              <i class="fa-solid fa-bolt text-xl"></i> 
-              <span id="random-btn-text">一鍵隨機取卦</span>
+            <button id="btn-execute-random" onclick="executeRandomGua()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-culture-gold to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-900 font-serif font-bold text-sm tracking-wider shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
+              <i class="fa-solid fa-bolt text-xl"></i> <span id="random-btn-text">一鍵隨機取卦</span>
             </button>
-            <div class="text-center text-[10.5px] text-stone-500 font-serif">系統將嚴格遵循由下而上生成六爻</div>
+            <div class="flex justify-between items-center text-[10px] text-stone-500 px-1 font-serif">
+              <span id="divination-quota-tip">系統將嚴格遵循由下而上生成六爻</span>
+              <button onclick="resetGuaBoard()" class="hover:text-culture-red underline">重置盤面</button>
+            </div>
           </div>
 
           <div class="bg-[#f8f3ea] p-3.5 rounded-xl border border-culture-border space-y-2 pointer-events-none">
             <div class="flex justify-between items-center text-[10px] text-stone-500 font-serif pb-1 border-b border-stone-200">
-              <span>【六爻卦位盤面】</span>
-              <span class="text-stone-400">系統自動生成</span>
+              <span id="board-instruction-text">【六爻卦位盤面】</span>
+              <span id="board-perm-badge" class="text-stone-400">訪客唯讀</span>
             </div>
             <div class="space-y-1.5">
-              <div class="flex items-center gap-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">上爻 (天)</span><div class="flex-grow" id="slot-yao-5"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
-              <div class="flex items-center gap-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">五爻 (尊)</span><div class="flex-grow" id="slot-yao-4"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
-              <div class="flex items-center gap-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">四爻 (人)</span><div class="flex-grow" id="slot-yao-3"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
+              <div class="flex items-center gap-2" id="row-yao-5"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">上爻 (天)</span><div class="flex-grow cursor-pointer" onclick="handleYaoClick(5)" id="slot-yao-5"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
+              <div class="flex items-center gap-2" id="row-yao-4"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">五爻 (尊)</span><div class="flex-grow cursor-pointer" onclick="handleYaoClick(4)" id="slot-yao-4"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
+              <div class="flex items-center gap-2" id="row-yao-3"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">四爻 (人)</span><div class="flex-grow cursor-pointer" onclick="handleYaoClick(3)" id="slot-yao-3"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
             </div>
             <div class="border-t border-dashed border-stone-300 my-1.5 text-center"><span class="bg-[#f8f3ea] px-2 text-[9px] text-stone-400 font-serif">▲ 上外卦 ｜ ▼ 下內卦</span></div>
             <div class="space-y-1.5">
-              <div class="flex items-center gap-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">三爻 (人)</span><div class="flex-grow" id="slot-yao-2"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
-              <div class="flex items-center gap-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">二爻 (地)</span><div class="flex-grow" id="slot-yao-1"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
-              <div class="flex items-center gap-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">初爻 (底)</span><div class="flex-grow" id="slot-yao-0"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
+              <div class="flex items-center gap-2" id="row-yao-2"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">三爻 (人)</span><div class="flex-grow cursor-pointer" onclick="handleYaoClick(2)" id="slot-yao-2"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
+              <div class="flex items-center gap-2" id="row-yao-1"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">二爻 (地)</span><div class="flex-grow cursor-pointer" onclick="handleYaoClick(1)" id="slot-yao-1"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
+              <div class="flex items-center gap-2" id="row-yao-0"><span class="w-14 text-[11px] font-serif font-semibold text-stone-600 text-right">初爻 (底)</span><div class="flex-grow cursor-pointer" onclick="handleYaoClick(0)" id="slot-yao-0"><div class="w-full h-4 bg-stone-300 rounded border border-dashed border-stone-400"></div></div></div>
             </div>
           </div>
 
           <div class="pt-1">
-            <button id="btn-view-result" onclick="goToResultPage()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-serif font-bold text-xs tracking-wider transition cursor-not-allowed flex items-center justify-center gap-2 shadow-sm">
-              <i class="fa-solid fa-lock"></i> <span>尚未成卦，請先起卦</span>
+            <button id="btn-view-result" onclick="handleDivinationCompleteButtonClick()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-serif font-bold text-xs tracking-wider transition cursor-not-allowed flex items-center justify-center gap-2 shadow-sm">
+              <i class="fa-solid fa-lock"></i> <span id="btn-view-result-text">尚未成卦，請先起卦</span>
             </button>
           </div>
         </div>
       </section>
 
-      <!-- 卦象解析解答 -->
+      <!-- ==========================================
+           【第五頁】：易學三義與心法 (原 P3)
+           ========================================== -->
+      <section id="p3-principles" class="view-panel hidden space-y-4">
+        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4">
+          <div class="border-b border-culture-border pb-2.5">
+            <span class="text-[10px] font-mono text-culture-red font-semibold tracking-wider">CORE PHILOSOPHY</span>
+            <h2 class="text-base font-serif font-bold text-stone-900 mt-0.5">易學三義與理性發問邏輯</h2>
+            <p class="text-xs text-stone-600 mt-0.5">陳亮老師心法：「算的準不難，能幫助人才是真本事。」</p>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-3.5 rounded-xl bg-white border border-stone-200 border-l-4 border-l-stone-800 shadow-sm space-y-1.5">
+              <div class="flex items-center justify-between pb-1 border-b border-stone-100">
+                <div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-md bg-stone-800 text-stone-100 font-serif font-bold text-xs"><i class="fa-solid fa-mountain text-stone-400 text-[10px]"></i> 不易</span><h3 class="font-serif font-bold text-xs text-stone-900">客觀環境硬邊界</h3></div>
+              </div>
+              <p class="text-[12px] text-stone-600 leading-relaxed font-serif pl-0.5">天注定的客觀事實。認清不易，便不致徒勞對抗客觀定律。</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-white border border-stone-200 border-l-4 border-l-amber-500 shadow-sm space-y-1.5">
+              <div class="flex items-center justify-between pb-1 border-b border-amber-50">
+                <div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-md bg-amber-500 text-stone-950 font-serif font-bold text-xs"><i class="fa-solid fa-sun text-stone-900 text-[10px]"></i> 簡易</span><h3 class="font-serif font-bold text-xs text-stone-900">週而復始的大道規律</h3></div>
+              </div>
+              <p class="text-[12px] text-stone-600 leading-relaxed font-serif pl-0.5">大道至簡。順應事物運行的普遍原理，便能在紛擾中見真章。</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-white border border-stone-200 border-l-4 border-l-culture-red shadow-sm space-y-1.5">
+              <div class="flex items-center justify-between pb-1 border-red-50">
+                <div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-md bg-culture-red text-white font-serif font-bold text-xs"><i class="fa-solid fa-compass text-amber-300 text-[10px]"></i> 變易</span><h3 class="font-serif font-bold text-xs text-stone-900">見招拆招的選擇積累</h3></div>
+              </div>
+              <p class="text-[12px] text-stone-600 leading-relaxed font-serif pl-0.5">局勢隨機變動，人的抉擇重構未來。易經協助求問者擬定對策。</p>
+            </div>
+          </div>
+
+          <div class="p-4 bg-gradient-to-br from-[#f8f3ea] to-[#efe5d5] rounded-xl border-2 border-culture-gold/60 space-y-3 text-xs font-serif shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-culture-gold/20 text-culture-gold flex items-center justify-center font-bold"><i class="fa-solid fa-scale-balanced"></i></span><div><h4 class="font-bold text-stone-900 text-xs">發問邏輯嚴格檢驗門檻</h4></div></div>
+              <span id="verify-status-tag" class="text-[10px] bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full font-bold">待檢驗</span>
+            </div>
+            <button onclick="openLogicVerificationModal()" class="w-full py-3 rounded-xl bg-culture-red hover:bg-culture-redHover text-white font-serif font-bold text-xs tracking-wider shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-list-check"></i> <span>開啟「發問邏輯嚴格檢驗」對話框 ➔</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           【第六頁】：獨立解答頁面 (原 View Result)
+           ========================================== -->
       <section id="view-result" class="view-panel hidden space-y-4">
         <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4">
           <div class="border-b border-culture-border pb-3 flex justify-between items-start">
@@ -253,6 +670,7 @@
             </div>
             <div class="text-right space-y-1">
               <span id="result-user-badge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-stone-200 text-stone-700 font-serif block">訪客</span>
+              <span id="result-quota-info" class="text-[10px] text-stone-500 font-mono block">本日剩餘 4 題</span>
             </div>
           </div>
 
@@ -264,54 +682,117 @@
             <p class="text-stone-700 text-xs" id="result-gua-nature">--</p>
           </div>
 
-          <!-- 解析載入區 -->
           <div id="result-tiered-content-container" class="space-y-4 protected-text-zone"></div>
           
-          <button onclick="goToStep('p2-categories')" class="w-full py-3 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-800 font-serif text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
-            <i class="fa-solid fa-rotate-left"></i> 重起新問題
+          <!-- 【這顆按鈕原本就有，幫您加回跳轉功能】 -->
+          <button type="button" onclick="jumpToClassicArchive()" class="w-full py-3 rounded-xl bg-gradient-to-r from-stone-900 via-stone-800 to-culture-dark hover:from-black hover:to-stone-900 text-amber-200 hover:text-white border border-culture-gold/60 font-serif font-bold text-xs transition flex items-center justify-center gap-2 shadow-sm active:scale-95 cursor-pointer">
+            <i class="fa-solid fa-scroll text-culture-gold"></i> <span>查看本卦易經原典、大象傳與判曰 ➔</span>
           </button>
+
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button onclick="goToStep('p4-checklist')" class="py-3 rounded-xl bg-culture-card text-culture-gold hover:text-white border border-culture-gold/50 font-serif text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-list-check"></i> 查看自檢筆記
+            </button>
+            <button onclick="goToStep('p2-categories')" class="py-3 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-800 font-serif text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-rotate-left"></i> 重起新問題
+            </button>
+          </div>
         </div>
       </section>
 
       <!-- ==========================================
-           【分頁三】：課程與諮詢 (含互動留言)
+           【第七頁】：自檢與紀錄簿 (原 P4 Checklist)
+           ========================================== -->
+      <section id="p4-checklist" class="view-panel hidden space-y-4">
+        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4">
+          <div class="border-b border-culture-border pb-2.5">
+            <span class="text-[10px] font-mono text-culture-red font-semibold tracking-wider">CHECKLIST & ARCHIVE</span>
+            <h2 class="text-base font-serif font-bold text-stone-900 mt-0.5">起卦前自檢與本機問事筆記</h2>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-culture-border space-y-3">
+            <div class="flex justify-between items-center">
+              <h3 class="font-serif font-bold text-xs text-stone-900"><i class="fa-solid fa-book-bookmark text-culture-gold"></i> 本次占卜歷史速記</h3>
+              <button onclick="clearAllRecords()" class="text-[10px] text-stone-400 hover:text-culture-red">清空</button>
+            </div>
+            <div id="records-list" class="space-y-2"><div class="text-center py-6 text-xs text-stone-400 font-serif">完成起卦後系統將自動保留最新一次占卜結論。</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           【第八頁】：六十四卦庫 (原 P5)
+           ========================================== -->
+      <section id="p5-hexagrams" class="view-panel hidden space-y-4">
+        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-3.5">
+          <div class="border-b border-culture-border pb-2.5 flex justify-between items-center">
+            <div>
+              <h2 class="text-base font-serif font-bold text-stone-900">六十四卦速查典藏庫</h2>
+              <p class="text-[10px] text-stone-500 font-serif">依先天八卦數序排列（1乾至8坤）</p>
+            </div>
+            <input type="text" id="hex-search-input" oninput="filterHexList()" placeholder="搜尋卦名..." class="text-xs px-2.5 py-1 rounded-lg border border-culture-border bg-white w-28 outline-none">
+          </div>
+          <div id="hex-grid-container" class="grid grid-cols-4 gap-2 max-h-64 overflow-y-auto pr-1"></div>
+          <div id="hex-detail-panel" class="bg-white p-3.5 rounded-xl border border-culture-border space-y-2 text-xs protected-text-zone">
+             <div class="text-center text-stone-400 py-6">請點擊上方卦名查看原典</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           【第九頁】：問答解析專區 (原 View Videos)
+           ========================================== -->
+      <section id="view-videos" class="view-panel hidden space-y-4">
+        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-4">
+          <div class="border-b border-culture-border pb-3 flex justify-between items-start">
+            <div>
+              <span class="text-[10px] font-mono text-amber-700 font-semibold tracking-wider">Q&A ANALYSIS</span>
+              <h2 class="text-base font-serif font-bold text-stone-900 mt-0.5 flex items-center gap-2"><i class="fa-solid fa-book-open-reader text-amber-600"></i> 基礎篇實戰問答解析全集</h2>
+            </div>
+            <span id="video-perm-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-700 font-serif">權限檢核中</span>
+          </div>
+
+          <div id="video-status-banner" class="p-3 rounded-xl text-xs font-serif"></div>
+
+          <div class="space-y-3.5">
+            <div id="video-completion-card" class="p-4 rounded-xl border-2 border-culture-red bg-gradient-to-br from-[#fcf7ee] to-[#f4ebe0] space-y-3 shadow-md font-serif">
+              <div class="flex items-center gap-2 border-b border-culture-border pb-2">
+                <span class="w-7 h-7 rounded-full bg-culture-red text-white flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-shield-halved"></i></span>
+                <div><h4 class="font-bold text-stone-900 text-xs">解鎖卦象解析 · 學習確認門檻</h4></div>
+              </div>
+              <div id="video-completion-status-hint" class="text-[12px] text-stone-700 leading-relaxed bg-white/80 p-2.5 rounded-lg border border-culture-border"></div>
+              <label class="flex items-start gap-2.5 p-3 rounded-xl border-2 border-culture-gold/60 bg-white cursor-pointer hover:bg-amber-50/50 transition">
+                <input type="checkbox" id="chk-video-watched" onchange="onVideoWatchedCheckChange()" class="w-4 h-4 mt-0.5 text-culture-red rounded focus:ring-culture-gold">
+                <div class="text-xs"><span class="font-bold text-stone-900 block">我已完整閱讀並確認看完實戰問答解析與決策體系介紹</span></div>
+              </label>
+              <button id="btn-unlock-divination-result" onclick="proceedToResultAfterVideo()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-serif font-bold text-xs tracking-wider transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lock" id="btn-unlock-result-icon"></i><span id="btn-unlock-result-text">請先勾選確認看完（已鎖定）</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           【新增】：課程與留言區分頁
            ========================================== -->
       <section id="view-courses" class="view-panel hidden space-y-4">
-        
-        <!-- 一對一諮詢預約 -->
-        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-3 font-serif">
-          <div class="border-b border-culture-border pb-2">
-            <h3 class="font-bold text-sm text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-bullseye text-culture-red"></i> 一對一命理決策諮詢預約</h3>
-            <p class="text-[11px] text-stone-500 mt-1">事業投資風控 / 職涯轉職診斷 / 紫微一生流年</p>
-          </div>
-          <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" class="w-full py-3 rounded-xl bg-[#06c755] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm active:scale-95">
-            <i class="fa-brands fa-line text-base"></i> 點此加官方 LINE 預約 (@129uiadu)
-          </a>
-        </div>
-
-        <!-- 課程大綱 -->
         <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-3 font-serif">
           <div class="border-b border-culture-border pb-2 flex justify-between items-center">
             <h3 class="font-bold text-sm text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-culture-gold"></i> 易經教學課程大綱</h3>
-            <button onclick="loadCoursesFrontEnd()" class="text-[10px] text-culture-gold hover:text-amber-700"><i class="fa-solid fa-rotate"></i> 重整</button>
+            <button onclick="loadCoursesFrontEnd()" class="text-[10px] text-culture-gold hover:text-amber-700"><i class="fa-solid fa-rotate"></i> 重新整理</button>
           </div>
           <div id="courses-list-container" class="space-y-3 text-xs">
             <div class="text-center text-stone-500 py-4"><i class="fa-solid fa-spinner fa-spin"></i> 載入課程中...</div>
           </div>
         </div>
 
-        <!-- 互動留言區 -->
         <div class="bg-gradient-to-b from-[#fdfbf7] to-[#f4ebe0] p-4 rounded-2xl border-2 border-culture-gold/40 shadow-md space-y-4 font-serif">
           <div class="border-b border-culture-gold/30 pb-2 flex justify-between items-center">
             <h3 class="font-bold text-sm text-culture-dark flex items-center gap-1.5"><i class="fa-regular fa-comments text-amber-600"></i> 學員互動留言板</h3>
-            <button onclick="loadMessagesFrontEnd()" class="text-[10px] text-amber-700 border border-amber-300 px-2 py-0.5 rounded bg-amber-50">刷新</button>
+            <button onclick="loadMessagesFrontEnd()" class="text-[10px] text-amber-700 border border-amber-300 px-2 py-0.5 rounded bg-amber-50">重新整理</button>
           </div>
-
-          <!-- 留言表單 (登入後可用) -->
           <div id="msg-form-container" class="bg-white p-3 rounded-xl border border-stone-200 shadow-sm space-y-2.5">
-            <div id="msg-login-warning" class="text-xs text-culture-red font-bold text-center py-2 hidden">
-              請先於「會員中心」登入後，方可發表留言。
-            </div>
+            <div id="msg-login-warning" class="text-xs text-culture-red font-bold text-center py-2 hidden">請先於下方「會員」登入後，方可發表留言。</div>
             <div id="msg-form-area" class="space-y-2.5">
               <div class="flex gap-2">
                 <input type="text" id="msgUserName" placeholder="您的姓名/暱稱" class="w-1/2 p-2 rounded bg-stone-50 border border-stone-300 text-xs focus:ring-1 focus:ring-culture-gold outline-none">
@@ -321,72 +802,11 @@
                 </select>
               </div>
               <textarea id="msgContentInput" rows="3" placeholder="寫下您的問題或心得..." class="w-full p-2 rounded bg-stone-50 border border-stone-300 text-xs focus:ring-1 focus:ring-culture-gold outline-none"></textarea>
-              <button onclick="submitMessageFrontEnd()" class="w-full py-2 bg-stone-800 text-culture-cream text-xs font-bold rounded-lg shadow-sm hover:bg-stone-900 transition">
-                送出留言 (待老師審核後公開)
-              </button>
+              <button onclick="submitMessageFrontEnd()" class="w-full py-2 bg-stone-800 text-culture-cream text-xs font-bold rounded-lg shadow-sm hover:bg-stone-900 transition">送出留言 (待老師審核後公開)</button>
             </div>
           </div>
-
-          <!-- 留言列表顯示區 -->
           <div id="messages-list-container" class="space-y-3 pt-2">
             <div class="text-center text-stone-500 text-xs py-4">留言載入中...</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           【附屬分頁】：六十四卦原典速查 (原 P5)
-           ========================================== -->
-      <section id="p5-hexagrams" class="view-panel hidden space-y-4">
-        <div class="bg-culture-cream p-4 rounded-2xl border border-culture-border shadow-md space-y-3.5">
-          <div class="border-b border-culture-border pb-2.5 flex justify-between items-center">
-            <div><h2 class="text-base font-serif font-bold text-stone-900">六十四卦原典庫</h2></div>
-            <input type="text" id="hex-search-input" oninput="filterHexList()" placeholder="搜尋卦名..." class="text-xs px-2.5 py-1 rounded-lg border border-culture-border w-24 outline-none">
-          </div>
-          <div id="hex-grid-container" class="grid grid-cols-4 gap-2 max-h-64 overflow-y-auto pr-1"></div>
-          <div id="hex-detail-panel" class="bg-white p-3.5 rounded-xl border border-culture-border space-y-2 text-xs protected-text-zone"></div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           【附屬分頁】：會員/訪客登入 (原 P2 Login)
-           ========================================== -->
-      <section id="p2-login" class="view-panel hidden space-y-4">
-        <div class="bg-culture-cream rounded-2xl shadow-md border-2 border-culture-gold/40 overflow-hidden">
-          <div class="bg-gradient-to-r from-[#fdfbf7] to-[#f4ebe0] px-4 py-3 border-b-2 border-culture-gold">
-            <h2 class="text-base font-serif font-bold text-culture-dark">會員與訪客登入中心</h2>
-          </div>
-          <div class="p-4 space-y-3">
-            <!-- 登入表單區 -->
-            <div id="login-form-area" class="space-y-3">
-              <div class="space-y-1">
-                <label class="block text-xs font-bold text-stone-800">身分選擇</label>
-                <select id="loginTierSelect" class="w-full p-2.5 rounded-lg border border-culture-border bg-white text-xs outline-none">
-                  <option value="guest">1. 網站訪客 (免費體驗)</option>
-                  <option value="member">2. 網站會員 (年費專屬)</option>
-                  <option value="advanced">3. 高階學員 (完整解鎖)</option>
-                </select>
-              </div>
-              <div class="space-y-1">
-                <label class="block text-xs font-bold text-stone-800">手機號碼 或 Email</label>
-                <input type="text" id="input-login-account" placeholder="0912345678" class="w-full p-2.5 rounded-lg border border-culture-border bg-white text-xs outline-none">
-              </div>
-              <div class="space-y-1">
-                <label class="block text-xs font-bold text-stone-800">6 位數通行碼</label>
-                <input type="password" id="input-login-pin" maxlength="6" inputmode="numeric" placeholder="******" class="w-full p-2.5 rounded-lg border border-culture-border bg-white text-xs tracking-widest outline-none">
-              </div>
-              <button onclick="submitUserLogin()" class="w-full py-3 bg-culture-red text-white font-bold text-xs rounded-xl shadow-md active:scale-95 transition">確認登入</button>
-            </div>
-            
-            <!-- 已登入狀態區 -->
-            <div id="logged-in-area" class="hidden text-center space-y-3 py-4">
-              <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl"><i class="fa-solid fa-user-check"></i></div>
-              <div>
-                <h3 class="font-bold text-stone-900" id="profile-name">姓名</h3>
-                <p class="text-xs text-stone-500 mt-1" id="profile-role">身分</p>
-              </div>
-              <button onclick="userLogout()" class="px-4 py-2 border border-culture-red text-culture-red rounded-lg text-xs font-bold">登出帳號</button>
-            </div>
           </div>
         </div>
       </section>
@@ -395,22 +815,161 @@
 
     <!-- 一分為三：全新 5 標籤底部導航 -->
     <nav class="sticky bottom-0 left-0 right-0 bg-culture-dark text-culture-cream border-t border-culture-gold/40 z-30 flex items-center justify-around h-14 px-1 shadow-2xl flex-shrink-0">
-      <button type="button" onclick="goToStep('view-columns')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-culture-gold" data-target="view-columns">
+      <button type="button" onclick="goToStep('p1-home')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-culture-gold" data-target="p1-home">
+        <i class="fa-solid fa-house text-sm"></i><span class="text-[10px] mt-0.5 font-serif">首頁</span>
+      </button>
+      <button type="button" onclick="goToStep('view-columns')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-stone-400" data-target="view-columns">
         <i class="fa-solid fa-newspaper text-sm"></i><span class="text-[10px] mt-0.5 font-serif">專欄</span>
       </button>
       <button type="button" onclick="goToStep('p2-categories')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-stone-400" data-target="p2-categories">
-        <i class="fa-solid fa-coins text-sm"></i><span class="text-[10px] mt-0.5 font-serif">占卜</span>
+        <i class="fa-solid fa-compass text-sm"></i><span class="text-[10px] mt-0.5 font-serif">占卜</span>
       </button>
       <button type="button" onclick="goToStep('view-courses')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-stone-400" data-target="view-courses">
         <i class="fa-solid fa-graduation-cap text-sm"></i><span class="text-[10px] mt-0.5 font-serif">課程/留言</span>
-      </button>
-      <button type="button" onclick="goToStep('p5-hexagrams')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-stone-400" data-target="p5-hexagrams">
-        <i class="fa-solid fa-book-open text-sm"></i><span class="text-[10px] mt-0.5 font-serif">64卦</span>
       </button>
       <button type="button" onclick="goToStep('p2-login')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-stone-400" data-target="p2-login">
         <i class="fa-solid fa-user text-sm"></i><span class="text-[10px] mt-0.5 font-serif">會員</span>
       </button>
     </nav>
+  </div>
+
+  <!-- 所有彈窗 (保留原本所有彈窗) -->
+  <div id="modal-handnote-detail" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 max-h-[92vh] overflow-y-auto font-serif">
+      <button type="button" onclick="closeHandnoteDetailModal()" class="absolute top-3.5 right-3.5 text-stone-400 hover:text-stone-700 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      <div class="text-center pt-1 border-b border-culture-border pb-2.5">
+        <div class="flex items-center justify-center gap-1.5 mb-1"><span id="hn-modal-tag" class="text-[10px] bg-red-100 text-culture-red px-2 py-0.5 rounded-full font-mono font-bold">標籤</span></div>
+        <h3 id="hn-modal-title" class="text-base font-serif font-bold text-stone-900 mt-0.5 leading-snug">標題</h3>
+      </div>
+      <div class="flex items-center justify-between bg-stone-100 p-2 rounded-xl border border-stone-300 text-xs">
+        <span class="text-stone-700 font-bold flex items-center gap-1"><i class="fa-solid fa-book-open-reader text-culture-gold"></i><span>內文詳細推演</span></span>
+        <div class="flex items-center gap-1"><button onclick="changeHnFontSize(-1.5)" class="px-2 py-0.5 rounded bg-white text-stone-800 border border-stone-300 text-[11px] font-bold">A-</button><span id="hn-font-size-indicator" class="text-[11px] font-mono text-stone-700 w-6 text-center">15px</span><button onclick="changeHnFontSize(1.5)" class="px-2 py-0.5 rounded bg-culture-gold text-stone-950 border border-culture-gold text-[11px] font-bold">A+</button></div>
+      </div>
+      <div id="hn-modal-content-area" class="space-y-2.5 leading-relaxed text-stone-800 font-serif protected-text-zone" style="font-size: 15px; line-height: 1.68;"></div>
+      <div class="space-y-2 pt-2 border-t border-dashed border-stone-300 font-sans">
+        <button onclick="closeHandnoteDetailModal()" class="w-full py-2.5 rounded-xl bg-stone-800 text-culture-cream font-bold text-xs shadow">返回首頁</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-guidance" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 max-h-[90vh] overflow-y-auto">
+      <button type="button" onclick="closeGuidanceModal()" class="absolute top-3.5 right-3.5 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark"></i></button>
+      <div class="text-center pt-1 border-b border-culture-border pb-2.5">
+        <h3 class="text-base font-serif font-bold text-stone-900 flex items-center justify-center gap-2"><i class="fa-solid fa-compass text-culture-gold"></i> <span id="guidance-modal-domain-title">四大領域心法</span></h3>
+        <span id="guidance-modal-role-badge" class="text-[10px] bg-stone-200 text-stone-700 px-2 py-0.5 rounded font-mono font-bold mt-1 inline-block">權限</span>
+      </div>
+      <div id="guidance-modal-content-area" class="space-y-2.5 text-xs font-serif leading-relaxed text-stone-800"></div>
+      <button onclick="closeGuidanceModal()" class="w-full py-2.5 rounded-xl bg-stone-800 text-culture-cream font-serif font-bold text-xs">我知道了</button>
+    </div>
+  </div>
+
+  <div id="modal-login" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5">
+      <button onclick="closeLoginModal()" class="absolute top-3.5 right-3.5 text-stone-400"><i class="fa-solid fa-xmark"></i></button>
+      <div class="text-center pt-1">
+        <h3 class="text-base font-serif font-bold text-stone-900" id="login-modal-title">登入</h3>
+        <p class="text-[11px] text-stone-600 mt-0.5" id="login-modal-sub">請輸入帳號</p>
+      </div>
+      <div id="login-device-hint" class="p-2.5 rounded-xl text-[10.5px] font-serif border"></div>
+      <div class="space-y-2.5 text-xs">
+        <input type="text" id="input-login-account" placeholder="手機或 Email" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white outline-none">
+        <input type="password" id="input-login-pin" maxlength="6" inputmode="numeric" placeholder="6 位數通行碼" class="w-full px-3 py-2.5 rounded-lg border border-culture-border bg-white tracking-widest outline-none">
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button onclick="closeLoginModal()" class="py-2.5 rounded-xl bg-stone-200 text-stone-700 text-xs font-bold">取消</button>
+        <button onclick="submitUserLogin()" class="py-2.5 rounded-xl bg-culture-red text-white font-bold text-xs">確認登入</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-register" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-xs w-full p-5 shadow-2xl border border-culture-border relative space-y-3.5">
+      <button onclick="closeRegisterModal()" class="absolute top-3.5 right-3.5 text-stone-400"><i class="fa-solid fa-xmark"></i></button>
+      <div class="text-center pt-1 border-b border-culture-border pb-2.5"><h3 class="text-base font-serif font-bold text-stone-900">帳號申請</h3></div>
+      <form onsubmit="handleRegistrationSubmit(event)" class="space-y-2.5 text-xs">
+        <input type="text" id="reg-name" required placeholder="姓名 *" class="w-full px-3 py-2 rounded-lg border border-culture-border bg-white outline-none">
+        <input type="tel" id="reg-phone" required placeholder="手機號碼 *" class="w-full px-3 py-2 rounded-lg border border-culture-border bg-white outline-none">
+        <input type="email" id="reg-email" required placeholder="Email *" class="w-full px-3 py-2 rounded-lg border border-culture-border bg-white outline-none">
+        <input type="text" id="reg-pin" required maxlength="6" inputmode="numeric" placeholder="自訂 6 位數通行碼 *" class="w-full px-3 py-2 rounded-lg border border-culture-border bg-white outline-none">
+        <select id="reg-tier-select" onchange="updateRegNotice()" class="w-full px-2.5 py-1.5 rounded-lg border border-culture-border bg-white outline-none">
+          <option value="網站訪客">網站訪客</option><option value="網站會員" selected>網站會員</option><option value="高階學員">高階學員</option>
+        </select>
+        <div id="reg-tier-notice" class="p-2 rounded-lg bg-amber-50 text-[10.5px] border border-amber-300 text-amber-950">會員說明</div>
+        <div class="pt-1 flex gap-2">
+          <button type="button" onclick="closeRegisterModal()" class="w-1/2 py-2.5 rounded-xl bg-stone-200 text-stone-700">取消</button>
+          <button type="submit" id="reg-submit-btn" class="w-1/2 py-2.5 rounded-xl bg-culture-red text-white font-bold">送出</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-reg-success-line" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-emerald-500 relative space-y-4 font-serif text-center">
+      <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto shadow-inner"><i class="fa-solid fa-shield-check"></i></div>
+      <h3 class="text-base font-bold text-stone-900">申請已送出！</h3>
+      <p class="text-[11.5px] text-stone-600">帳號：<span id="reg-success-user-name" class="font-bold text-culture-red"></span>（<span id="reg-success-user-role"></span>）</p>
+      <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" class="w-full py-3 rounded-xl bg-[#06c755] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg"><i class="fa-brands fa-line text-lg"></i> 一鍵開啟 LINE 加好友</a>
+      <button onclick="closeRegSuccessModal()" class="w-full py-2 rounded-xl bg-stone-200 text-stone-700 text-[11px]">我已回傳姓名，返回首頁</button>
+    </div>
+  </div>
+
+  <div id="modal-coin-essence" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 max-h-[90vh] overflow-y-auto font-serif">
+      <button onclick="closeCoinEssenceModal()" class="absolute top-3.5 right-3.5 text-stone-400"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="text-base font-serif font-bold text-stone-900 flex items-center justify-center gap-2"><i class="fa-solid fa-coins text-culture-gold"></i> 電腦與自己占卜差別</h3>
+      <p class="text-[11.5px] text-stone-600 leading-relaxed p-3 bg-white rounded-xl border">推算本質無異，差異在「靜思」。手動搖卦時全神貫注，動機明確，卦象解答才能精準。</p>
+      <button onclick="closeCoinEssenceModal()" class="w-full py-2.5 rounded-xl bg-stone-800 text-culture-cream font-bold text-xs shadow">我瞭解了</button>
+    </div>
+  </div>
+
+  <div id="modal-verify-logic" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-4 max-h-[92vh] overflow-y-auto">
+      <button onclick="closeLogicVerificationModal()" class="absolute top-3.5 right-3.5 text-stone-400"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="text-base font-serif font-bold text-stone-900 text-center"><i class="fa-solid fa-scale-balanced text-culture-gold"></i> 發問邏輯嚴格檢驗</h3>
+      <div id="logic-user-hint-banner" class="p-2.5 rounded-xl text-xs font-serif"></div>
+      <div class="space-y-3 text-xs font-serif">
+        <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-culture-border bg-white cursor-pointer"><input type="checkbox" id="logic-chk-1" onchange="onLogicCheckboxChange()" class="w-4 h-4 mt-0.5 text-culture-red rounded"><span class="font-bold">1. 排除荒謬與不可能發生之事</span></label>
+        <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-culture-border bg-white cursor-pointer"><input type="checkbox" id="logic-chk-2" onchange="onLogicCheckboxChange()" class="w-4 h-4 mt-0.5 text-culture-red rounded"><span class="font-bold">2. 善易者不占，常理先於占卜</span></label>
+        <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-culture-border bg-white cursor-pointer"><input type="checkbox" id="logic-chk-3" onchange="onLogicCheckboxChange()" class="w-4 h-4 mt-0.5 text-culture-red rounded"><span class="font-bold">3. 一問一卦，專一聚焦</span></label>
+      </div>
+      <button id="btn-confirm-logic" onclick="confirmLogicVerificationAndProceed()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-bold text-xs tracking-wider transition">請完成勾選</button>
+    </div>
+  </div>
+
+  <div id="modal-guest-daily-rules" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-red relative space-y-3.5">
+      <h3 class="text-base font-serif font-bold text-stone-900 text-center">訪客使用規範</h3>
+      <p class="text-[11.5px] text-stone-700 bg-white p-3 rounded-xl border">每日限 5 題免費發問（不可遞延），系統隨機排卦。</p>
+      <label class="flex items-start gap-2.5 p-3 rounded-xl border-2 border-culture-red bg-red-50/50 cursor-pointer"><input type="checkbox" id="chk-guest-daily-agreed" onchange="onGuestDailyCheckChange()" class="w-4 h-4 mt-0.5 text-culture-red rounded"><span class="font-bold text-xs">我同意使用規範</span></label>
+      <button id="btn-guest-daily-confirm" onclick="confirmGuestDailyRules()" disabled class="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-bold text-xs">請先勾選同意</button>
+    </div>
+  </div>
+
+  <div id="modal-member-upgrade-invite" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5">
+      <h3 class="text-base font-serif font-bold text-stone-900 text-center">晉升「高階學員」</h3>
+      <p class="text-[11.5px] text-stone-700 p-3 bg-amber-50 rounded-xl border border-amber-300">若想深入卦爻辭骨髓，誠摯邀請您加入「高階學員」！</p>
+      <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" class="w-full py-2.5 rounded-xl bg-[#06c755] text-white font-bold text-xs text-center block">洽詢陳老師</a>
+      <button onclick="closeMemberUpgradeModalAndProceed()" class="w-full py-2.5 rounded-xl bg-stone-800 text-stone-200 font-bold text-xs">我知道了，開始占問</button>
+    </div>
+  </div>
+
+  <div id="modal-advanced-daily-tip" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-sm w-full p-5 shadow-2xl border-2 border-amber-500 relative space-y-3.5">
+      <h3 class="text-base font-serif font-bold text-stone-900 text-center">陳老師每日勉勵</h3>
+      <p class="text-[12px] p-3 bg-[#f8f2e7] rounded-xl border border-amber-300">請務必多研讀解析與實戰全集，打穩理論框架。</p>
+      <button onclick="closeAdvancedTipModalAndProceed()" class="w-full py-3 rounded-xl bg-amber-600 text-white font-bold text-xs">開始實戰起卦</button>
+    </div>
+  </div>
+
+  <div id="modal-qrcode" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-culture-cream rounded-2xl max-w-xs w-full p-5 shadow-2xl border-2 border-culture-gold relative space-y-3.5 text-center">
+      <button onclick="closeQrModal()" class="absolute top-3.5 right-3.5 text-stone-400"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="text-base font-serif font-bold text-stone-900">掃碼進入易經互動網</h3>
+      <div id="qrcode-box" class="p-3 bg-white rounded-2xl shadow-inner border inline-flex items-center justify-center min-h-[190px]"></div>
+      <button onclick="closeQrModal()" class="w-full py-2.5 rounded-xl bg-stone-200 text-stone-700 font-bold text-xs">關閉</button>
+    </div>
   </div>
 
   <div id="toast" class="fixed top-14 left-1/2 transform -translate-x-1/2 bg-culture-dark text-culture-cream px-4 py-2 rounded-full shadow-2xl border border-culture-gold text-xs z-50 transition-opacity duration-300 opacity-0 pointer-events-none flex items-center gap-1.5">
@@ -419,53 +978,96 @@
 
   <script>
     // ============================================================
-    // API 連線設定 (請替換為您剛剛部署的 GAS Web App URL)
+    // API 連線設定
     // ============================================================
-    const API_URL = "https://script.google.com/macros/s/AKfycbzailXGSYgFkkaEMAhLip5CvcYSt5pSxOZnj17slQ-Ot3owjwbz-0zCrvMbULSP6CFo/exec";
-    
-    // Auth 專用 (若分開，則維持舊設定，若已合併至上方，也可統一用上方 API_URL)
-    const AUTH_URL = "https://script.google.com/macros/s/AKfycby3YV_5TIBDKuClv19sWIjgZ3-Dxovq2K6p2312xys9etQWqIWNrgs70ELsMulR8_2H/exec";
+    const CLASSIC_API_URL = "https://script.google.com/macros/s/AKfycbzailXGSYgFkkaEMAhLip5CvcYSt5pSxOZnj17slQ-Ot3owjwbz-0zCrvMbULSP6CFo/exec";
+    const AUTH_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby3YV_5TIBDKuClv19sWIjgZ3-Dxovq2K6p2312xys9etQWqIWNrgs70ELsMulR8_2H/exec";
 
-    let currentUser = { isLoggedIn: false, token: "", role: "", name: "" };
+    let currentUser = { isLoggedIn: false, token: "", role: "網站訪客", name: "" };
     let selectedCategory = null; 
     let currentYaoLines = [null, null, null, null, null, null]; 
+    let hasVerifiedLogic = false;
+    let hasConfirmedVideo = false;
+    let currentHnFontSize = 15;
+    let currentClassicFontSize = 15;
+    let currentContentFontSize = 15.5;
+    let cachedFeaturedHandnotes = [];
 
-    // 八卦與64卦核心資料字典
+    // 核心八卦字典
     const TRIGRAMS = {
       1: { name: '乾', nature: '天', lines: [1, 1, 1] }, 2: { name: '兌', nature: '澤', lines: [1, 1, 0] },
       3: { name: '離', nature: '火', lines: [1, 0, 1] }, 4: { name: '震', nature: '雷', lines: [1, 0, 0] },
       5: { name: '巽', nature: '風', lines: [0, 1, 1] }, 6: { name: '坎', nature: '水', lines: [0, 1, 0] },
-      7: { name: '艮', nature: '山', lines: [0, 0, 1] }, 8: { name: '坤', nature: '地', lines: [0, 0, 0] },
+      7: { name: '艮', nature: '山', lines: [0, 0, 1] }, 8: { name: '坤', nature: '地', lines: [0, 0, 0] }
     };
+    
+    // 完整 64卦矩陣 (原汁原味)
     const HEXAGRAM_MATRIX = {
-      "1,1": { name: "乾為天" }, "1,5": { name: "天風姤" }, "6,4": { name: "水雷屯" }, // (略... 為節省篇幅，請自行保留原本完整的 64卦字典)
-      // 若原檔有完整 64卦 JSON，請在此補齊
+      "1,1": { name: "乾為天" }, "1,2": { name: "天澤履" }, "1,3": { name: "天火同人" }, "1,4": { name: "天雷无妄" },
+      "1,5": { name: "天風姤" }, "1,6": { name: "天水訟" }, "1,7": { name: "天山遯" }, "1,8": { name: "天地否" },
+      "2,1": { name: "澤天夬" }, "2,2": { name: "兌為澤" }, "2,3": { name: "澤火革" }, "2,4": { name: "澤雷隨" },
+      "2,5": { name: "澤風大過" }, "2,6": { name: "澤水困" }, "2,7": { name: "澤山咸" }, "2,8": { name: "澤地萃" },
+      "3,1": { name: "火天大有" }, "3,2": { name: "火澤睽" }, "3,3": { name: "離為火" }, "3,4": { name: "火雷噬嗑" },
+      "3,5": { name: "火風鼎" }, "3,6": { name: "火水未濟" }, "3,7": { name: "火山旅" }, "3,8": { name: "火地晉" },
+      "4,1": { name: "雷天大壯" }, "4,2": { name: "雷澤歸妹" }, "4,3": { name: "雷火豐" }, "4,4": { name: "震為雷" },
+      "4,5": { name: "雷風恆" }, "4,6": { name: "雷水解" }, "4,7": { name: "雷山小過" }, "4,8": { name: "雷地豫" },
+      "5,1": { name: "風天小畜" }, "5,2": { name: "風澤中孚" }, "5,3": { name: "風火家人" }, "5,4": { name: "風雷益" },
+      "5,5": { name: "巽為風" }, "5,6": { name: "風水渙" }, "5,7": { name: "風山漸" }, "5,8": { name: "風地觀" },
+      "6,1": { name: "水天需" }, "6,2": { name: "水澤節" }, "6,3": { name: "水火既濟" }, "6,4": { name: "水雷屯" },
+      "6,5": { name: "水風井" }, "6,6": { name: "坎為水" }, "6,7": { name: "水山蹇" }, "6,8": { name: "水地比" },
+      "7,1": { name: "山天大畜" }, "7,2": { name: "山澤損" }, "7,3": { name: "山火賁" }, "7,4": { name: "山雷頤" },
+      "7,5": { name: "山風蠱" }, "7,6": { name: "山水蒙" }, "7,7": { name: "艮為山" }, "7,8": { name: "山地剝" },
+      "8,1": { name: "地天泰" }, "8,2": { name: "地澤臨" }, "8,3": { name: "地火明夷" }, "8,4": { name: "地雷復" },
+      "8,5": { name: "地風升" }, "8,6": { name: "地水師" }, "8,7": { name: "地山謙" }, "8,8": { name: "坤為地" }
     };
+    
+    const CLASSIC_DATABASE = {}; // 初始化，點擊原典時自動從雲端抓取
 
     window.onload = function () {
       try {
-        const saved = localStorage.getItem('iching_auth_user');
-        if (saved) {
-          const u = JSON.parse(saved);
-          if (u && u.isLoggedIn) { currentUser = u; }
+        const savedAuth = localStorage.getItem('iching_auth_user');
+        if (savedAuth) {
+          const u = JSON.parse(savedAuth);
+          if (u && u.isLoggedIn) {
+            currentUser = u;
+            hasVerifiedLogic = currentUser.isAdvanced;
+          }
         }
       } catch (err) {}
-      updateLoginUI();
+
+      updateRoleDisplay();
+      renderBoardYaoSlots();
+      checkGuaCompletionStatus();
+      buildHexGrid();
+      
+      // 載入首頁專欄等資料
+      loadFeaturedHandnotes();
       loadColumnsFrontEnd();
-      // 初始化64卦清單 (若有完整字典)
-      // buildHexGrid(); 
+      loadGeneralRules();
+
+      ['result-tiered-content-container', 'hex-detail-panel', 'hn-modal-content-area'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add('protected-text-zone');
+          el.addEventListener('contextmenu', e => e.preventDefault());
+          el.addEventListener('copy', e => {
+            e.preventDefault();
+            showToast("為保護智慧財產權，系統已限制整段複製！");
+          });
+        }
+      });
     };
 
     // ==========================================
     // 導航與視圖切換
     // ==========================================
     function goToStep(viewId) {
-      // 若進入需登入的功能且未登入，強迫導向登入頁
       if (!currentUser.isLoggedIn && (viewId === 'p2-categories' || viewId === 'view-divination' || viewId === 'view-result')) {
-        showToast("請先在會員中心登入帳號！");
+        showToast("進入占卜系統前，請先登入！");
         goToStep('p2-login');
         return;
       }
+      
       if (viewId === 'view-courses') {
         loadCoursesFrontEnd();
         loadMessagesFrontEnd();
@@ -479,21 +1081,27 @@
       }
 
       document.querySelectorAll('.bot-nav-btn').forEach(btn => {
-        if (btn.dataset.target === viewId || (viewId.includes('divination') && btn.dataset.target === 'p2-categories') || (viewId.includes('result') && btn.dataset.target === 'p2-categories')) {
-          btn.classList.remove('text-stone-400'); btn.classList.add('text-culture-gold');
+        if (btn.dataset.target === viewId || 
+           ((viewId === 'p2-categories' || viewId === 'view-divination' || viewId === 'view-result' || viewId === 'p3-principles') && btn.dataset.target === 'p2-categories') ||
+           ((viewId === 'view-videos') && btn.dataset.target === 'p2-categories') ||
+           ((viewId === 'p4-checklist') && btn.dataset.target === 'p2-categories')) {
+          btn.classList.remove('text-stone-400');
+          btn.classList.add('text-culture-gold');
         } else {
-          btn.classList.remove('text-culture-gold'); btn.classList.add('text-stone-400');
+          btn.classList.remove('text-culture-gold');
+          btn.classList.add('text-stone-400');
         }
       });
     }
 
     // ==========================================
-    // 分頁一：研究與專欄
+    // 新增：研究與專欄、課程與留言區 API 邏輯
     // ==========================================
     async function loadColumnsFrontEnd() {
       const container = document.getElementById("columns-list-container");
+      if(!container) return;
       try {
-        const res = await fetch(`${API_URL}?action=getColumns`);
+        const res = await fetch(`${CLASSIC_API_URL}?action=getColumns`);
         const data = await res.json();
         if (data.length === 0) {
           container.innerHTML = `<div class="text-center text-stone-400 text-xs py-4">目前尚無公開專欄文章。</div>`;
@@ -503,13 +1111,9 @@
           let ytHtml = '';
           if (col.ytLink) {
             let vid = col.ytLink.includes('v=') ? col.ytLink.split('v=')[1].split('&')[0] : (col.ytLink.includes('youtu.be/') ? col.ytLink.split('youtu.be/')[1] : '');
-            if(vid) {
-              ytHtml = `<div class="mt-3 rounded-lg overflow-hidden border border-stone-200 aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe></div>`;
-            }
+            if(vid) ytHtml = `<div class="mt-3 rounded-lg overflow-hidden border border-stone-200 aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe></div>`;
           }
-          // 將換行符號轉為 <br>
-          const formatContent = (text) => text.replace(/\n/g, '<br>');
-          
+          const formatContent = (text) => (text || '').replace(/\n/g, '<br>');
           return `
             <details class="bg-white rounded-xl border-2 border-stone-200 shadow-sm overflow-hidden group">
               <summary class="p-3.5 cursor-pointer outline-none select-none flex flex-col gap-1 hover:bg-stone-50 transition relative pr-8">
@@ -529,26 +1133,24 @@
           `;
         }).join('');
       } catch (err) {
-        container.innerHTML = `<div class="text-center text-culture-red text-xs py-4">讀取失敗，請稍後重試。</div>`;
+        container.innerHTML = `<div class="text-center text-culture-red text-xs py-4">專欄讀取失敗，請稍後重試。</div>`;
       }
     }
 
-    // ==========================================
-    // 分頁三：課程與留言區
-    // ==========================================
     async function loadCoursesFrontEnd() {
       const container = document.getElementById("courses-list-container");
+      if(!container) return;
       try {
-        const res = await fetch(`${API_URL}?action=getCourses`);
+        const res = await fetch(`${CLASSIC_API_URL}?action=getCourses`);
         const data = await res.json();
         if (data.length === 0) {
-          container.innerHTML = `<div class="text-center text-stone-400 py-4">暫無課程大綱。</div>`; return;
+          container.innerHTML = `<div class="text-center text-stone-400 text-xs py-4">暫無課程大綱。</div>`; return;
         }
         container.innerHTML = data.map(c => `
           <div class="p-3 bg-white rounded-xl border border-stone-200">
             <h4 class="font-bold text-sm text-culture-dark">${c.id} - ${c.name}</h4>
-            <div class="text-stone-600 mt-1.5 whitespace-pre-wrap">${c.outline}</div>
-            ${c.link ? `<a href="${c.link}" target="_blank" class="block mt-2 text-culture-red font-bold underline"><i class="fa-solid fa-link"></i> 講義試閱</a>` : ''}
+            <div class="text-stone-600 mt-1.5 whitespace-pre-wrap text-xs leading-relaxed">${c.outline}</div>
+            ${c.link ? `<a href="${c.link}" target="_blank" class="block mt-2 text-culture-red font-bold underline text-xs"><i class="fa-solid fa-link"></i> 講義試閱</a>` : ''}
           </div>
         `).join('');
       } catch(e) {}
@@ -558,6 +1160,7 @@
       const container = document.getElementById("messages-list-container");
       const formArea = document.getElementById("msg-form-area");
       const warning = document.getElementById("msg-login-warning");
+      if(!container) return;
 
       if (!currentUser.isLoggedIn) {
         formArea.classList.add("hidden"); warning.classList.remove("hidden");
@@ -567,7 +1170,7 @@
       }
 
       try {
-        const res = await fetch(`${API_URL}?action=getMessages`);
+        const res = await fetch(`${CLASSIC_API_URL}?action=getMessages`);
         const data = await res.json();
         if (data.length === 0) {
           container.innerHTML = `<div class="text-center text-stone-400 text-xs py-4">目前尚無公開留言。</div>`; return;
@@ -577,16 +1180,16 @@
             <div class="flex justify-between items-start border-b border-stone-100 pb-1.5 mb-1.5">
               <div>
                 <span class="font-bold text-culture-dark">${m.userName}</span>
-                <span class="text-[9px] bg-stone-100 px-1 py-0.5 rounded text-stone-500 ml-1">${m.role}</span>
+                <span class="text-[9px] bg-stone-100 px-1 py-0.5 rounded text-stone-500 ml-1 border">${m.role}</span>
               </div>
               <span class="text-[9px] text-stone-400">${m.time.split(' ')[0]}</span>
             </div>
-            <div class="mb-1"><span class="text-[10px] text-blue-600 font-bold bg-blue-50 px-1 rounded">${m.type}</span></div>
-            <div class="text-stone-700 whitespace-pre-wrap">${m.content}</div>
+            <div class="mb-1"><span class="text-[10px] text-blue-600 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">${m.type}</span></div>
+            <div class="text-stone-700 whitespace-pre-wrap leading-relaxed">${m.content}</div>
             ${m.reply ? `
               <div class="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-900">
                 <div class="font-bold text-[10px] mb-0.5 flex items-center gap-1"><i class="fa-solid fa-reply"></i> 陳老師回覆：</div>
-                <div class="whitespace-pre-wrap">${m.reply}</div>
+                <div class="whitespace-pre-wrap leading-relaxed">${m.reply}</div>
               </div>
             ` : ''}
           </div>
@@ -603,7 +1206,7 @@
       
       showToast("正在送出留言...");
       try {
-        const res = await fetch(API_URL, {
+        const res = await fetch(CLASSIC_API_URL, {
           method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: new URLSearchParams({
             action: "addMessage", token: currentUser.token, userName: name, type, content
@@ -618,172 +1221,616 @@
     }
 
     // ==========================================
-    // 分頁二：一鍵隨機起卦核心
+    // 原汁原味：解卦手記讀取邏輯
     // ==========================================
-    function selectCategory(cat) {
-      selectedCategory = cat;
-      document.querySelectorAll('.category-card').forEach(c => c.classList.remove('border-culture-gold', 'bg-amber-50'));
-      document.getElementById(`cat-${cat}`).classList.add('border-culture-gold', 'bg-amber-50');
-      document.getElementById('btn-proceed-to-divination').disabled = false;
-      document.getElementById('btn-proceed-to-divination').className = "w-full py-3 rounded-xl bg-culture-red text-white font-serif font-bold text-xs tracking-wider transition shadow-md active:scale-95";
-      document.getElementById('proceed-text').innerText = "已選定領域，進入起卦台 ➔";
-      document.getElementById('proceed-icon').className = "fa-solid fa-arrow-right";
-      showToast("領域已選定");
+    async function loadFeaturedHandnotes() {
+      const container = document.getElementById('featured-handnotes-container');
+      if (!container) return;
+
+      try {
+        const res = await fetch(`${CLASSIC_API_URL}?action=getHandnotes&_t=${Date.now()}`);
+        const data = await res.json();
+        if (data && data.success && Array.isArray(data.handnotes) && data.handnotes.length > 0) {
+          cachedFeaturedHandnotes = data.handnotes;
+          container.innerHTML = cachedFeaturedHandnotes.map((note, idx) => `
+            <div onclick="openHandnoteDetailModal(${idx})" class="p-3 bg-white rounded-xl border border-stone-200 hover:border-culture-gold text-xs space-y-1.5 shadow-2xs cursor-pointer transition active:scale-[0.99] group">
+              <div class="flex justify-between items-start gap-1">
+                <span class="font-bold text-[11.5px] text-stone-900 group-hover:text-culture-red transition">${note.title}</span>
+                <span class="text-[10px] ${note.tagColor || 'text-culture-red'} font-bold flex-shrink-0 ml-1 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">${note.tag || '案例解析'}</span>
+              </div>
+              <p class="text-[10.5px] text-stone-600 leading-relaxed font-serif">${note.summary}</p>
+              <div class="pt-1 flex items-center justify-between text-[10px] text-culture-gold font-bold">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-book-open"></i> 點此閱讀全文推演與對策</span>
+                <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </div>
+            </div>
+          `).join('');
+          return;
+        }
+      } catch (err) { }
+      container.innerHTML = `<div class="text-center py-4 text-xs text-stone-400">目前尚無手記資料。</div>`;
     }
 
-    function proceedToDivination() {
-      if (!selectedCategory) return;
-      const catNames = { 'career':'事業與學業競爭', 'romance':'感情與婚姻生活', 'personality':'個性與人情處理', 'health':'身體與健康' };
-      document.getElementById('active-category-display').innerHTML = `<i class="fa-solid fa-folder-open text-culture-gold"></i> ${catNames[selectedCategory]}`;
-      // 重置盤面
-      currentYaoLines = [null, null, null, null, null, null];
-      renderBoard();
-      goToStep('view-divination');
+    function openHandnoteDetailModal(idx) {
+      const note = cachedFeaturedHandnotes[idx];
+      if (!note) return;
+      document.getElementById('hn-modal-title').innerText = note.title || "案例手記解析";
+      document.getElementById('hn-modal-tag').innerText = note.tag || "實戰推演";
+      const fullText = note.content || note.summary || "暫無全文內容。";
+      const paragraphs = fullText.split(/\n\n|\n/).map(p => p.trim()).filter(p => p.length > 0);
+      document.getElementById('hn-modal-content-area').innerHTML = paragraphs.map(p => `<p class="leading-relaxed pl-0.5">${p}</p>`).join('');
+      applyHnFontSize();
+      document.getElementById('modal-handnote-detail').classList.remove('hidden');
+    }
+    function closeHandnoteDetailModal() { document.getElementById('modal-handnote-detail').classList.add('hidden'); }
+    function changeHnFontSize(delta) { currentHnFontSize = Math.min(24, Math.max(13, currentHnFontSize + delta)); applyHnFontSize(); }
+    function applyHnFontSize() {
+      const el = document.getElementById('hn-modal-content-area');
+      if (el) { el.style.fontSize = currentHnFontSize + 'px'; el.style.lineHeight = (currentHnFontSize * 1.68) + 'px'; }
+      document.getElementById('hn-font-size-indicator').innerText = currentHnFontSize + 'px';
+    }
+
+    // ==========================================
+    // 原汁原味：四大領域心法導引讀取邏輯
+    // ==========================================
+    async function loadGeneralRules() {
+      const container = document.getElementById('general-rules-content');
+      if (!container) return;
+      try {
+        const res = await fetch(`${CLASSIC_API_URL}?action=getTopicGuidance&domain=general&role=guest`);
+        const data = await res.json();
+        if (data && (data.title || data.body)) {
+          const paras = (data.body || '').split('\n').filter(p => p.trim().length > 0);
+          container.innerHTML = paras.map(p => `<p class="text-[11.5px] text-stone-700 leading-relaxed font-serif">${p}</p>`).join('');
+          return;
+        }
+      } catch (err) { }
+      container.innerHTML = `<p class="text-[11.5px] text-stone-800 leading-relaxed"><strong>易經三義心法：</strong>「不易」為客觀天道之硬邊界；「簡易」為自然規律；「變易」乃決策之能動性。</p>`;
+    }
+
+    async function openGuidanceModal(e, domainKey, catName) {
+      if (e) e.stopPropagation();
+      document.getElementById('guidance-modal-domain-title').innerText = `${catName} · 心法導引`;
+      let roleCode = currentUser.isAdvanced ? 'student' : (currentUser.role === '網站會員' ? 'member' : 'guest');
+      let roleLabel = currentUser.isAdvanced ? '學員（深造指導）' : (currentUser.role === '網站會員' ? '會員（系統綱領）' : '訪客（前言引言）');
+      document.getElementById('guidance-modal-role-badge').innerText = roleLabel;
+      const contentArea = document.getElementById('guidance-modal-content-area');
+      contentArea.innerHTML = `<div class="py-8 text-center text-stone-500 font-serif"><i class="fa-solid fa-spinner fa-spin text-culture-gold text-lg mb-2 block"></i><span>正在從雲端讀取專文...</span></div>`;
+      document.getElementById('modal-guidance').classList.remove('hidden');
+
+      try {
+        const res = await fetch(`${CLASSIC_API_URL}?action=getTopicGuidance&token=${encodeURIComponent(currentUser.token || "")}&domain=${encodeURIComponent(domainKey)}&role=${encodeURIComponent(roleCode)}`);
+        const data = await res.json();
+        if (data && (data.title || data.body)) {
+          const paras = (data.body || '').split('\n').filter(p => p.trim().length > 0);
+          contentArea.innerHTML = `
+            <div class="p-3 bg-gradient-to-br from-[#f8f2e7] to-[#eee2d0] rounded-xl border border-amber-300/80 shadow-xs space-y-1.5">
+              <h4 class="font-bold text-sm text-culture-dark font-serif">${data.title || catName + ' 核心心法綱領'}</h4>
+            </div>
+            <div class="space-y-2 pt-1">${paras.map(p => `<p class="text-[12px] text-stone-700 leading-relaxed font-serif pl-0.5">${p}</p>`).join('')}</div>
+          `;
+        } else {
+          contentArea.innerHTML = `<div class="p-3.5 bg-amber-50 rounded-xl border border-amber-300 text-stone-700 text-xs">暫無專文內容。</div>`;
+        }
+      } catch (err) {
+        contentArea.innerHTML = `<div class="p-3.5 bg-amber-50 rounded-xl border border-amber-300 text-stone-700 text-xs">連線失敗。</div>`;
+      }
+    }
+    function closeGuidanceModal() { document.getElementById('modal-guidance').classList.add('hidden'); }
+
+    // ==========================================
+    // 占卜流程核心函數
+    // ==========================================
+    function selectCategory(catKey) {
+      const catNames = { 'personality':'個性與人情處理', 'career':'事業與學業競爭', 'romance':'感情與婚姻生活', 'health':'身體與健康' };
+      selectedCategory = catKey;
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.classList.remove('border-culture-gold', 'bg-amber-50/50');
+        const icon = card.querySelector('.check-icon');
+        if (icon) { icon.classList.remove('bg-culture-gold', 'text-white', 'border-culture-gold'); icon.classList.add('text-transparent', 'border-stone-300'); }
+      });
+      const selectedEl = document.getElementById(`cat-${catKey}`);
+      if (selectedEl) {
+        selectedEl.classList.add('border-culture-gold', 'bg-amber-50/50');
+        const icon = selectedEl.querySelector('.check-icon');
+        if (icon) { icon.classList.add('bg-culture-gold', 'text-white', 'border-culture-gold'); icon.classList.remove('text-transparent', 'border-stone-300'); }
+      }
+      const proceedBtn = document.getElementById('btn-proceed-to-principles');
+      proceedBtn.disabled = false;
+      proceedBtn.className = "w-full py-3 rounded-xl bg-culture-red text-white hover:bg-culture-redHover font-serif font-bold text-xs tracking-wider transition shadow-sm";
+      document.getElementById('proceed-icon').className = "fa-solid fa-arrow-right";
+      document.getElementById('proceed-text').innerText = `已選【${catNames[catKey]}】，前往閱讀三義心法 ➔`;
+      document.getElementById('active-category-display').innerHTML = `<i class="fa-solid fa-folder-open text-culture-gold"></i> ${catNames[catKey]}`;
+    }
+
+    function proceedToPrinciples() {
+      if (!selectedCategory) { showToast("請先選擇問題領域！"); return; }
+      if (!checkCanAskQuestion()) return;
+      if (!triggerDailyFirstQuestionModal()) { goToStep('p3-principles'); }
     }
 
     function executeRandomGua() {
-      for (let i = 0; i < 6; i++) {
-        currentYaoLines[i] = Math.random() >= 0.5 ? 1 : 0;
-      }
-      renderBoard();
-      showToast("一鍵生成完畢！請點擊下方查看解析");
+      if (!checkCanAskQuestion()) return;
+      for (let i = 0; i < 6; i++) currentYaoLines[i] = Math.random() >= 0.5 ? 1 : 0;
+      renderBoardYaoSlots();
+      checkGuaCompletionStatus();
+      showToast("一鍵生成完畢！");
     }
 
-    function renderBoard() {
+    function renderBoardYaoSlots() {
       for (let i = 0; i < 6; i++) {
         const slot = document.getElementById(`slot-yao-${i}`);
+        if(!slot) continue;
         const val = currentYaoLines[i];
         if (val === null) {
           slot.innerHTML = `<div class="w-full h-4 bg-stone-300/80 rounded border border-dashed border-stone-400"></div>`;
         } else if (val === 1) {
-          slot.innerHTML = `<div class="w-full yang-bar flex items-center justify-center text-[10px] text-white font-bold tracking-widest">九 · 陽</div>`;
+          slot.innerHTML = `<div class="w-full yang-bar flex items-center justify-center text-[10px] text-white font-bold tracking-widest select-none">九 · 陽</div>`;
         } else {
-          slot.innerHTML = `<div class="w-full flex items-center justify-between gap-2.5"><div class="w-1/2 yin-segment"></div><div class="w-1/2 yin-segment text-[9px] text-white text-center">陰</div></div>`;
+          slot.innerHTML = `<div class="w-full flex items-center justify-between gap-2.5"><div class="w-1/2 yin-segment flex items-center justify-center text-[9px] text-white select-none">六</div><div class="w-1/2 yin-segment flex items-center justify-center text-[9px] text-white select-none">陰</div></div>`;
         }
       }
+    }
+
+    function handleYaoClick(idx) {
+      if (!currentUser.isAdvanced && currentUser.role !== '網站會員') { showToast("手動點爻為會員專屬！"); return; }
+      currentYaoLines[idx] = (currentYaoLines[idx] === null || currentYaoLines[idx] === 0) ? 1 : 0;
+      renderBoardYaoSlots(); checkGuaCompletionStatus();
+    }
+
+    function resetGuaBoard() {
+      currentYaoLines = [null, null, null, null, null, null];
+      hasConfirmedVideo = false;
+      const chk = document.getElementById('chk-video-watched'); if (chk) chk.checked = false;
+      renderBoardYaoSlots(); checkGuaCompletionStatus();
+    }
+
+    function checkGuaCompletionStatus() {
       const isComplete = currentYaoLines.every(v => v !== null);
-      const btn = document.getElementById('btn-view-result');
+      const btnResult = document.getElementById('btn-view-result');
+      if (!btnResult) return;
       if (isComplete) {
-        btn.disabled = false;
-        btn.className = "w-full py-3 rounded-xl bg-culture-red text-white font-serif font-bold text-xs tracking-wider shadow-md active:scale-95";
-        btn.innerHTML = `<i class="fa-solid fa-arrow-right"></i> 查看對應身分之 64卦解析 ➔`;
+        btnResult.disabled = false;
+        btnResult.className = "w-full py-3 rounded-xl bg-culture-red text-white hover:bg-culture-redHover font-serif font-bold text-xs tracking-wider shadow-md";
+        btnResult.innerHTML = (currentUser.isAdvanced || hasConfirmedVideo) ? `<i class="fa-solid fa-arrow-right"></i> 查看卦象解析與解答 ➔` : `<i class="fa-solid fa-book-open"></i> 前往問答解析並確認 ➔ 解鎖解答`;
       } else {
-        btn.disabled = true;
-        btn.className = "w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-serif font-bold text-xs tracking-wider cursor-not-allowed shadow-sm";
-        btn.innerHTML = `<i class="fa-solid fa-lock"></i> 尚未成卦，請先起卦`;
+        btnResult.disabled = true;
+        btnResult.className = "w-full py-3 rounded-xl bg-stone-300 text-stone-500 cursor-not-allowed font-serif font-bold text-xs tracking-wider";
+        btnResult.innerHTML = `<i class="fa-solid fa-lock"></i> 尚未成卦，請先起卦`;
       }
+    }
+
+    function handleDivinationCompleteButtonClick() {
+      const isComplete = currentYaoLines.every(v => v !== null);
+      if (!isComplete) { showToast("六爻尚未生成！"); return; }
+      if (currentUser.isAdvanced || hasConfirmedVideo) { goToResultPage(); } 
+      else { showToast("請詳讀心法並確認。"); goToStep('view-videos'); }
+    }
+
+    function matchCodeFrom3Lines(lines) {
+      for (let code = 1; code <= 8; code++) {
+        const t = TRIGRAMS[code];
+        if (t.lines[0] === lines[0] && t.lines[1] === lines[1] && t.lines[2] === lines[2]) return code;
+      }
+      return 1;
     }
 
     async function goToResultPage() {
       const isComplete = currentYaoLines.every(v => v !== null);
       if (!isComplete) return;
+      if (!currentUser.isAdvanced && !hasConfirmedVideo) { goToStep('view-videos'); return; }
+      if (!checkCanAskQuestion()) return;
 
-      const getCode = (arr) => {
-        for (let c = 1; c <= 8; c++) {
-          if (TRIGRAMS[c].lines[0]===arr[0] && TRIGRAMS[c].lines[1]===arr[1] && TRIGRAMS[c].lines[2]===arr[2]) return c;
-        }
-        return 1;
-      };
-      const low = getCode([currentYaoLines[0], currentYaoLines[1], currentYaoLines[2]]);
-      const up = getCode([currentYaoLines[3], currentYaoLines[4], currentYaoLines[5]]);
-      // 若有完整字典可查卦名，此處以假定有 MATRIX 為例
-      const key = `${up},${low}`;
-      const hName = (HEXAGRAM_MATRIX && HEXAGRAM_MATRIX[key]) ? HEXAGRAM_MATRIX[key].name : "未知卦";
-      
+      const lowerCode = matchCodeFrom3Lines([currentYaoLines[0], currentYaoLines[1], currentYaoLines[2]]);
+      const upperCode = matchCodeFrom3Lines([currentYaoLines[3], currentYaoLines[4], currentYaoLines[5]]);
+      const key = `${upperCode},${lowerCode}`;
+      const guaInfo = HEXAGRAM_MATRIX[key] || { name: "未知卦" };
+      const upTri = TRIGRAMS[upperCode];
+      const lowTri = TRIGRAMS[lowerCode];
       const catNames = { 'career':'事業與學業競爭', 'romance':'感情與婚姻生活', 'personality':'個性與人情處理', 'health':'身體與健康' };
-      document.getElementById('result-gua-title').innerHTML = `${hName} 卦`;
-      document.getElementById('result-category-subtitle').innerText = `求問類別：${catNames[selectedCategory]}`;
-      document.getElementById('result-gua-numbers').innerText = `先天數 [${up}, ${low}]`;
+      const domain = catNames[selectedCategory] || "事業與學業競爭";
 
-      const roleStr = currentUser.isAdvanced ? "高階學員" : (currentUser.isLoggedIn && currentUser.role==='網站會員' ? "網站會員" : "網站訪客");
-      document.getElementById('result-user-badge').innerText = `${roleStr} ${currentUser.name ? '- '+currentUser.name : ''}`;
+      const usage = getTodayUsage();
+      usage.count += 1;
+      saveTodayUsage(usage);
+      updateDailyQuotaDisplay();
 
+      document.getElementById('result-gua-title').innerHTML = `${guaInfo.name} 卦 <span class="text-[12px] px-2 py-0.5 rounded-full bg-culture-gold text-stone-900 font-bold">外${upTri.nature} / 內${lowTri.nature}</span>`;
+      document.getElementById('result-category-subtitle').innerText = `求問類別：${domain}`;
+      document.getElementById('result-gua-fullname').innerText = `${guaInfo.name} 卦`;
+      document.getElementById('result-gua-numbers').innerText = `先天數 [${upperCode}, ${lowerCode}]`;
+      document.getElementById('result-gua-nature').innerText = `外卦${upTri.name}(${upTri.nature})、內卦${lowTri.name}(${lowTri.nature})`;
+
+      let badgeStr = currentUser.isAdvanced ? "高階學員" : (currentUser.role === '網站會員' ? "網站會員" : "網站訪客");
+      document.getElementById('result-user-badge').innerText = `${badgeStr} · ${currentUser.name}`;
+
+      const tieredContainer = document.getElementById('result-tiered-content-container');
+      tieredContainer.innerHTML = `<div class="p-6 text-center space-y-2 font-serif text-stone-700"><i class="fa-solid fa-spinner fa-spin text-culture-red text-xl"></i><p>調取連貫解答中...</p></div>`;
       goToStep('view-result');
-      
-      const container = document.getElementById('result-tiered-content-container');
-      container.innerHTML = `<div class="text-center py-8 text-stone-500"><i class="fa-solid fa-spinner fa-spin text-xl"></i><p class="mt-2">正在為您的身分調取雲端深度解析...</p></div>`;
 
-      // 決定抓取層級
-      let tiers = ["初階_訪客"];
-      if(roleStr==="網站會員" || roleStr==="高階學員") tiers.push("進階_會員");
-      if(roleStr==="高階學員") tiers.push("高階_學員");
+      let tiersToFetch = ["初階_訪客"];
+      if (currentUser.isAdvanced) { tiersToFetch = ["初階_訪客", "進階_會員", "高階_學員"]; }
+      else if (currentUser.role === '網站會員') { tiersToFetch = ["初階_訪客", "進階_會員"]; }
 
       try {
-        let html = '';
-        for(let t of tiers) {
-          const res = await fetch(`${API_URL}?action=getTierContent&gua=${encodeURIComponent(hName)}&tier=${encodeURIComponent(t)}&category=${encodeURIComponent(catNames[selectedCategory])}&token=${currentUser.token}`);
-          const d = await res.json();
+        const fetchPromises = tiersToFetch.map(t => fetch(`${CLASSIC_API_URL}?action=getTierContent&gua=${encodeURIComponent(guaInfo.name)}&tier=${encodeURIComponent(t)}&category=${encodeURIComponent(domain)}&token=${encodeURIComponent(currentUser.token)}`).then(r => r.json()));
+        const results = await Promise.all(fetchPromises);
+        
+        let finalHtml = `
+          <div class="flex items-center justify-between bg-stone-100 p-2 rounded-xl border border-stone-300 text-xs font-serif mb-3">
+            <span class="text-stone-700 font-bold flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-culture-gold"></i>連貫解析解答</span>
+            <div class="flex items-center gap-1">
+              <button onclick="changeResultFontSize(-1.5)" class="px-2 py-0.5 rounded bg-white text-stone-800 border border-stone-300 text-[11px] font-bold">A-</button>
+              <button onclick="changeResultFontSize(1.5)" class="px-2 py-0.5 rounded bg-culture-gold text-stone-950 border border-culture-gold text-[11px] font-bold">A+</button>
+            </div>
+          </div>
+        `;
+
+        const renderText = (t) => {
+          let s = t.replace(/^\s+|\s+$/g, '');
+          s = s.replace(/ 【深層奧義與推演】[：:]/g, "\n\n【深層奧義與推演】：");
+          s = s.replace(/ 實戰見招拆招策略[：:]/g, "\n\n【實戰見招拆招策略】：");
+          s = s.replace(/ 氣場與時機法則[：:]/g, "\n\n【氣場與時機法則】：");
+          return s.split("\n\n").map(p => p.trim()).filter(p=>p.length>0).map(p => {
+            if(p.startsWith("【判曰古文解析】")) return `<div class="pt-2"><span class="px-2.5 py-0.5 rounded bg-stone-900 text-amber-200 font-bold text-xs">【判曰古文解析】</span></div><div class="pt-1">${p.replace(/【判曰古文解析】[：:]/,"").replace(/^\s+|\s+$/g,'')}</div>`;
+            if(p.startsWith("【深層奧義與推演】")) return `<div class="pt-3"><span class="px-2.5 py-0.5 rounded bg-[#6b21a8] text-white font-bold text-xs">【深層奧義與推演】</span></div><div class="pt-1">${p.replace(/【深層奧義與推演】[：:]/,"").replace(/^\s+|\s+$/g,'')}</div>`;
+            if(p.startsWith("【實戰見招拆招策略】")) return `<div class="pt-3"><span class="px-2.5 py-0.5 rounded bg-emerald-800 text-emerald-100 font-bold text-xs">【實戰見招拆招策略】</span></div><div class="pt-1">${p.replace(/【實戰見招拆招策略】[：:]/,"").replace(/^\s+|\s+$/g,'')}</div>`;
+            if(p.startsWith("性格盲點")||p.startsWith("核心盲點")||p.startsWith("人際盲點")) return `<div class="pt-2"><span class="px-2.5 py-0.5 rounded bg-culture-red text-white font-bold text-xs">【盲點與警示】</span></div><div class="pt-1">${p}</div>`;
+            return `<div class="py-1">${p}</div>`;
+          }).join('');
+        };
+
+        results.forEach((resItem, idx) => {
+          const t = tiersToFetch[idx];
           let color = t.includes("高階") ? "amber" : (t.includes("進階") ? "red" : "stone");
-          html += `
-            <div class="bg-white p-4 rounded-xl border-2 border-${color}-200 mb-3 shadow-sm text-xs font-serif">
-              <div class="font-bold text-${color}-800 border-b border-${color}-100 pb-1 mb-2">【${t.split('_')[0]}解析】</div>
-              <div class="whitespace-pre-wrap text-stone-700 leading-relaxed">${d.content || "暫無內容"}</div>
+          let label = t.includes("高階") ? "高階 · 判曰古文解析與奧義" : (t.includes("進階") ? "進階 · 盲點與實戰見招拆招" : "初階 · 客觀局勢與象意");
+          finalHtml += `
+            <div class="bg-white p-4 rounded-xl border-2 border-${color}-200 mb-3 shadow-sm font-serif">
+              <div class="border-b border-${color}-100 pb-2 mb-2"><span class="font-bold text-${color}-800 text-xs flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-${color}-600 text-white flex items-center justify-center text-[10px]">${idx+1}</span>${label}</span></div>
+              <div class="rendered-dynamic-content text-stone-800 leading-relaxed font-serif" style="font-size:${currentContentFontSize}px; line-height:${currentContentFontSize*1.65}px;">${renderText(resItem.content || "暫無對應內容。")}</div>
             </div>
           `;
-        }
-        container.innerHTML = html;
-      } catch(e) {
-        container.innerHTML = `<div class="text-center text-red-500 py-4">讀取失敗</div>`;
+        });
+        tieredContainer.innerHTML = finalHtml;
+      } catch (err) {
+        tieredContainer.innerHTML = `<div class="p-5 text-center text-xs text-red-500">連線超時，請重新載入。</div>`;
       }
     }
 
+    function changeResultFontSize(delta) {
+      currentContentFontSize = Math.min(22, Math.max(13, currentContentFontSize + delta));
+      document.querySelectorAll('.rendered-dynamic-content').forEach(el => {
+        el.style.fontSize = `${currentContentFontSize}px`;
+        el.style.lineHeight = `${currentContentFontSize * 1.65}px`;
+      });
+    }
+
+    function applyDirectNumbers() {
+      if (!currentUser.isAdvanced && currentUser.role !== '網站會員') { showToast("手動輸入卦號為會員專屬功能！"); return; }
+      const upNum = parseInt(document.getElementById('select-upper-number').value, 10);
+      const lowNum = parseInt(document.getElementById('select-lower-number').value, 10);
+      currentYaoLines = [...TRIGRAMS[lowNum].lines, ...TRIGRAMS[upNum].lines];
+      renderBoardYaoSlots(); checkGuaCompletionStatus();
+    }
+
     // ==========================================
-    // 會員登入系統
+    // 登入與會員驗證系統 (修復的 3 顆按鈕登入)
     // ==========================================
+    function openLoginModal(targetTier = 'member') {
+      const title = document.getElementById('login-modal-title');
+      const sub = document.getElementById('login-modal-sub');
+      const hint = document.getElementById('login-device-hint');
+
+      if (targetTier === 'guest') {
+        title.innerText = "1. 網站訪客登入"; sub.innerText = "請輸入登記之手機/信箱與通行碼";
+        hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-stone-100 border border-stone-300 text-stone-800";
+        hint.innerHTML = `<i class="fa-solid fa-circle-info text-stone-600"></i> 請輸入您申請時設定的帳號與 6 位數通行碼。`;
+      } else if (targetTier === 'advanced') {
+        title.innerText = "3. 高階學員登入"; sub.innerText = "請輸入高階學員帳號與專屬通行碼";
+        hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-amber-50 border border-amber-300 text-amber-900";
+        hint.innerHTML = `<i class="fa-solid fa-crown text-amber-600"></i> <strong>高階學員驗證：</strong>連續錯 3 次將暫時鎖定。`;
+      } else {
+        title.innerText = "2. 網站會員登入"; sub.innerText = "請輸入年費會員帳號與專屬通行碼";
+        hint.className = "p-2 rounded-xl text-[10.5px] font-serif bg-red-50 border border-red-200 text-culture-red";
+        hint.innerHTML = `<i class="fa-solid fa-id-card text-culture-red"></i> <strong>網站會員入口：</strong>連續錯 3 次將暫時鎖定。`;
+      }
+      document.getElementById('input-login-pin').value = ""; 
+      document.getElementById('modal-login').classList.remove('hidden');
+    }
+    function closeLoginModal() { document.getElementById('modal-login').classList.add('hidden'); }
+    function openRegisterModal() { document.getElementById('modal-register').classList.remove('hidden'); updateRegNotice(); }
+    function closeRegisterModal() { document.getElementById('modal-register').classList.add('hidden'); }
+
     async function submitUserLogin() {
       const acc = document.getElementById('input-login-account').value.trim();
       const pin = document.getElementById('input-login-pin').value.trim();
-      const tier = document.getElementById('loginTierSelect').value;
-      if (!acc || !pin) { showToast("請填寫帳號與 6 位數通行碼！"); return; }
-      
+      if (!acc || !pin) { showToast("請輸入帳號與通行碼！"); return; }
       showToast("驗證中...");
       try {
-        // 使用 AUTH_URL
-        const res = await fetch(`${AUTH_URL}?action=checkUser&account=${encodeURIComponent(acc)}&pin=${encodeURIComponent(pin)}`);
+        const res = await fetch(`${AUTH_WEBAPP_URL}?action=checkUser&account=${encodeURIComponent(acc)}&pin=${encodeURIComponent(pin)}`);
         const data = await res.json();
         if (data.success) {
           currentUser = { isLoggedIn: true, token: data.token, role: data.user.role, name: data.user.name, phone: data.user.phone, isAdvanced: data.user.role === '高階學員' };
           localStorage.setItem('iching_auth_user', JSON.stringify(currentUser));
+          hasVerifiedLogic = currentUser.isAdvanced;
           showToast(`登入成功！歡迎 ${currentUser.name}`);
-          updateLoginUI();
-        } else {
-          showToast(data.message || "登入失敗");
-        }
+          closeLoginModal(); updateRoleDisplay(); goToStep('p2-categories');
+        } else { showToast(data.message); }
       } catch(e) { showToast("連線異常"); }
     }
 
-    function updateLoginUI() {
+    function updateRoleDisplay() {
+      const pill = document.getElementById('role-text');
+      const indicator = document.getElementById('role-indicator');
       const form = document.getElementById('login-form-area');
       const logged = document.getElementById('logged-in-area');
-      const pill = document.getElementById('role-text');
-      const ind = document.getElementById('role-indicator');
-      const headerQuota = document.getElementById('header-quota-pill');
-
+      
       if (currentUser.isLoggedIn) {
-        form.classList.add('hidden'); logged.classList.remove('hidden');
-        document.getElementById('profile-name').innerText = currentUser.name;
-        document.getElementById('profile-role').innerText = currentUser.role;
         pill.innerText = `${currentUser.name} (${currentUser.role.substring(0,2)})`;
-        ind.className = `w-2 h-2 rounded-full ${currentUser.isAdvanced ? 'bg-amber-400' : 'bg-emerald-400'}`;
-        headerQuota.innerText = currentUser.isAdvanced ? "無限制" : (currentUser.role === '網站會員' ? "會員專屬" : "訪客模式");
+        pill.className = "whitespace-nowrap " + (currentUser.isAdvanced ? "text-amber-300" : "text-culture-gold");
+        indicator.className = "w-2 h-2 rounded-full " + (currentUser.isAdvanced ? "bg-amber-400" : "bg-emerald-400");
+        document.getElementById('header-quota-pill').innerText = currentUser.isAdvanced ? "無限制" : "會員專屬";
+        if(form) form.classList.add('hidden');
+        if(logged) {
+          logged.classList.remove('hidden');
+          document.getElementById('profile-name').innerText = currentUser.name;
+          document.getElementById('profile-role').innerText = currentUser.role;
+        }
+        const tag = document.getElementById('verify-status-tag');
+        if (tag) {
+          tag.className = currentUser.isAdvanced ? "text-[10px] bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold" : "text-[10px] bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full font-bold";
+          tag.innerText = currentUser.isAdvanced ? "高階學員已通過" : "待檢驗";
+        }
       } else {
-        form.classList.remove('hidden'); logged.classList.add('hidden');
-        pill.innerText = "訪客中心";
-        ind.className = "w-2 h-2 rounded-full bg-stone-400";
-        headerQuota.innerText = "未登入";
+        pill.innerText = "訪客中心"; pill.className = "whitespace-nowrap text-stone-300";
+        indicator.className = "w-2 h-2 rounded-full bg-stone-400";
+        document.getElementById('header-quota-pill').innerText = "未登入";
+        if(form) form.classList.remove('hidden');
+        if(logged) logged.classList.add('hidden');
       }
+      applyUserPermissionsToDivinationView();
+      renderVideoCourseArea();
+      updateDailyQuotaDisplay();
     }
 
     function userLogout() {
       currentUser = { isLoggedIn: false, token: "", role: "", name: "" };
       localStorage.removeItem('iching_auth_user');
-      showToast("已登出");
-      updateLoginUI();
+      showToast("已登出帳號"); updateRoleDisplay(); goToStep('p1-home');
     }
 
+    function updateRegNotice() {
+      const sel = document.getElementById('reg-tier-select').value;
+      const n = document.getElementById('reg-tier-notice');
+      if (sel === '網站訪客') { n.className="p-2 rounded-lg bg-stone-100 text-[10.5px] border border-stone-300 text-stone-800"; n.innerText="審核通過享 90 天免費體驗，每日限 5 題。"; }
+      else if (sel === '高階學員') { n.className="p-2 rounded-lg bg-amber-50 text-[10.5px] border border-amber-300 text-amber-950"; n.innerText="提問無限制，解鎖實戰決策解析與專屬指導。"; }
+      else { n.className="p-2 rounded-lg bg-red-50 text-[10.5px] border border-red-200 text-culture-red"; n.innerText="年費 2,500 元，開通每日 10 題與自行占卦填入。申請送出後請加官方 LINE 開通。"; }
+    }
+
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('reg-submit-btn');
+      btn.innerHTML = "送出中..."; btn.disabled = true;
+      const payload = {
+        name: document.getElementById('reg-name').value, phone: document.getElementById('reg-phone').value,
+        email: document.getElementById('reg-email').value, pin: document.getElementById('reg-pin').value,
+        role: document.getElementById('reg-tier-select').value, note: "使用者線上申請帳號"
+      };
+      fetch(AUTH_WEBAPP_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+        .then(() => {
+          btn.innerHTML = "送出"; btn.disabled = false; closeRegisterModal();
+          document.getElementById('reg-success-user-name').innerText = payload.name;
+          document.getElementById('reg-success-user-role').innerText = payload.role;
+          document.getElementById('modal-reg-success-line').classList.remove('hidden');
+        }).catch(()=> { btn.innerHTML = "送出"; btn.disabled = false; });
+    }
+    
+    function closeRegSuccessModal() { document.getElementById('modal-reg-success-line').classList.add('hidden'); }
+    function handleDirectLineClick(e) { /* 行動端直接開LINE */ }
+
     // ==========================================
-    // 雜項與 Toast
+    // 每日額度與檢驗系統
     // ==========================================
+    function getUserUsageKey() { return `iching_usage_${currentUser.name||"guest"}_${new Date().toISOString().split('T')[0]}`; }
+    function getTodayUsage() {
+      try { const raw = localStorage.getItem(getUserUsageKey()); if (raw) return JSON.parse(raw); } catch (e) {}
+      return { count: 0, firstPromptShown: false };
+    }
+    function saveTodayUsage(data) { try { localStorage.setItem(getUserUsageKey(), JSON.stringify(data)); } catch (e) {} }
+
+    function updateDailyQuotaDisplay() {
+      const u = getTodayUsage();
+      const remain = currentUser.isAdvanced ? "無限制" : (currentUser.role==='網站會員' ? Math.max(0, 10-u.count) : Math.max(0, 5-u.count));
+      document.getElementById('daily-quota-badge').innerText = `今日尚餘：${remain} 題`;
+      const btn = document.getElementById('btn-execute-random');
+      if (remain === 0 && !currentUser.isAdvanced) {
+        btn.disabled = true; document.getElementById('random-btn-text').innerText = "今日額度已達上限";
+      } else {
+        btn.disabled = false; document.getElementById('random-btn-text').innerText = "一鍵隨機取卦";
+      }
+    }
+    function checkCanAskQuestion() {
+      const u = getTodayUsage();
+      if (currentUser.isAdvanced) return true;
+      if (currentUser.role === '網站會員' && u.count >= 10) { showToast("今日額度已用完！"); return false; }
+      if (currentUser.role !== '網站會員' && u.count >= 5) { showToast("免費額度已用完！"); return false; }
+      return true;
+    }
+    function triggerDailyFirstQuestionModal() {
+      const u = getTodayUsage();
+      if (u.count === 0 && !u.firstPromptShown) {
+        if (currentUser.isAdvanced) document.getElementById('modal-advanced-daily-tip').classList.remove('hidden');
+        else if (currentUser.role === '網站會員') document.getElementById('modal-member-upgrade-invite').classList.remove('hidden');
+        else document.getElementById('modal-guest-daily-rules').classList.remove('hidden');
+        return true;
+      }
+      return false;
+    }
+    function onGuestDailyCheckChange() {
+      const btn = document.getElementById('btn-guest-daily-confirm');
+      if (document.getElementById('chk-guest-daily-agreed').checked) { btn.disabled = false; btn.innerText = "確認並開始今日占問 ➔"; }
+      else { btn.disabled = true; btn.innerText = "請先勾選同意"; }
+    }
+    function confirmGuestDailyRules() {
+      const u = getTodayUsage(); u.firstPromptShown = true; saveTodayUsage(u);
+      document.getElementById('modal-guest-daily-rules').classList.add('hidden'); goToStep('p3-principles');
+    }
+    function closeMemberUpgradeModalAndProceed() {
+      const u = getTodayUsage(); u.firstPromptShown = true; saveTodayUsage(u);
+      document.getElementById('modal-member-upgrade-invite').classList.add('hidden'); goToStep('p3-principles');
+    }
+    function closeAdvancedTipModalAndProceed() {
+      const u = getTodayUsage(); u.firstPromptShown = true; saveTodayUsage(u);
+      document.getElementById('modal-advanced-daily-tip').classList.add('hidden'); goToStep('p3-principles');
+    }
+
+    // 發問邏輯
+    function openLogicVerificationModal() {
+      if (currentUser.isAdvanced) { hasVerifiedLogic = true; document.getElementById('verify-status-tag').innerText="已通過"; goToStep('view-divination'); return; }
+      document.getElementById('modal-verify-logic').classList.remove('hidden');
+      const hintBanner = document.getElementById('logic-user-hint-banner');
+      hintBanner.className = "p-2.5 rounded-xl text-xs font-serif bg-amber-50 border border-amber-300 text-amber-900";
+      const roleLabel = (currentUser.isLoggedIn && currentUser.role === '網站會員') ? '網站會員' : '網站訪客';
+      hintBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-culture-gold"></i> <strong>${roleLabel}自檢：</strong>起卦前請逐項核對並勾選。`;
+    }
+    function closeLogicVerificationModal() { document.getElementById('modal-verify-logic').classList.add('hidden'); }
+    function onLogicCheckboxChange() {
+      const c1 = document.getElementById('logic-chk-1').checked, c2 = document.getElementById('logic-chk-2').checked, c3 = document.getElementById('logic-chk-3').checked;
+      const btn = document.getElementById('btn-confirm-logic');
+      if (c1 && c2 && c3) { btn.disabled = false; btn.innerText = "三項確認無誤，進入起卦台 ➔"; btn.className="w-full py-3 rounded-xl bg-culture-red text-white font-bold text-xs shadow"; }
+      else { btn.disabled = true; btn.innerText = "請完成勾選"; btn.className="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-bold text-xs"; }
+    }
+    function confirmLogicVerificationAndProceed() {
+      hasVerifiedLogic = true; document.getElementById('verify-status-tag').innerText = "已通過檢驗";
+      document.getElementById('verify-status-tag').className = "text-[10px] bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold";
+      closeLogicVerificationModal(); goToStep('view-divination');
+    }
+
+    function applyUserPermissionsToDivinationView() {
+      const banner = document.getElementById('permission-hint-banner');
+      const direct = document.getElementById('member-direct-inputs');
+      if (currentUser.isAdvanced) {
+        banner.innerHTML = `<span class="font-bold text-amber-800"><i class="fa-solid fa-crown text-amber-600"></i> 高階學員模式：提問無限制。</span>`;
+        banner.className = "p-2.5 rounded-xl text-xs font-serif bg-amber-50 border border-amber-400 text-amber-950 flex items-center justify-between";
+        direct.classList.remove('hidden');
+      } else if (currentUser.role === '網站會員') {
+        banner.innerHTML = `<span class="font-bold text-emerald-800"><i class="fa-solid fa-circle-check text-emerald-600"></i> 會員模式：每日10題，解鎖先天數與點爻。</span>`;
+        banner.className = "p-2.5 rounded-xl text-xs font-serif bg-emerald-50 border border-emerald-300 text-emerald-900 flex items-center justify-between";
+        direct.classList.remove('hidden');
+      } else {
+        banner.innerHTML = `<span class="font-bold text-stone-700"><i class="fa-solid fa-circle-info text-stone-500"></i> 訪客模式：每日限5題，限隨機取卦。</span>`;
+        banner.className = "p-2.5 rounded-xl text-xs font-serif bg-stone-100 border border-stone-300 text-stone-800 flex items-center justify-between";
+        direct.classList.add('hidden');
+      }
+    }
+
+    function renderVideoCourseArea() {
+      const banner = document.getElementById('video-status-banner');
+      const btn = document.getElementById('btn-unlock-divination-result');
+      if (currentUser.isAdvanced) {
+        banner.innerHTML = `<span class="font-bold text-amber-800">高階學員：已全數開通實戰問答解析。</span>`;
+        banner.className = "p-2.5 rounded-xl text-xs font-serif bg-amber-50 border border-amber-300 text-amber-900 flex items-center justify-between";
+        if(btn) { btn.disabled = false; btn.innerText = "高階學員直接查看解答 ➔"; btn.className="w-full py-3 rounded-xl bg-culture-red text-white font-bold text-xs shadow"; }
+      } else {
+        banner.innerHTML = `<span class="text-stone-700"><i class="fa-solid fa-lock text-culture-red"></i> 此專區為高階專屬。解鎖解答請先勾選下方確認。</span>`;
+        banner.className = "p-2.5 rounded-xl text-xs font-serif bg-stone-100 border border-stone-300 text-stone-700 flex items-center justify-between";
+      }
+    }
+    function onVideoWatchedCheckChange() {
+      const btn = document.getElementById('btn-unlock-divination-result');
+      if(document.getElementById('chk-video-watched').checked) {
+        btn.disabled = false; btn.innerText = "已確認，查看解答 ➔"; btn.className="w-full py-3 rounded-xl bg-culture-red text-white font-bold text-xs shadow";
+      } else {
+        btn.disabled = true; btn.innerText = "請先勾選確認看完"; btn.className="w-full py-3 rounded-xl bg-stone-300 text-stone-500 font-bold text-xs";
+      }
+    }
+    function proceedToResultAfterVideo() { hasConfirmedVideo = true; goToResultPage(); }
+
+    // ==========================================
+    // 64卦庫與雜項
+    // ==========================================
+    function buildHexGrid() {
+      const c = document.getElementById('hex-grid-container'); if(!c) return;
+      let html = '';
+      for (let u=1; u<=8; u++) {
+        for (let l=1; l<=8; l++) {
+          const k = `${u},${l}`; const h = HEXAGRAM_MATRIX[k];
+          if(h) html += `<div id="hex-item-${u}-${l}" onclick="selectHexInLibrary('${k}')" class="hex-item p-2 rounded-lg border border-culture-border bg-white text-center cursor-pointer hover:border-culture-gold transition"><span class="block text-xs font-serif font-bold text-stone-900 truncate">${h.name}</span><span class="block text-[9px] text-stone-400 font-mono">[${u},${l}]</span></div>`;
+        }
+      }
+      c.innerHTML = html;
+    }
+    
+    async function selectHexInLibrary(key) {
+      document.querySelectorAll('.hex-item').forEach(el => el.classList.remove('border-culture-red', 'bg-red-50/50'));
+      const parts = key.split(',');
+      const target = document.getElementById(`hex-item-${parts[0]}-${parts[1]}`);
+      if (target) target.classList.add('border-culture-red', 'bg-red-50/50');
+
+      const h = HEXAGRAM_MATRIX[key]; if(!h) return;
+      const panel = document.getElementById('hex-detail-panel');
+      if(CLASSIC_DATABASE[h.name]) { renderClassicPanel(h, parts[0], parts[1], CLASSIC_DATABASE[h.name]); return; }
+      
+      panel.innerHTML = `<div class="text-center py-6 text-stone-500"><i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i>正在從雲端載入原典...</div>`;
+      try {
+        const res = await fetch(`${CLASSIC_API_URL}?action=getClassicText&token=${encodeURIComponent(currentUser.token || "")}&hexName=${encodeURIComponent(h.name)}`);
+        const data = await res.json();
+        if(data.success) { CLASSIC_DATABASE[h.name] = data; renderClassicPanel(h, parts[0], parts[1], data); }
+        else { panel.innerHTML = `<div class="text-center text-red-500 py-4">查無資料</div>`; }
+      } catch(e) { panel.innerHTML = `<div class="text-center text-red-500 py-4">連線失敗</div>`; }
+    }
+    
+    function renderClassicPanel(h, u, l, dbData) {
+      const panel = document.getElementById('hex-detail-panel');
+      panel.innerHTML = `
+        <div class="border-b border-culture-border pb-2 flex justify-between items-center">
+          <h3 class="font-serif font-bold text-base text-stone-900">${h.name} 卦</h3>
+          <div class="flex gap-1"><button onclick="changeClassicFontSize(-1.5)" class="w-6 h-6 bg-white border border-stone-300 rounded font-bold">A-</button><button onclick="changeClassicFontSize(1.5)" class="w-6 h-6 bg-culture-gold border border-culture-gold rounded font-bold">A+</button></div>
+        </div>
+        <div id="classic-dynamic-content-box" class="space-y-3 pt-2">
+          ${dbData.panyue ? `<div class="p-3 bg-stone-50 rounded-xl border border-stone-200"><div class="font-bold text-xs bg-stone-900 text-amber-200 inline-block px-1.5 py-0.5 rounded mb-1">判曰</div><div class="classic-font-scalable leading-relaxed text-stone-800">${dbData.panyue}</div></div>` : ''}
+          ${dbData.guaci ? `<div class="p-3 bg-white rounded-xl border border-stone-200"><div class="font-bold text-xs bg-culture-red text-white inline-block px-1.5 py-0.5 rounded mb-1">卦辭</div><div class="classic-font-scalable font-bold leading-relaxed text-stone-900">${dbData.guaci}</div></div>` : ''}
+          ${dbData.daxiang ? `<div class="p-3 bg-white rounded-xl border border-stone-200"><div class="font-bold text-xs bg-stone-700 text-white inline-block px-1.5 py-0.5 rounded mb-1">大象傳</div><div class="classic-font-scalable leading-relaxed text-stone-800">${dbData.daxiang}</div></div>` : ''}
+          ${dbData.yaoci ? `<div class="p-3.5 bg-amber-50 rounded-xl border border-amber-300"><div class="font-bold text-xs bg-amber-600 text-white inline-block px-1.5 py-0.5 rounded mb-1">六爻爻辭</div><div class="classic-font-scalable leading-relaxed text-stone-800 whitespace-pre-wrap">${dbData.yaoci}</div></div>` : ''}
+        </div>
+      `;
+      changeClassicFontSize(0);
+    }
+    
+    function changeClassicFontSize(delta) {
+      currentClassicFontSize = Math.min(28, Math.max(13, currentClassicFontSize + delta));
+      document.querySelectorAll('.classic-font-scalable').forEach(el => {
+        el.style.fontSize = currentClassicFontSize + 'px'; el.style.lineHeight = (currentClassicFontSize * 1.68) + 'px';
+      });
+    }
+
+    function filterHexList() {
+      const q = document.getElementById('hex-search-input').value.trim();
+      for (let u=1; u<=8; u++) {
+        for (let l=1; l<=8; l++) {
+          const item = document.getElementById(`hex-item-${u}-${l}`);
+          if(item) {
+            if(!q || HEXAGRAM_MATRIX[`${u},${l}`].name.includes(q)) item.classList.remove('hidden');
+            else item.classList.add('hidden');
+          }
+        }
+      }
+    }
+
+    function jumpToClassicArchive() {
+      if(currentYaoLines.some(v => v === null)) { goToStep('p5-hexagrams'); return; }
+      const low = matchCodeFrom3Lines([currentYaoLines[0], currentYaoLines[1], currentYaoLines[2]]);
+      const up = matchCodeFrom3Lines([currentYaoLines[3], currentYaoLines[4], currentYaoLines[5]]);
+      goToStep('p5-hexagrams');
+      selectHexInLibrary(`${up},${low}`);
+    }
+    
+    function clearAllRecords() { document.getElementById('records-list').innerHTML = `<div class="text-center py-6 text-xs text-stone-400 font-serif">已清空。</div>`; }
+    function openCoinEssenceModal() { document.getElementById('modal-coin-essence').classList.remove('hidden'); }
+    function closeCoinEssenceModal() { document.getElementById('modal-coin-essence').classList.add('hidden'); }
+    function openQrModal() { document.getElementById('modal-qrcode').classList.remove('hidden'); }
+    function closeQrModal() { document.getElementById('modal-qrcode').classList.add('hidden'); }
+
     let toastTimer = null;
     function showToast(text) {
       const t = document.getElementById('toast');
