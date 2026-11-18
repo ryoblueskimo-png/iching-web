@@ -1472,7 +1472,7 @@
       openSlideDrawer({ tag: col.category || '易學專欄', title: col.title, htmlContent: html });
     }
 
-    async function loadFeaturedHandnotes() {
+   async function loadFeaturedHandnotes() {
       const container = document.getElementById('featured-handnotes-container');
       if (!container) return;
       try {
@@ -1480,19 +1480,23 @@
         const data = await res.json();
         if (data && data.success && Array.isArray(data.handnotes) && data.handnotes.length > 0) {
           cachedFeaturedHandnotes = data.handnotes;
-          container.innerHTML = cachedFeaturedHandnotes.map((note, idx) => `
-            <div onclick="openHandnoteDrawer(${idx})" class="p-4 bg-neo-paper/70 hover:bg-white rounded-2xl border border-neo-border hover:border-neo-amber space-y-2 cursor-pointer transition group">
-              <div class="flex justify-between items-start gap-2">
-                <span class="font-bold text-sm sm:text-base text-neo-indigo group-hover:text-neo-amberHover transition leading-snug">${note.title}</span>
-                <span class="text-xs text-neo-cinnabar font-bold flex-shrink-0 bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200">${note.tag || '案例解析'}</span>
+          container.innerHTML = cachedFeaturedHandnotes.map((note, idx) => {
+            const rawText = note.summary || '';
+            const shortSummary = rawText.includes('===') ? rawText.split('===')[0].trim() : rawText;
+            return `
+              <div onclick="openHandnoteDrawer(${idx})" class="p-4 bg-neo-paper/70 hover:bg-white rounded-2xl border border-neo-border hover:border-neo-amber space-y-2 cursor-pointer transition group">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1.5">
+                  <span class="font-bold text-sm sm:text-base text-neo-indigo group-hover:text-neo-amberHover transition leading-snug">${note.title}</span>
+                  <span class="text-xs text-neo-cinnabar font-bold self-start flex-shrink-0 bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200">${note.tag || '案例解析'}</span>
+                </div>
+                <p class="text-xs sm:text-sm text-neo-muted leading-relaxed">${shortSummary}</p>
+                <div class="pt-1 flex items-center justify-between text-xs text-neo-indigoLight font-bold">
+                  <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-open text-neo-amber"></i> 點此展開側邊閱讀欄詳閱完整問答</span>
+                  <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-neo-amber"></i>
+                </div>
               </div>
-              <p class="text-xs sm:text-sm text-neo-muted leading-relaxed">${note.summary}</p>
-              <div class="pt-1 flex items-center justify-between text-xs text-neo-indigoLight font-bold">
-                <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-open text-neo-amber"></i> 點此展開側邊閱讀欄詳閱全文推演</span>
-                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-neo-amber"></i>
-              </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
           return;
         }
       } catch (err) { }
@@ -1502,15 +1506,36 @@
     function openHandnoteDrawer(idx) {
       const note = cachedFeaturedHandnotes[idx];
       if (!note) return;
-      const fullText = note.content || note.summary || "暫無全文內容。";
-      const paragraphs = fullText.split(String.fromCharCode(10)).map(p => p.trim()).filter(p => p.length > 0);
+      const rawText = note.summary || note.content || "暫無內容。";
+      let topSummary = "";
+      let mainDialog = "";
+
+      if (rawText.includes('===')) {
+        const parts = rawText.split('===');
+        topSummary = parts[0].trim();
+        mainDialog = parts.slice(1).join('===').trim();
+      } else {
+        topSummary = rawText;
+        mainDialog = note.content || "";
+      }
+
+      const paragraphs = mainDialog
+        .split(String.fromCharCode(10))
+        .map(p => p.trim())
+        .filter(p => p.length > 0)
+        .map(p => {
+          if (p.startsWith('【') && p.endsWith('】')) {
+            return `<div class="pt-3 pb-1"><span class="px-2.5 py-0.5 rounded-lg bg-neo-indigo text-neo-amber font-bold text-xs tracking-wider">${p}</span></div>`;
+          }
+          return `<p class="leading-relaxed">${p}</p>`;
+        });
+
       const html = `
         <div class="p-4 rounded-2xl bg-neo-indigoSoft/70 border border-neo-indigo/20 text-sm text-neo-indigo font-bold leading-relaxed">
-          案例提要：${note.summary || ''}
+          <span class="text-xs text-neo-indigoLight block mb-1">【問題摘要】</span>
+          ${topSummary}
         </div>
-        <div class="space-y-3 pt-1">
-          ${paragraphs.map(p => `<p>${p}</p>`).join('')}
-        </div>
+        ${paragraphs.length > 0 ? `<div class="space-y-2.5 pt-2 border-t border-neo-border/60">${paragraphs.join('')}</div>` : ''}
       `;
       openSlideDrawer({ tag: note.tag || '實戰手記', title: note.title, htmlContent: html });
     }
