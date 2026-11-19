@@ -2178,7 +2178,11 @@
       if (!acc || !pin) { showToast("請輸入帳號與 6 位數通行碼！"); return; }
       showToast("正在驗證身分憑證...");
       try {
-        const res = await safeFetch(`${AUTH_WEBAPP_URL}?action=checkUser&account=${encodeURIComponent(acc)}&pin=${encodeURIComponent(pin)}`);
+        const res = await safeFetch(AUTH_WEBAPP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ action: "checkUser", account: acc, pin: pin })
+        });
         const data = await res.json();
         if (data.success && data.token && data.user) {
           currentUser = { 
@@ -2267,22 +2271,39 @@
       else n.innerText = "年費 2,500 元，開通每日 10 題與進階實戰策略解析。送出後請加官方 LINE 告知姓名開通。";
     }
 
-    function handleRegistrationSubmit(e) {
+    async function handleRegistrationSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('reg-submit-btn');
       btn.innerHTML = "送出中..."; btn.disabled = true;
       const payload = {
-        name: document.getElementById('reg-name').value, phone: document.getElementById('reg-phone').value,
-        email: document.getElementById('reg-email').value, pin: document.getElementById('reg-pin').value,
-        role: document.getElementById('reg-tier-select').value, note: "使用者線上申請帳號"
+        action: "register",
+        name: document.getElementById('reg-name').value.trim(),
+        phone: document.getElementById('reg-phone').value.trim(),
+        email: document.getElementById('reg-email').value.trim(),
+        pin: document.getElementById('reg-pin').value.trim(),
+        role: document.getElementById('reg-tier-select').value,
+        note: "使用者線上申請帳號"
       };
-      fetch(AUTH_WEBAPP_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
-        .then(() => {
-          btn.innerHTML = "送出申請"; btn.disabled = false; closeRegisterModal();
+      try {
+        const res = await safeFetch(AUTH_WEBAPP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(payload)
+        });
+        const data = await res.json();
+        btn.innerHTML = "送出申請"; btn.disabled = false;
+        if (data && data.success) {
+          closeRegisterModal();
           document.getElementById('reg-success-user-name').innerText = payload.name;
           document.getElementById('reg-success-user-role').innerText = payload.role;
           document.getElementById('modal-reg-success-line').classList.remove('hidden');
-        }).catch(() => { btn.innerHTML = "送出申請"; btn.disabled = false; });
+        } else {
+          showToast((data && data.message) ? data.message : "申請送出失敗，請確認欄位後重試！");
+        }
+      } catch (err) {
+        btn.innerHTML = "送出申請"; btn.disabled = false;
+        showToast("連線逾時或網路不穩，申請尚未送達，請再試一次！");
+      }
     }
     
     function closeRegSuccessModal() { document.getElementById('modal-reg-success-line').classList.add('hidden'); }
