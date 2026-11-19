@@ -14,6 +14,36 @@
   <meta property="og:description" content="工科邏輯 × 人文視野 × 三十年易學實踐。提供線上略筮法自學排卦、專欄研究與一對一命理決策諮詢。">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="zh_TW">
+  <meta property="og:url" content="https://ryoblueskimo-png.github.io/iching-web/">
+  <link rel="canonical" href="https://ryoblueskimo-png.github.io/iching-web/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "陳亮老師易經占卜教室",
+    "alternateName": "陳亮易經互動網",
+    "description": "位於新北市鶯歌區的陳亮老師易經占卜教室官方互動網，結合臺大機械、政治、人類學三學院跨領域思維與三十年實戰經驗，提供正統略筮法線上排卦、周易六十四卦解析、一對一命理決策諮詢與紫微斗數流年健檢。",
+    "url": "https://ryoblueskimo-png.github.io/iching-web/",
+    "telephone": "+886-961-411-357",
+    "email": "ryoblueskimo@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "福昌街七巷五號",
+      "addressLocality": "鶯歌區",
+      "addressRegion": "新北市",
+      "addressCountry": "TW"
+    },
+    "areaServed": {
+      "@type": "Place",
+      "name": "新北市鶯歌區及全臺灣（支援線上諮詢與教學）"
+    },
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=100057076734888",
+      "https://line.me/R/ti/p/@129uiadu"
+    ]
+  }
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +62,7 @@
               indigoLight: '#244B73',// 次級深青藍
               indigoSoft: '#EBF1F6', // 淡青藍底色
               amber: '#D99B26',      // 琥珀金主按鈕
-              amberHover: '#C28619', // 琥珀金懸停
+              amberHover: '#C28619', // 琥珀金滑鼠移入
               amberSoft: '#FDF6E7',  // 淡琥珀金底色
               cinnabar: '#B83B2B',   // 朱砂紅點綴（印章/警示）
               border: '#E4DCCB',     // 宣紙溫潤邊框
@@ -93,7 +123,7 @@
     details > summary { list-style: none; }
     details > summary::-webkit-details-marker { display: none; }
 
-    /* 無刷新側滑抽屜動畫 */
+    /* 免重新整理側滑面板動畫 */
     #slide-drawer-backdrop { transition: opacity 0.3s ease; }
     #slide-drawer-panel { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     .drawer-closed #slide-drawer-panel { transform: translateX(100%); }
@@ -130,7 +160,7 @@
 
   <!-- 桌面版左右雙欄 / 手機版單欄外層容器 -->
   <div class="max-w-6xl mx-auto min-h-screen flex flex-col lg:flex-row bg-neo-paper shadow-xl border-x border-neo-border">
-<!-- 桌面版左側固定導航與個人品牌側邊欄 -->
+<!-- 桌面版左側固定導覽與個人品牌側邊欄 -->
     <aside class="hidden lg:flex lg:w-80 xl:w-88 flex-col justify-between bg-neo-paperDeep/60 border-r border-neo-border p-6 sticky top-0 h-screen overflow-y-auto flex-shrink-0">
       <div class="space-y-6">
         <div class="flex items-center gap-3 cursor-pointer pb-4 border-b border-neo-border" onclick="goToStep('p1-home')">
@@ -141,7 +171,7 @@
             <circle cx="50" cy="74" r="7" fill="#D99B26"/>
           </svg>
           <div>
-            <h1 class="font-serif font-bold text-xl tracking-wider text-neo-indigo">陳亮易經互動網</h1>
+            <div class="font-serif font-bold text-xl tracking-wider text-neo-indigo">陳亮易經互動網</div>
             <p class="text-xs text-neo-muted tracking-widest mt-0.5">臺大三學院思維 × 三十年實證</p>
           </div>
         </div>
@@ -207,9 +237,9 @@
                 <span class="px-3 py-1 rounded-full bg-neo-indigo text-neo-amber text-xs font-serif font-bold tracking-wider">陳亮老師易經占卜教室</span>
                 <span class="px-2.5 py-1 rounded-full bg-white text-neo-indigo border border-neo-border text-xs font-bold">新北市鶯歌區</span>
               </div>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-neo-indigo tracking-wide leading-snug">
-                以理性拆解迷局，用易經推演生機
-              </h2>
+              <h1 class="text-2xl sm:text-3xl font-serif font-bold text-neo-indigo tracking-wide leading-snug">
+                陳亮老師易經占卜教室｜以理性拆解迷局，用易經推演生機
+              </h1>
               <p class="text-sm sm:text-base text-neo-indigoLight font-serif font-bold">
                 國立臺灣大學 機械 × 政治 × 人類 三學院跨領域思維 · 三十年實證
               </p>
@@ -258,13 +288,13 @@
                 </button>
               </div>
               <div class="space-y-2.5 text-xs sm:text-sm text-neo-indigoLight leading-relaxed">
-                <p>在臺大求學橫跨<strong>工學院機械、法學院政治、文學院人類</strong>三座領域，我將易經提煉為理性決策架構：</p>
+                <p>在臺大求學橫跨<strong>工學院機械、法學院政治、文學院人類</strong>三大領域，我將易經提煉為理性決策架構：</p>
                 <div class="p-3 rounded-xl bg-neo-paper border border-neo-border space-y-1.5">
                   <strong class="text-neo-indigo block text-xs tracking-tight whitespace-nowrap">1. 機械思維看「不易」：辨識客觀底線</strong>
                   <strong class="text-neo-indigo block text-xs tracking-tight whitespace-nowrap">2. 政治思維看「變易」：推演進退對策</strong>
                   <strong class="text-neo-indigo block text-xs tracking-tight whitespace-nowrap">3. 人類學思維看「自修」：直指性格盲點</strong>
                 </div>
-                <p class="text-neo-cinnabar font-bold text-center py-1">「算的準不難，能幫助人才是真本事。」</p>
+                <p class="text-neo-cinnabar font-bold text-center py-1">「算得準不難，能幫助人才是真本事。」</p>
               </div>
               <div class="pt-3 border-t border-neo-border space-y-2 text-xs sm:text-sm">
                 <div><strong class="text-neo-indigo">服務專線：</strong><a href="tel:0961411357" class="font-mono font-bold text-neo-indigo underline">0961-411357</a> <span class="text-xs text-neo-cinnabar">（問事請先預約）</span></div>
@@ -391,6 +421,38 @@
 
           </div>
         </div>
+
+        <!-- 靜態常見問題（幫助新朋友快速了解，也有助搜尋引擎索引） -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-3 font-serif">
+          <div class="border-b border-neo-border pb-2.5">
+            <h2 class="font-bold text-base sm:text-lg text-neo-indigo flex items-center gap-2">
+              <i class="fa-solid fa-circle-question text-neo-amber"></i> 常見問題：鶯歌易經占卜、一對一諮詢與課程說明
+            </h2>
+          </div>
+          <div class="space-y-2.5 text-xs sm:text-sm text-neo-indigoLight">
+            <details class="p-3.5 rounded-xl bg-neo-paper/70 border border-neo-border group">
+              <summary class="font-bold text-neo-indigo cursor-pointer flex items-center justify-between">
+                <span>新北市鶯歌區「陳亮老師易經占卜教室」提供哪些服務？</span>
+                <i class="fa-solid fa-chevron-down text-neo-muted group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="pt-2.5 leading-relaxed">教室位於新北市鶯歌區福昌街七巷五號，提供正統周易略筮法線上排卦、一對一易經決策諮詢（事業投資、合夥風險評估、職涯轉職取捨）、紫微斗數一生健檢與流年解析，以及系統化易經占卜實體與線上教學課程。</p>
+            </details>
+            <details class="p-3.5 rounded-xl bg-neo-paper/70 border border-neo-border group">
+              <summary class="font-bold text-neo-indigo cursor-pointer flex items-center justify-between">
+                <span>如何預約一對一易經占卜或申請線上排卦帳號？</span>
+                <i class="fa-solid fa-chevron-down text-neo-muted group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="pt-2.5 leading-relaxed">線上自學排卦可直接在網站內「線上占卜」申請帳號，新朋友通過審核即享 90 天每日 5 題免費體驗；若需一對一深度問事或洽詢易經課程，歡迎加入官方 LINE（@129uiadu）或致電 0961-411357 預約。</p>
+            </details>
+            <details class="p-3.5 rounded-xl bg-neo-paper/70 border border-neo-border group">
+              <summary class="font-bold text-neo-indigo cursor-pointer flex items-center justify-between">
+                <span>陳亮易經互動網的「線上略筮法」和一般算命有何不同？</span>
+                <i class="fa-solid fa-chevron-down text-neo-muted group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="pt-2.5 leading-relaxed">本網站採用正統略筮法「純論本卦大象、不取變爻」，結合機械、政治與人類學跨領域邏輯，先透過「發問邏輯檢驗」聚焦具體問題，再從不易底線、簡易規律與變易對策切入，提供理性、務實的決策參考。</p>
+            </details>
+          </div>
+        </div>
       </section>
 
       <!-- 第二站：文章專欄與影音庫（免登入直接瀏覽） -->
@@ -463,7 +525,7 @@
 
           <div class="p-5 sm:p-6">
             <div id="gate-login-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- 新用戶申請 -->
+              <!-- 新使用者申請 -->
               <button type="button" onclick="openRegisterModal()" class="text-left p-4 rounded-2xl border-2 border-neo-cinnabar bg-red-50/40 hover:bg-red-50 transition flex items-center justify-between cursor-pointer">
                 <div class="flex items-center gap-3.5">
                   <div class="w-11 h-11 rounded-xl bg-neo-cinnabar text-white flex items-center justify-center font-bold text-base flex-shrink-0">
@@ -540,7 +602,7 @@
 
       <!-- 選定求問四大主題 -->
       <section id="p2-categories" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導航列 -->
+        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goBackStep()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
             <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回上一步（占卜入口）</span>
@@ -564,7 +626,7 @@
                 <i class="fa-solid fa-scroll text-neo-amber"></i> 【總則解說】易學總則與核心心法
               </span>
               <span class="text-xs text-neo-muted flex items-center gap-1.5">
-                <span>點擊折疊/展開</span>
+                <span>點選收合／展開</span>
                 <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
               </span>
             </summary>
@@ -645,7 +707,7 @@
 
       <!-- 發問邏輯嚴格檢驗過渡頁 -->
       <section id="p3-principles" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導航列 -->
+        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goToStep('p2-categories')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
             <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回重選四大領域</span>
@@ -657,7 +719,7 @@
           <div class="border-b border-neo-border pb-3">
             <span class="text-xs font-mono text-neo-amberHover font-bold tracking-wider">CORE PHILOSOPHY</span>
             <h2 class="text-lg sm:text-xl font-serif font-bold text-neo-indigo mt-0.5">易學三義與理性發問邏輯檢驗</h2>
-            <p class="text-xs sm:text-sm text-neo-muted mt-0.5">陳亮老師心法：「算的準不難，能幫助人才是真本事。」</p>
+            <p class="text-xs sm:text-sm text-neo-muted mt-0.5">陳亮老師心法：「算得準不難，能幫助人才是真本事。」</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -695,7 +757,7 @@
 
       <!-- 電腦隨機取卦台 -->
       <section id="view-divination" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導航列 -->
+        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goToStep('p2-categories')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
             <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回重選四大領域</span>
@@ -789,7 +851,7 @@
 
       <!-- 分層次卦象解答與分享圖卡 -->
       <section id="view-result" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導航列 -->
+        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goToStep('view-divination')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
             <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回隨機取卦台</span>
@@ -836,7 +898,7 @@
             </div>
           </div>
 
-          <!-- 三層次可折疊解析區 -->
+          <!-- 三層次可收合解析區 -->
           <div id="result-tiered-content-container" class="space-y-4 protected-text-zone"></div>
           
           <div class="pt-3 border-t border-neo-border space-y-3">
@@ -923,7 +985,7 @@
     </main>
   </div>
 
-  <!-- 全平台通用：底部 4 標籤固定導航列 (手機與電腦版皆顯示) -->
+  <!-- 全平台通用：底部 4 標籤固定導覽列 (手機與電腦版皆顯示) -->
   <nav class="fixed bottom-0 left-0 right-0 bg-[#181818]/95 backdrop-blur-md text-slate-300 border-t border-stone-800 z-40 flex items-center justify-center h-16 px-2 shadow-2xl">
     <div class="w-full max-w-2xl flex items-center justify-around h-full">
       <button type="button" onclick="goToStep('p1-home')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-neo-amber font-bold transition cursor-pointer" data-target="p1-home">
@@ -977,7 +1039,7 @@
   </div>
 
   <!-- ============================================================
-       精美卦象與重點語錄分享圖卡彈窗 (HTML5 Canvas)
+       精美卦象與重點語錄分享圖卡彈出視窗 (HTML5 Canvas)
        ============================================================ -->
   <div id="modal-share-card" class="fixed inset-0 bg-neo-indigo/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-neo-border relative space-y-4 text-center">
@@ -1002,7 +1064,7 @@
   </div>
 
   <!-- ============================================================
-       登入、註冊、邏輯核對與 QR Code 彈窗
+       登入、註冊、邏輯核對與 QR Code 彈出視窗
        ============================================================ -->
   <div id="modal-login" class="fixed inset-0 bg-neo-indigo/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-neo-border relative space-y-4">
@@ -1100,7 +1162,7 @@
   <div id="modal-qrcode" class="fixed inset-0 bg-neo-indigo/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-xs w-full p-6 shadow-2xl border border-neo-border relative space-y-4 text-center">
       <button onclick="closeQrModal()" class="absolute top-4 right-4 text-neo-muted cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
-      <h3 class="text-base font-serif font-bold text-neo-indigo">掃碼進入陳亮易經互動網</h3>
+      <h3 class="text-base font-serif font-bold text-neo-indigo">掃描 QR Code 進入陳亮易經互動網</h3>
       <div id="qrcode-box" class="p-3 bg-neo-paper rounded-2xl border border-neo-border inline-flex items-center justify-center min-h-[180px]"></div>
       <button onclick="closeQrModal()" class="w-full py-2.5 rounded-xl bg-neo-indigo text-white font-bold text-xs cursor-pointer">關閉</button>
     </div>
@@ -1121,10 +1183,21 @@
       return window.location.origin + window.location.pathname;
     }
 
-    // 封裝附帶 8 秒超時保護的 fetch (Timeout Safeguard)
+    // HTML 特殊字元跳脫，防堵 XSS 注入風險
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // 封裝附帶 15 秒逾時保護的 fetch (Timeout Safeguard)
     async function safeFetch(url, options = {}) {
       const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), 8000);
+      const id = setTimeout(() => controller.abort(), 15000);
       try {
         const res = await fetch(url, { ...options, signal: controller.signal });
         clearTimeout(id);
@@ -1218,7 +1291,7 @@
     };
 
     // ==========================================
-    // 嚴格身分驗證判斷與路由跳轉
+    // 嚴格身分驗證判斷與頁面切換
     // ==========================================
     function hasValidLoginSession() {
       return Boolean(
@@ -1243,7 +1316,7 @@
       goToStep('p2-categories');
     }
 
-    // 記錄瀏覽歷史，支援手機/電腦瀏覽器實體「倒退鍵」與畫面返回按鈕
+    // 記錄瀏覽歷史，支援手機/電腦瀏覽器實體「返回鍵」與畫面返回按鈕
     let stepHistory = ['p1-home'];
 
     function goBackStep() {
@@ -1256,7 +1329,7 @@
       }
     }
 
-    // 監聽瀏覽器自帶的上一頁（倒退鍵）
+    // 監聽瀏覽器內建的上一頁（返回鍵）
     window.addEventListener('popstate', function (e) {
       if (e.state && e.state.viewId) {
         goToStep(e.state.viewId, false);
@@ -1295,7 +1368,7 @@
         ? 'view-divination-gate'
         : viewId;
 
-      // 同步更新底部黑金導航列狀態
+      // 同步更新底部黑金導覽列狀態
       document.querySelectorAll('.bot-nav-btn').forEach(btn => {
         if (btn.dataset.target === activeGroup) {
           btn.classList.remove('text-slate-400');
@@ -1306,7 +1379,7 @@
         }
       });
 
-      // 同步更新桌面左側導航欄狀態
+      // 同步更新桌面左側導覽欄狀態
       document.querySelectorAll('.desk-nav-btn').forEach(btn => {
         if (btn.dataset.target === activeGroup) {
           btn.classList.add('bg-neo-indigo', 'text-white', 'shadow-sm');
@@ -1397,7 +1470,7 @@
         
         const formatText = (text) => {
             if (!text) return '';
-            return text.split(String.fromCharCode(10)).join('<br>');
+            return escapeHtml(text).split(String.fromCharCode(10)).join('<br>');
         };
         
         if (container) {
@@ -1409,12 +1482,12 @@
                 <div class="space-y-2">
                   <div class="flex items-center justify-between gap-2 flex-wrap">
                     <div class="flex items-center gap-1.5">
-                      <span class="text-xs bg-neo-indigo text-neo-amber px-2.5 py-0.5 rounded-lg font-mono font-bold">${col.category || '易學研究'}</span>
+                      <span class="text-xs bg-neo-indigo text-neo-amber px-2.5 py-0.5 rounded-lg font-mono font-bold">${escapeHtml(col.category || '易學研究')}</span>
                       ${hasVideoBadge}
                     </div>
-                    <span class="text-xs text-neo-muted font-mono">${col.date || ''}</span>
+                    <span class="text-xs text-neo-muted font-mono">${escapeHtml(col.date || '')}</span>
                   </div>
-                  <h4 class="font-bold text-base sm:text-lg text-neo-indigo leading-snug">${col.title}</h4>
+                  <h4 class="font-bold text-base sm:text-lg text-neo-indigo leading-snug">${escapeHtml(col.title)}</h4>
                   <p class="text-xs sm:text-sm text-neo-indigoLight leading-relaxed">${formatText(col.summary)}</p>
                 </div>
 
@@ -1439,17 +1512,17 @@
           gatePreview.innerHTML = cachedColumnsData.slice(0, 4).map((col, idx) => `
             <div onclick="openColumnDrawer(event, ${idx})" class="p-4 rounded-2xl bg-neo-paper/70 hover:bg-white border border-neo-border hover:border-neo-amber cursor-pointer transition space-y-1.5 group">
               <div class="flex items-center justify-between gap-2">
-                <span class="text-[11px] bg-neo-indigoSoft text-neo-indigo px-2 py-0.5 rounded-md font-mono font-bold">${col.category || '易學專欄'}</span>
-                <span class="text-[11px] text-neo-muted font-mono">${col.date || ''}</span>
+                <span class="text-[11px] bg-neo-indigoSoft text-neo-indigo px-2 py-0.5 rounded-md font-mono font-bold">${escapeHtml(col.category || '易學專欄')}</span>
+                <span class="text-[11px] text-neo-muted font-mono">${escapeHtml(col.date || '')}</span>
               </div>
-              <h4 class="font-bold text-sm sm:text-base text-neo-indigo group-hover:text-neo-amberHover transition leading-snug">${col.title}</h4>
-              <p class="text-xs text-neo-muted line-clamp-2 leading-relaxed">${col.summary || ''}</p>
+              <h4 class="font-bold text-sm sm:text-base text-neo-indigo group-hover:text-neo-amberHover transition leading-snug">${escapeHtml(col.title)}</h4>
+              <p class="text-xs text-neo-muted line-clamp-2 leading-relaxed">${escapeHtml(col.summary || '')}</p>
               <span class="text-xs font-bold text-neo-indigoLight inline-flex items-center gap-1 pt-0.5">閱讀全文與影音 <i class="fa-solid fa-arrow-right text-[10px] text-neo-amber"></i></span>
             </div>
           `).join('');
         }
       } catch (err) {
-        if (container) container.innerHTML = `<div class="col-span-full text-center text-neo-cinnabar text-sm py-8">雲端讀取超時，請稍後點擊同步更新。</div>`;
+        if (container) container.innerHTML = `<div class="col-span-full text-center text-neo-cinnabar text-sm py-8">雲端讀取逾時，請稍後點擊同步更新。</div>`;
       }
     }
 
@@ -1462,11 +1535,11 @@
       const paragraphs = fullContent.split(String.fromCharCode(10)).map(p => p.trim()).filter(p => p.length > 0);
       const html = `
         <div class="p-4 rounded-2xl bg-neo-amberSoft/60 border border-neo-amber/40 text-sm text-neo-indigo font-bold leading-relaxed">
-          核心摘要：${col.summary || ''}
+          核心摘要：${escapeHtml(col.summary || '')}
         </div>
         ${ytHtml}
         <div class="space-y-3 pt-2">
-          ${paragraphs.map(p => `<p>${p}</p>`).join('')}
+          ${paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
         </div>
       `;
       openSlideDrawer({ tag: col.category || '易學專欄', title: col.title, htmlContent: html });
@@ -1486,10 +1559,10 @@
             return `
               <div onclick="openHandnoteDrawer(${idx})" class="p-4 bg-neo-paper/70 hover:bg-white rounded-2xl border border-neo-border hover:border-neo-amber space-y-2 cursor-pointer transition group">
                 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1.5">
-                  <span class="font-bold text-sm sm:text-base text-neo-indigo group-hover:text-neo-amberHover transition leading-snug">${note.title}</span>
-                  <span class="text-xs text-neo-cinnabar font-bold self-start flex-shrink-0 bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200">${note.tag || '案例解析'}</span>
+                  <span class="font-bold text-sm sm:text-base text-neo-indigo group-hover:text-neo-amberHover transition leading-snug">${escapeHtml(note.title)}</span>
+                  <span class="text-xs text-neo-cinnabar font-bold self-start flex-shrink-0 bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200">${escapeHtml(note.tag || '案例解析')}</span>
                 </div>
-                <p class="text-xs sm:text-sm text-neo-muted leading-relaxed">${shortSummary}</p>
+                <p class="text-xs sm:text-sm text-neo-muted leading-relaxed">${escapeHtml(shortSummary)}</p>
                 <div class="pt-1 flex items-center justify-between text-xs text-neo-indigoLight font-bold">
                   <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-open text-neo-amber"></i> 點此展開側邊閱讀欄詳閱完整問答</span>
                   <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-neo-amber"></i>
@@ -1500,7 +1573,7 @@
           return;
         }
       } catch (err) { }
-      container.innerHTML = `<div class="text-center py-6 text-sm text-neo-muted">雲端讀取超時。</div>`;
+      container.innerHTML = `<div class="text-center py-6 text-sm text-neo-muted">雲端讀取逾時。</div>`;
     }
 
     function openHandnoteDrawer(idx) {
@@ -1525,15 +1598,15 @@
         .filter(p => p.length > 0)
         .map(p => {
           if (p.startsWith('【') && p.endsWith('】')) {
-            return `<div class="pt-3 pb-1"><span class="px-2.5 py-0.5 rounded-lg bg-neo-indigo text-neo-amber font-bold text-xs tracking-wider">${p}</span></div>`;
+            return `<div class="pt-3 pb-1"><span class="px-2.5 py-0.5 rounded-lg bg-neo-indigo text-neo-amber font-bold text-xs tracking-wider">${escapeHtml(p)}</span></div>`;
           }
-          return `<p class="leading-relaxed">${p}</p>`;
+          return `<p class="leading-relaxed">${escapeHtml(p)}</p>`;
         });
 
       const html = `
         <div class="p-4 rounded-2xl bg-neo-indigoSoft/70 border border-neo-indigo/20 text-sm text-neo-indigo font-bold leading-relaxed">
           <span class="text-xs text-neo-indigoLight block mb-1">【問題摘要】</span>
-          ${topSummary}
+          ${escapeHtml(topSummary)}
         </div>
         ${paragraphs.length > 0 ? `<div class="space-y-2.5 pt-2 border-t border-neo-border/60">${paragraphs.join('')}</div>` : ''}
       `;
@@ -1556,14 +1629,14 @@
         container.innerHTML = data.map(c => `
           <details class="bg-neo-paper rounded-2xl border border-neo-border overflow-hidden group" open>
             <summary class="p-4 cursor-pointer flex items-center justify-between hover:bg-neo-amberSoft/40 transition select-none">
-              <h4 class="font-bold text-sm sm:text-base text-neo-indigo">${c.id} - ${c.name}</h4>
+              <h4 class="font-bold text-sm sm:text-base text-neo-indigo">${escapeHtml(c.id)} - ${escapeHtml(c.name)}</h4>
               <i class="fa-solid fa-chevron-down text-neo-muted group-open:rotate-180 transition-transform"></i>
             </summary>
-            <div class="p-4 pt-2 border-t border-neo-border/60 text-neo-indigoLight whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">${c.outline}</div>
+            <div class="p-4 pt-2 border-t border-neo-border/60 text-neo-indigoLight whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">${escapeHtml(c.outline)}</div>
           </details>
         `).join('');
       } catch(e) {
-          container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線超時。</div>`; 
+          container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線逾時。</div>`; 
       }
     }
 
@@ -1596,24 +1669,24 @@
             <div class="bg-neo-paper/70 p-4 rounded-2xl border border-neo-border space-y-2 text-xs sm:text-sm">
               <div class="flex justify-between items-center border-b border-neo-border/70 pb-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-bold text-neo-indigo">${m.userName}</span>
-                  <span class="text-[11px] bg-white px-2 py-0.5 rounded-full text-neo-muted border border-neo-border">${m.role}</span>
+                  <span class="font-bold text-neo-indigo">${escapeHtml(m.userName)}</span>
+                  <span class="text-[11px] bg-white px-2 py-0.5 rounded-full text-neo-muted border border-neo-border">${escapeHtml(m.role)}</span>
                 </div>
-                <span class="text-xs text-neo-muted font-mono">${(m.time || '').split(' ')[0]}</span>
+                <span class="text-xs text-neo-muted font-mono">${escapeHtml((m.time || '').split(' ')[0])}</span>
               </div>
-              <div><span class="text-xs font-bold px-2.5 py-0.5 rounded-lg border ${badgeClass}">${m.type}</span></div>
-              <div class="text-neo-indigo whitespace-pre-wrap leading-relaxed pt-0.5">${m.content}</div>
+              <div><span class="text-xs font-bold px-2.5 py-0.5 rounded-lg border ${badgeClass}">${escapeHtml(m.type)}</span></div>
+              <div class="text-neo-indigo whitespace-pre-wrap leading-relaxed pt-0.5">${escapeHtml(m.content)}</div>
               ${m.reply ? `
                 <div class="mt-2 p-3 bg-white border-l-4 border-l-neo-amber rounded-xl text-neo-indigo shadow-2xs">
                   <div class="font-bold text-xs text-neo-amberHover mb-1 flex items-center gap-1.5"><i class="fa-solid fa-reply"></i> 陳老師親筆回覆：</div>
-                  <div class="whitespace-pre-wrap leading-relaxed text-xs sm:text-sm">${m.reply}</div>
+                  <div class="whitespace-pre-wrap leading-relaxed text-xs sm:text-sm">${escapeHtml(m.reply)}</div>
                 </div>
               ` : ''}
             </div>
           `;
         }).join('');
       } catch(e) {
-          container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線超時。</div>`; 
+          container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線逾時。</div>`; 
       }
     }
 
@@ -1652,7 +1725,7 @@
         const data = await res.json();
         if (data && (data.title || data.body)) {
           const paras = (data.body || '').split(String.fromCharCode(10)).filter(p => p.trim().length > 0);
-          container.innerHTML = paras.map(p => `<p class="pt-2">${p}</p>`).join('');
+          container.innerHTML = paras.map(p => `<p class="pt-2">${escapeHtml(p)}</p>`).join('');
           return;
         }
       } catch (err) { }
@@ -1677,9 +1750,9 @@
           const paras = (data.body || '').split(String.fromCharCode(10)).filter(p => p.trim().length > 0);
           document.getElementById('drawer-body').innerHTML = `
             <div class="p-4 bg-neo-amberSoft/70 rounded-2xl border border-neo-amber/40 font-bold text-neo-indigo">
-              ${data.title || catName + ' 核心心法綱領'}
+              ${escapeHtml(data.title || catName + ' 核心心法綱領')}
             </div>
-            <div class="space-y-3 pt-1">${paras.map(p => `<p>${p}</p>`).join('')}</div>
+            <div class="space-y-3 pt-1">${paras.map(p => `<p>${escapeHtml(p)}</p>`).join('')}</div>
           `;
         } else {
           document.getElementById('drawer-body').innerHTML = `<div class="p-4 bg-neo-paper rounded-xl text-sm">暫無專文內容。</div>`;
@@ -1846,7 +1919,7 @@
 
         const renderText = (t) => {
           if (!t) return "暫無對應內容。";
-          let s = t.trim();
+          let s = escapeHtml(t.trim());
           const doubleNewline = String.fromCharCode(10) + String.fromCharCode(10);
           s = s.replace(/【深層奧義與推演】[：:]/g, doubleNewline + "【深層奧義與推演】：");
           s = s.replace(/實戰見招拆招策略[：:]/g, doubleNewline + "【實戰見招拆招策略】：");
@@ -1881,7 +1954,7 @@
         });
         tieredContainer.innerHTML = finalHtml;
       } catch (err) {
-        tieredContainer.innerHTML = `<div class="p-6 text-center text-sm text-neo-cinnabar">連線超時，請重新載入。</div>`;
+        tieredContainer.innerHTML = `<div class="p-6 text-center text-sm text-neo-cinnabar">連線逾時，請重新載入。</div>`;
       }
     }
 
@@ -1928,17 +2001,17 @@
           document.getElementById('drawer-body').innerHTML = `<div class="p-4 bg-red-50 rounded-xl text-sm text-neo-cinnabar">無法讀取原典資料，請確認登入狀態有效。</div>`;
         }
       } catch (e) {
-        document.getElementById('drawer-body').innerHTML = `<div class="p-4 bg-red-50 rounded-xl text-sm text-neo-cinnabar">雲端連線超時，請稍後重試。</div>`;
+        document.getElementById('drawer-body').innerHTML = `<div class="p-4 bg-red-50 rounded-xl text-sm text-neo-cinnabar">雲端連線逾時，請稍後重試。</div>`;
       }
     }
 
     function renderClassicDrawerBody(dbData) {
       document.getElementById('drawer-body').innerHTML = `
         <div class="space-y-4">
-          ${dbData.panyue ? `<div class="p-4 bg-neo-amberSoft/60 rounded-2xl border border-neo-amber/40"><div class="font-bold text-xs bg-neo-indigo text-neo-amber inline-block px-2.5 py-0.5 rounded-lg mb-2">判曰</div><div class="leading-relaxed text-neo-indigo">${dbData.panyue}</div></div>` : ''}
-          ${dbData.guaci ? `<div class="p-4 bg-white rounded-2xl border border-neo-border"><div class="font-bold text-xs bg-neo-cinnabar text-white inline-block px-2.5 py-0.5 rounded-lg mb-2">卦辭</div><div class="font-bold leading-relaxed text-neo-indigo">${dbData.guaci}</div></div>` : ''}
-          ${dbData.daxiang ? `<div class="p-4 bg-white rounded-2xl border border-neo-border"><div class="font-bold text-xs bg-neo-indigoLight text-white inline-block px-2.5 py-0.5 rounded-lg mb-2">大象傳</div><div class="leading-relaxed text-neo-indigo">${dbData.daxiang}</div></div>` : ''}
-          ${dbData.yaoci ? `<div class="p-4 bg-neo-paper rounded-2xl border border-neo-border"><div class="font-bold text-xs bg-neo-amber text-neo-indigo inline-block px-2.5 py-0.5 rounded-lg mb-2">六爻爻辭</div><div class="leading-relaxed text-neo-indigo whitespace-pre-wrap">${dbData.yaoci}</div></div>` : ''}
+          ${dbData.panyue ? `<div class="p-4 bg-neo-amberSoft/60 rounded-2xl border border-neo-amber/40"><div class="font-bold text-xs bg-neo-indigo text-neo-amber inline-block px-2.5 py-0.5 rounded-lg mb-2">判曰</div><div class="leading-relaxed text-neo-indigo">${escapeHtml(dbData.panyue)}</div></div>` : ''}
+          ${dbData.guaci ? `<div class="p-4 bg-white rounded-2xl border border-neo-border"><div class="font-bold text-xs bg-neo-cinnabar text-white inline-block px-2.5 py-0.5 rounded-lg mb-2">卦辭</div><div class="font-bold leading-relaxed text-neo-indigo">${escapeHtml(dbData.guaci)}</div></div>` : ''}
+          ${dbData.daxiang ? `<div class="p-4 bg-white rounded-2xl border border-neo-border"><div class="font-bold text-xs bg-neo-indigoLight text-white inline-block px-2.5 py-0.5 rounded-lg mb-2">大象傳</div><div class="leading-relaxed text-neo-indigo">${escapeHtml(dbData.daxiang)}</div></div>` : ''}
+          ${dbData.yaoci ? `<div class="p-4 bg-neo-paper rounded-2xl border border-neo-border"><div class="font-bold text-xs bg-neo-amber text-neo-indigo inline-block px-2.5 py-0.5 rounded-lg mb-2">六爻爻辭</div><div class="leading-relaxed text-neo-indigo whitespace-pre-wrap">${escapeHtml(dbData.yaoci)}</div></div>` : ''}
         </div>
       `;
     }
@@ -2125,7 +2198,7 @@
         } else { 
           showToast(data.message || "帳號或通行碼錯誤，請確認後重試！"); 
         }
-      } catch(e) { showToast("驗證連線超時，請稍後再試"); }
+      } catch(e) { showToast("驗證連線逾時，請稍後再試"); }
     }
 
     function updateRoleDisplay() {
@@ -2214,7 +2287,7 @@
     
     function closeRegSuccessModal() { document.getElementById('modal-reg-success-line').classList.add('hidden'); }
 
-    function getUserUsageKey() { return `iching_usage_${currentUser.name || "guest"}_${new Date().toISOString().split('T')[0]}`; }
+    function getUserUsageKey() { const twDate = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' }); return `iching_usage_${currentUser.name || "guest"}_${twDate}`; }
     function getTodayUsage() {
       try { const raw = localStorage.getItem(getUserUsageKey()); if (raw) return JSON.parse(raw); } catch (e) {}
       return { count: 0, firstPromptShown: false };
