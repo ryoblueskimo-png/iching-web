@@ -105,11 +105,31 @@
       box-shadow: 0 2px 5px rgba(22, 50, 79, 0.2); 
     }
     @keyframes tossRoll { 
-      0% { transform: scale(0.95); opacity: 0.7; } 
-      50% { transform: scale(1.03); opacity: 1; } 
-      100% { transform: scale(1); opacity: 1; } 
+      0% { transform: scale(0.92) translateY(4px); opacity: 0.5; } 
+      50% { transform: scale(1.03) translateY(-1px); opacity: 1; } 
+      100% { transform: scale(1) translateY(0); opacity: 1; } 
     }
     .yao-animating { animation: tossRoll 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+    /* 八角切角新中式神諭卡樣式 */
+    .oracle-card-frame {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 100%);
+      border: 2px solid #D99B26;
+      box-shadow: 0 10px 28px -6px rgba(22, 50, 79, 0.14);
+      position: relative;
+    }
+    .oracle-corner-tl, .oracle-corner-tr, .oracle-corner-bl, .oracle-corner-br {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-color: #16324F;
+      pointer-events: none;
+    }
+    .oracle-corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
+    .oracle-corner-tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; }
+    .oracle-corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; }
+    .oracle-corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; }
+
     .rendered-dynamic-content { word-break: break-word; overflow-wrap: break-word; }
     
     .protected-text-zone { 
@@ -149,18 +169,18 @@
 
     <div class="flex items-center gap-1.5">
       <div id="mobile-header-quota-pill" class="text-[11px] bg-neo-amberSoft border border-neo-amber/50 px-2.5 py-0.5 rounded-full font-mono text-neo-indigo font-bold whitespace-nowrap">
-        未登入
+        免登入體驗
       </div>
-      <div onclick="goToDivinationGate()" class="text-[11px] bg-neo-indigo text-white px-2.5 py-1 rounded-full flex items-center gap-1.5 cursor-pointer shadow-xs">
+      <div onclick="goToAccountGate()" class="text-[11px] bg-neo-indigo text-white px-2.5 py-1 rounded-full flex items-center gap-1.5 cursor-pointer shadow-xs">
         <span class="w-2 h-2 rounded-full bg-neo-amber" id="mobile-role-indicator"></span>
-        <span id="mobile-role-text" class="whitespace-nowrap font-medium">登入/卜卦</span>
+        <span id="mobile-role-text" class="whitespace-nowrap font-medium">登入/註冊</span>
       </div>
     </div>
   </header>
 
   <!-- 桌面版左右雙欄 / 手機版單欄外層容器 -->
   <div class="max-w-6xl mx-auto min-h-screen flex flex-col lg:flex-row bg-neo-paper shadow-xl border-x border-neo-border">
-<!-- 桌面版左側固定導覽與個人品牌側邊欄 -->
+    <!-- 桌面版左側固定導覽與個人品牌側邊欄 -->
     <aside class="hidden lg:flex lg:w-80 xl:w-88 flex-col justify-between bg-neo-paperDeep/60 border-r border-neo-border p-6 sticky top-0 h-screen overflow-y-auto flex-shrink-0">
       <div class="space-y-6">
         <div class="flex items-center gap-3 cursor-pointer pb-4 border-b border-neo-border" onclick="goToStep('p1-home')">
@@ -179,15 +199,15 @@
         <div class="bg-white p-4 rounded-2xl border border-neo-border shadow-xs space-y-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-stone-400" id="desktop-role-indicator"></span>
-              <span id="desktop-role-text" class="font-bold text-sm text-neo-indigo">尚未登入卜卦身分</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-neo-amber" id="desktop-role-indicator"></span>
+              <span id="desktop-role-text" class="font-bold text-sm text-neo-indigo">免登入體驗模式</span>
             </div>
             <span id="desktop-header-quota-pill" class="text-xs bg-neo-amberSoft text-neo-indigo border border-neo-amber/50 px-2.5 py-0.5 rounded-full font-mono font-bold">
-              未登入
+              不限次數
             </span>
           </div>
-          <button type="button" onclick="goToDivinationGate()" class="w-full py-2 px-3 rounded-xl bg-neo-indigoSoft hover:bg-neo-indigo hover:text-white text-neo-indigo font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer">
-            <i class="fa-solid fa-id-card"></i> <span id="desktop-login-btn-label">前往登入 / 申請卜卦帳號</span>
+          <button type="button" onclick="goToAccountGate()" class="w-full py-2 px-3 rounded-xl bg-neo-indigoSoft hover:bg-neo-indigo hover:text-white text-neo-indigo font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-id-card"></i> <span id="desktop-login-btn-label">登入帳號 / 免費領半年體驗</span>
           </button>
         </div>
 
@@ -200,9 +220,9 @@
             <i class="fa-solid fa-newspaper w-5 text-center text-neo-amber"></i>
             <span>2. 文章專欄與解卦手記</span>
           </button>
-          <button type="button" onclick="goToDivinationGate()" data-target="view-divination-gate" class="desk-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-bold text-sm text-neo-indigo hover:bg-white transition cursor-pointer">
+          <button type="button" onclick="startDivinationDirect()" data-target="p2-categories" class="desk-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-bold text-sm text-neo-indigo hover:bg-white transition cursor-pointer">
             <i class="fa-solid fa-compass w-5 text-center text-neo-amber"></i>
-            <span>3. 線上占卜流程（需登入）</span>
+            <span>3. 線上占卜流程（免登入體驗）</span>
           </button>
           <button type="button" onclick="goToStep('view-courses')" data-target="view-courses" class="desk-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-bold text-sm text-neo-indigo hover:bg-white transition cursor-pointer">
             <i class="fa-solid fa-graduation-cap w-5 text-center text-neo-amber"></i>
@@ -248,29 +268,32 @@
               </p>
             </div>
             <div class="lg:col-span-5 flex flex-col gap-3">
-              <button type="button" onclick="goToDivinationGate()" class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-neo-amber to-amber-500 hover:from-neo-amberHover hover:to-amber-600 text-neo-indigo font-serif font-bold text-base flex items-center justify-center gap-2.5 shadow-md active:scale-95 transition cursor-pointer">
-                <i class="fa-solid fa-compass text-lg"></i> <span>立即進入占卜流程 ➔</span>
+              <button type="button" onclick="startDivinationDirect()" class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-neo-amber to-amber-500 hover:from-neo-amberHover hover:to-amber-600 text-neo-indigo font-serif font-bold text-base flex items-center justify-center gap-2.5 shadow-md active:scale-95 transition cursor-pointer">
+                <i class="fa-solid fa-compass text-lg"></i> <span>立即進入占卜流程（免登入）➔</span>
               </button>
               <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-2xl bg-neo-indigo hover:bg-neo-indigoLight text-white font-serif font-bold text-sm flex items-center justify-center gap-2 shadow-sm active:scale-95 transition cursor-pointer">
-                <i class="fa-brands fa-line text-lg text-neo-amber"></i> <span>LINE 預約一對一諮詢</span>
+                <i class="fa-brands fa-line text-lg text-neo-amber"></i> <span>LINE 預約一對一諮詢 (@129uiadu)</span>
               </a>
             </div>
           </div>
         </div>
 
-        <!-- YouTube 系統教學卡片 -->
+        <!-- YouTube 系統教學與影音訂閱卡片 -->
         <div class="bg-gradient-to-br from-white to-neo-paper rounded-3xl border border-neo-border shadow-xs p-6 space-y-4 text-center">
           <div class="w-14 h-14 mx-auto rounded-full bg-red-50 text-neo-cinnabar flex items-center justify-center text-2xl border border-red-200">
             <i class="fa-brands fa-youtube"></i>
           </div>
           <div class="space-y-1.5">
-            <h3 class="font-serif font-bold text-lg text-neo-indigo">初次造訪請先觀看：系統操作與問事說明</h3>
-            <p class="text-xs sm:text-sm text-neo-muted">陳亮老師親自為您解說：占卜原則、帳號申請與免跳頁閱讀操作指南</p>
+            <h3 class="font-serif font-bold text-lg text-neo-indigo">初次造訪必看：系統操作說明與陳亮老師易理影音</h3>
+            <p class="text-xs sm:text-sm text-neo-muted">陳亮老師親自解說占卜原則與實戰案例；加入官方 LINE（@129uiadu）或註冊訪客，最新影片上架第一時間通知您！</p>
           </div>
-          <div class="pt-2">
-            <a href="https://www.youtube.com/watch?v=FSbHLJ7ZOa4" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-neo-cinnabar hover:bg-red-700 text-white text-sm font-bold shadow-md transition active:scale-95">
-              <span>▶ 前往 YouTube 觀看系統使用說明完整教學影片 ➔</span>
+          <div class="pt-1 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="https://www.youtube.com/watch?v=FSbHLJ7ZOa4" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-neo-cinnabar hover:bg-red-700 text-white text-sm font-bold shadow-md transition active:scale-95">
+              <span>▶ 前往 YouTube 觀看系統使用說明教學影片 ➔</span>
             </a>
+            <button type="button" onclick="openRegisterModal('網站訪客')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo border border-neo-amber text-sm font-serif font-bold transition cursor-pointer">
+              <i class="fa-solid fa-gift text-neo-cinnabar"></i> <span>免費註冊領半年體驗＋老師親批1題</span>
+            </button>
           </div>
         </div>
 
@@ -298,7 +321,7 @@
               </div>
               <div class="pt-3 border-t border-neo-border space-y-2 text-xs sm:text-sm">
                 <div><strong class="text-neo-indigo">服務專線：</strong><a href="tel:0961411357" class="font-mono font-bold text-neo-indigo underline">0961-411357</a> <span class="text-xs text-neo-cinnabar">（問事請先預約）</span></div>
-                <div><strong class="text-neo-indigo">官方 LINE：</strong><span class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">@129uiadu</span></div>
+                <div><strong class="text-neo-indigo">官方 LINE：</strong><a href="https://line.me/R/ti/p/@129uiadu" target="_blank" class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 underline">@129uiadu</a></div>
                 <div><strong class="text-neo-indigo">教學中心：</strong>新北市鶯歌區福昌街七巷五號</div>
                 <div><strong class="text-neo-indigo">聯絡信箱：</strong><span class="font-mono">ryoblueskimo@gmail.com</span></div>
               </div>
@@ -325,10 +348,10 @@
             </div>
           </div>
 
-          <!-- 右欄 (佔 7 欄)：解卦手記 ＋ 底部高度平衡模組 -->
+          <!-- 右欄 (佔 7 欄)：解卦手記 ＋ 底部四大領域快速入口 -->
           <div class="lg:col-span-7 flex flex-col justify-between space-y-5 font-serif h-full">
             
-            <!-- 上半卡：精選解卦手記 (手機與電腦皆顯示) -->
+            <!-- 上半卡：精選解卦手記 -->
             <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-4">
               <div class="border-b border-neo-border pb-3 flex flex-wrap justify-between items-center gap-2">
                 <div>
@@ -350,21 +373,21 @@
               </div>
             </div>
 
-            <!-- 下半卡：填補電腦版右下空白（手機版自動隱藏，只補電腦版空白） -->
-            <div class="hidden lg:block bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-4">
+            <!-- 下半卡：四大實戰求問領域快速體驗入口 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-4">
               <div class="border-b border-neo-border pb-2.5 flex items-center justify-between">
                 <h3 class="font-bold text-base text-neo-indigo flex items-center gap-2">
                   <i class="fa-solid fa-compass text-neo-amber"></i> 線上略筮法・四大實戰求問領域
                 </h3>
-                <span class="text-xs font-mono text-neo-amberHover font-bold">一問一卦・理性推演</span>
+                <span class="text-xs font-mono text-neo-amberHover font-bold">免登入直接起卦</span>
               </div>
               
               <p class="text-xs sm:text-sm text-neo-muted leading-relaxed">
-                本教室採用正統略筮法「純論本卦大象、不取變爻」，協助求問者在面臨人生與事業關卡時，精準辨識客觀環境的「不易」底線，擬定見招拆招的「變易」對策：
+                採用正統略筮法「純論本卦大象、不取變爻」，嚴守「一問一卦、問哪一項得哪一項」原則。直接點選下方任一領域即可立即免費起卦：
               </p>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
-                <div onclick="goToDivinationGate()" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
+                <div onclick="startDivinationWithCategory('personality')" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
                   <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-users text-neo-amber text-base w-5 text-center"></i>
                     <div>
@@ -375,7 +398,7 @@
                   <i class="fa-solid fa-chevron-right text-xs text-neo-muted group-hover:text-neo-indigo"></i>
                 </div>
 
-                <div onclick="goToDivinationGate()" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
+                <div onclick="startDivinationWithCategory('career')" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
                   <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-briefcase text-neo-indigo text-base w-5 text-center"></i>
                     <div>
@@ -386,7 +409,7 @@
                   <i class="fa-solid fa-chevron-right text-xs text-neo-muted group-hover:text-neo-indigo"></i>
                 </div>
 
-                <div onclick="goToDivinationGate()" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
+                <div onclick="startDivinationWithCategory('romance')" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
                   <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-heart text-neo-cinnabar text-base w-5 text-center"></i>
                     <div>
@@ -397,7 +420,7 @@
                   <i class="fa-solid fa-chevron-right text-xs text-neo-muted group-hover:text-neo-indigo"></i>
                 </div>
 
-                <div onclick="goToDivinationGate()" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
+                <div onclick="startDivinationWithCategory('health')" class="p-3.5 rounded-xl bg-neo-paper/70 hover:bg-neo-amberSoft/50 border border-neo-border hover:border-neo-amber transition cursor-pointer flex items-center justify-between group">
                   <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-notes-medical text-emerald-700 text-base w-5 text-center"></i>
                     <div>
@@ -411,10 +434,10 @@
 
               <div class="pt-1 flex flex-col sm:flex-row items-center justify-between gap-2.5 bg-neo-amberSoft/60 p-3.5 rounded-xl border border-neo-amber/40">
                 <span class="text-xs text-neo-indigo font-bold">
-                  <i class="fa-solid fa-circle-check text-neo-amberHover mr-1"></i> 新朋友申請訪客帳號，即享 90 天每日 5 題免費體驗！
+                  <i class="fa-solid fa-circle-check text-neo-amberHover mr-1"></i> 免費註冊「網站訪客」，即享半年（180 天）完整解析＋加贈老師親自文字解卦 1 題！
                 </span>
-                <button type="button" onclick="goToDivinationGate()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-neo-indigo hover:bg-neo-indigoLight text-white text-xs font-bold whitespace-nowrap transition cursor-pointer">
-                  立即前往登入 / 起卦 ➔
+                <button type="button" onclick="openRegisterModal('網站訪客')" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-neo-indigo hover:bg-neo-indigoLight text-white text-xs font-bold whitespace-nowrap transition cursor-pointer">
+                  免費註冊領取 ➔
                 </button>
               </div>
             </div>
@@ -422,7 +445,7 @@
           </div>
         </div>
 
-        <!-- 靜態常見問題（幫助新朋友快速了解，也有助搜尋引擎索引） -->
+        <!-- 靜態常見問題 -->
         <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-3 font-serif">
           <div class="border-b border-neo-border pb-2.5">
             <h2 class="font-bold text-base sm:text-lg text-neo-indigo flex items-center gap-2">
@@ -439,10 +462,10 @@
             </details>
             <details class="p-3.5 rounded-xl bg-neo-paper/70 border border-neo-border group">
               <summary class="font-bold text-neo-indigo cursor-pointer flex items-center justify-between">
-                <span>如何預約一對一易經占卜或申請線上排卦帳號？</span>
+                <span>免登入體驗與註冊「網站訪客」有什麼不同？</span>
                 <i class="fa-solid fa-chevron-down text-neo-muted group-open:rotate-180 transition-transform"></i>
               </summary>
-              <p class="pt-2.5 leading-relaxed">線上自學排卦可直接在網站內「線上占卜」申請帳號，新朋友通過審核即享 90 天每日 5 題免費體驗；若需一對一深度問事或洽詢易經課程，歡迎加入官方 LINE（@129uiadu）或致電 0961-411357 預約。</p>
+              <p class="pt-2.5 leading-relaxed">免登入訪客可不限次數直接起卦，獲得「卦的簡介」與「單一領域核心結論」；若免費註冊為「網站訪客」，審核通過即享半年（180 天）每日 5 題完整客觀局勢解析、四大領域心法導引與周易古文原典，首次登入更特別加贈「陳亮老師親自文字親批 1 題」禮遇！</p>
             </details>
             <details class="p-3.5 rounded-xl bg-neo-paper/70 border border-neo-border group">
               <summary class="font-bold text-neo-indigo cursor-pointer flex items-center justify-between">
@@ -456,8 +479,6 @@
       </section>
 
       <!-- 第二站：文章專欄與影音庫（免登入直接瀏覽） -->
-      
-<!-- 第二站：文章專欄與影音庫（免登入直接瀏覽） -->
       <section id="view-columns" class="view-panel hidden space-y-5">
         <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-4 font-serif">
           <div class="border-b border-neo-border pb-3 flex flex-wrap justify-between items-center gap-2">
@@ -472,8 +493,8 @@
               <button onclick="loadColumnsFrontEnd()" class="px-3 py-1.5 rounded-xl bg-neo-paper border border-neo-border text-neo-indigo text-xs font-sans font-bold hover:bg-neo-amberSoft transition cursor-pointer">
                 <i class="fa-solid fa-rotate"></i> 同步更新
               </button>
-              <button onclick="goToDivinationGate()" class="px-3.5 py-1.5 rounded-xl bg-neo-amber text-neo-indigo text-xs font-sans font-bold shadow-xs hover:bg-neo-amberHover transition cursor-pointer">
-                前往登入卜卦 ➔
+              <button onclick="startDivinationDirect()" class="px-3.5 py-1.5 rounded-xl bg-neo-amber text-neo-indigo text-xs font-sans font-bold shadow-xs hover:bg-neo-amberHover transition cursor-pointer">
+                立即體驗占卜 ➔
               </button>
             </div>
           </div>
@@ -487,17 +508,123 @@
         </div>
       </section>
 
-      <!-- 占卜前導覽與身分登入專區 -->
+      <!-- 帳號登入、註冊與分級權益說明專區 -->
       <section id="view-divination-gate" class="view-panel hidden space-y-6">
-        <!-- 上半部：占卜前必讀文章 -->
+        <div class="flex items-center justify-between">
+          <button type="button" onclick="goBackStep()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
+            <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回上一頁</span>
+          </button>
+          <button type="button" onclick="startDivinationDirect()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo border border-neo-amber text-xs font-serif font-bold transition cursor-pointer">
+            <span>先不登入，直接免登入起卦 ➔</span>
+          </button>
+        </div>
+
+        <div id="gate-auth-card" class="bg-white rounded-3xl border-2 border-neo-indigo shadow-md overflow-hidden">
+          <div class="bg-neo-indigo text-white px-6 py-4 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-shield-halved text-neo-amber text-xl"></i>
+              <div>
+                <h3 class="font-serif font-bold text-base sm:text-lg tracking-wide">陳亮易經互動網・帳號登入與權益開通專區</h3>
+                <p class="text-xs text-blue-100">免費註冊「網站訪客」即享半年（180 天）完整解析＋加贈陳亮老師文字親批 1 題！</p>
+              </div>
+            </div>
+            <span class="text-xs bg-neo-amber text-neo-indigo px-3 py-1 rounded-full font-bold">四層分級</span>
+          </div>
+
+          <div class="p-5 sm:p-6 space-y-5">
+            <div id="gate-login-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button type="button" onclick="openRegisterModal('網站訪客')" class="text-left p-4 rounded-2xl border-2 border-neo-cinnabar bg-red-50/40 hover:bg-red-50 transition flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-11 rounded-xl bg-neo-cinnabar text-white flex items-center justify-center font-bold text-base flex-shrink-0">
+                    <i class="fa-solid fa-gift"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-sm text-neo-cinnabar">免費註冊・領取半年體驗＋親批 1 題</div>
+                    <div class="text-xs text-neo-muted mt-1">填寫姓名、手機、Email 與自訂通行碼，審核即開通</div>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-white bg-neo-cinnabar px-3 py-1.5 rounded-xl whitespace-nowrap ml-2">立即申請</span>
+              </button>
+
+              <button type="button" onclick="openLoginModal('guest')" class="text-left p-4 rounded-2xl border border-neo-border bg-neo-paper/60 hover:bg-white hover:border-neo-indigo transition flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-11 rounded-xl bg-neo-indigoSoft text-neo-indigo flex items-center justify-center font-bold text-base flex-shrink-0">1</div>
+                  <div>
+                    <div class="font-bold text-sm text-neo-indigo">網站訪客登入 <span class="text-[11px] font-bold text-emerald-700">（享半年 180 天體驗）</span></div>
+                    <div class="text-xs text-neo-muted mt-1">每日 5 題完整客觀局勢解析、心法導引與古文原典</div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-right-to-bracket text-neo-indigo ml-2"></i>
+              </button>
+
+              <button type="button" onclick="openLoginModal('member')" class="text-left p-4 rounded-2xl border border-neo-border bg-neo-paper/60 hover:bg-white hover:border-neo-indigo transition flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-11 rounded-xl bg-neo-indigo text-white flex items-center justify-center font-bold text-base flex-shrink-0">2</div>
+                  <div>
+                    <div class="font-bold text-sm text-neo-indigo">網站會員登入 <span class="text-[11px] font-bold text-neo-indigoLight">（年費 2,500 元）</span></div>
+                    <div class="text-xs text-neo-muted mt-1">每日 10 題（解鎖第二層性格盲點與實戰見招拆招）</div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-right-to-bracket text-neo-indigo ml-2"></i>
+              </button>
+
+              <button type="button" onclick="openLoginModal('advanced')" class="text-left p-4 rounded-2xl border-2 border-neo-amber bg-neo-amberSoft/60 hover:bg-neo-amberSoft transition flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-11 rounded-xl bg-neo-amber text-neo-indigo flex items-center justify-center font-bold text-base flex-shrink-0">3</div>
+                  <div>
+                    <div class="font-bold text-sm text-neo-indigo">高階學員登入 <span class="text-[11px] font-bold text-neo-cinnabar">（永久有效・提問無限制）</span></div>
+                    <div class="text-xs text-neo-indigoLight mt-1">開放閱覽全三層解析（含判曰古文奧義與深層推演）</div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-right-to-bracket text-neo-indigo ml-2"></i>
+              </button>
+            </div>
+
+            <div id="gate-logged-in-panel" class="hidden space-y-4">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-300">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xl flex-shrink-0">
+                    <i class="fa-solid fa-user-check"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-serif font-bold text-base text-neo-indigo" id="gate-profile-name">已驗證身分</h4>
+                    <p class="text-xs text-emerald-800 mt-0.5" id="gate-profile-role">憑證有效，已解鎖完整心法導引與分層解析</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2.5 w-full sm:w-auto">
+                  <button type="button" onclick="goToStep('p2-categories')" class="flex-grow sm:flex-grow-0 px-5 py-3 rounded-xl bg-neo-amber hover:bg-neo-amberHover text-neo-indigo font-serif font-bold text-xs sm:text-sm shadow-sm transition cursor-pointer">
+                    前往四大主題占卜 ➔
+                  </button>
+                  <button type="button" onclick="userLogout()" class="px-4 py-3 rounded-xl bg-white border border-neo-cinnabar text-neo-cinnabar font-bold text-xs hover:bg-red-50 transition cursor-pointer">
+                    登出切換
+                  </button>
+                </div>
+              </div>
+
+              <div id="gate-gift-consult-banner" class="hidden p-5 rounded-2xl bg-gradient-to-r from-neo-amberSoft to-white border-2 border-neo-amber space-y-3 font-serif">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span class="px-3 py-1 rounded-full bg-neo-cinnabar text-white text-xs font-bold"><i class="fa-solid fa-gift mr-1"></i> 網站訪客首登專屬禮遇</span>
+                  <span class="text-xs text-neo-muted">每組帳號限兌換 1 次</span>
+                </div>
+                <h4 class="font-bold text-base text-neo-indigo">免費兌換：陳亮老師親自文字解卦 1 題</h4>
+                <p class="text-xs sm:text-sm text-neo-indigoLight leading-relaxed">
+                  只要您把遇到的具體處境與抉擇點寫清楚，並同意去識別化後作為網站公開案例或電子報教學分享，陳亮老師將親自用文字為您批示一題！
+                </p>
+                <button type="button" onclick="openGiftConsultModal()" class="px-5 py-2.5 rounded-xl bg-neo-indigo hover:bg-neo-indigoLight text-white font-bold text-xs sm:text-sm shadow-xs transition cursor-pointer">
+                  <i class="fa-solid fa-pen-nib text-neo-amber mr-1"></i> 立即填寫問題・兌換老師親批 1 題 ➔
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-white p-5 sm:p-6 rounded-3xl border border-neo-border shadow-xs space-y-4 font-serif">
           <div class="border-b border-neo-border pb-3 flex flex-wrap justify-between items-center gap-2">
             <div>
-              <span class="text-xs font-mono text-neo-amberHover font-bold tracking-wider">STEP 1 / READ BEFORE DIVINATION</span>
+              <span class="text-xs font-mono text-neo-amberHover font-bold tracking-wider">READ & LEARN</span>
               <h2 class="text-lg sm:text-xl font-bold text-neo-indigo flex items-center gap-2 mt-0.5">
                 <i class="fa-solid fa-book-open-reader text-neo-amber"></i> 占卜前必讀：最新發表文章與研究心得
               </h2>
-              <p class="text-xs text-neo-muted font-sans mt-0.5">起卦前先靜心閱讀老師最新發表的易理觀點，建立正確問事心態（下方為登入專區）</p>
             </div>
             <button type="button" onclick="goToStep('view-columns')" class="text-xs text-neo-indigoLight hover:underline font-sans font-bold cursor-pointer">
               瀏覽全部文章與影音 ➔
@@ -509,105 +636,27 @@
             </div>
           </div>
         </div>
-
-        <!-- 下半部：發問卜卦身分登入專區 -->
-        <div id="gate-auth-card" class="bg-white rounded-3xl border-2 border-neo-indigo shadow-md overflow-hidden">
-          <div class="bg-neo-indigo text-white px-6 py-4 flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-shield-halved text-neo-amber text-xl"></i>
-              <div>
-                <h3 class="font-serif font-bold text-base sm:text-lg tracking-wide">發問卜卦身分登入專區</h3>
-                <p class="text-xs text-blue-100">欲進入四大領域起卦，請先完成「申請帳號」或「登入三種身分之一」</p>
-              </div>
-            </div>
-            <span class="text-xs bg-neo-amber text-neo-indigo px-3 py-1 rounded-full font-bold">身分核驗</span>
-          </div>
-
-          <div class="p-5 sm:p-6">
-            <div id="gate-login-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- 新使用者申請 -->
-              <button type="button" onclick="openRegisterModal()" class="text-left p-4 rounded-2xl border-2 border-neo-cinnabar bg-red-50/40 hover:bg-red-50 transition flex items-center justify-between cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                  <div class="w-11 h-11 rounded-xl bg-neo-cinnabar text-white flex items-center justify-center font-bold text-base flex-shrink-0">
-                    <i class="fa-solid fa-user-plus"></i>
-                  </div>
-                  <div>
-                    <div class="font-bold text-sm text-neo-cinnabar">初次使用・請先申請帳號</div>
-                    <div class="text-xs text-neo-muted mt-1">填寫姓名、手機、Email 並自訂通行碼</div>
-                  </div>
-                </div>
-                <span class="text-xs font-bold text-white bg-neo-cinnabar px-3 py-1.5 rounded-xl whitespace-nowrap ml-2">申請帳號</span>
-              </button>
-
-              <!-- 1. 網站訪客登入 -->
-              <button type="button" onclick="openLoginModal('guest')" class="text-left p-4 rounded-2xl border border-neo-border bg-neo-paper/60 hover:bg-white hover:border-neo-indigo transition flex items-center justify-between cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                  <div class="w-11 h-11 rounded-xl bg-neo-indigoSoft text-neo-indigo flex items-center justify-center font-bold text-base flex-shrink-0">1</div>
-                  <div>
-                    <div class="font-bold text-sm text-neo-indigo">網站訪客登入 <span class="text-[11px] font-normal text-neo-muted">（享 90 天體驗）</span></div>
-                    <div class="text-xs text-neo-muted mt-1">每日限 5 題免費發問（開放閱覽第一層客觀局勢解析）</div>
-                  </div>
-                </div>
-                <i class="fa-solid fa-right-to-bracket text-neo-indigo ml-2"></i>
-              </button>
-
-              <!-- 2. 網站會員登入 -->
-              <button type="button" onclick="openLoginModal('member')" class="text-left p-4 rounded-2xl border border-neo-border bg-neo-paper/60 hover:bg-white hover:border-neo-indigo transition flex items-center justify-between cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                  <div class="w-11 h-11 rounded-xl bg-neo-indigo text-white flex items-center justify-center font-bold text-base flex-shrink-0">2</div>
-                  <div>
-                    <div class="font-bold text-sm text-neo-indigo">網站會員登入 <span class="text-[11px] font-bold text-neo-indigoLight">（年費 2,500 元）</span></div>
-                    <div class="text-xs text-neo-muted mt-1">每日 10 題（開放閱覽第一、二層盲點與實戰對策）</div>
-                  </div>
-                </div>
-                <i class="fa-solid fa-right-to-bracket text-neo-indigo ml-2"></i>
-              </button>
-
-              <!-- 3. 高階學員登入 -->
-              <button type="button" onclick="openLoginModal('advanced')" class="text-left p-4 rounded-2xl border-2 border-neo-amber bg-neo-amberSoft/60 hover:bg-neo-amberSoft transition flex items-center justify-between cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                  <div class="w-11 h-11 rounded-xl bg-neo-amber text-neo-indigo flex items-center justify-center font-bold text-base flex-shrink-0">3</div>
-                  <div>
-                    <div class="font-bold text-sm text-neo-indigo">高階學員登入 <span class="text-[11px] font-bold text-neo-cinnabar">（提問無限制）</span></div>
-                    <div class="text-xs text-neo-indigoLight mt-1">開放閱覽全三層解析（含判曰古文奧義與深層推演）</div>
-                  </div>
-                </div>
-                <i class="fa-solid fa-right-to-bracket text-neo-indigo ml-2"></i>
-              </button>
-            </div>
-
-            <!-- 已通過後端 Token 驗證狀態 -->
-            <div id="gate-logged-in-panel" class="hidden flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-300">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xl flex-shrink-0">
-                  <i class="fa-solid fa-user-check"></i>
-                </div>
-                <div>
-                  <h4 class="font-serif font-bold text-base text-neo-indigo" id="gate-profile-name">已驗證身分</h4>
-                  <p class="text-xs text-emerald-800 mt-0.5" id="gate-profile-role">憑證有效，可進入四大求問領域</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-2.5 w-full sm:w-auto">
-                <button type="button" onclick="proceedToCategoriesStep()" class="flex-grow sm:flex-grow-0 px-5 py-3 rounded-xl bg-neo-amber hover:bg-neo-amberHover text-neo-indigo font-serif font-bold text-xs sm:text-sm shadow-sm transition cursor-pointer">
-                  進入選定四大主題 ➔
-                </button>
-                <button type="button" onclick="userLogout()" class="px-4 py-3 rounded-xl bg-white border border-neo-cinnabar text-neo-cinnabar font-bold text-xs hover:bg-red-50 transition cursor-pointer">
-                  登出切換
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
-      <!-- 選定求問四大主題 -->
+      <!-- 步驟 2：選定求問四大主題（免登入直接可進） -->
       <section id="p2-categories" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
-          <button type="button" onclick="goBackStep()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
-            <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回上一步（占卜入口）</span>
+          <button type="button" onclick="goToStep('p1-home')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
+            <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回教室首頁</span>
           </button>
           <span class="text-xs text-neo-muted font-serif">步驟 2 / 4：選擇求問領域</span>
+        </div>
+
+        <div id="guest-lite-mode-banner" class="p-4 rounded-2xl bg-gradient-to-r from-neo-amberSoft via-white to-neo-amberSoft border border-neo-amber/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-serif">
+          <div class="space-y-0.5">
+            <div class="text-xs sm:text-sm font-bold text-neo-indigo flex items-center gap-1.5">
+              <i class="fa-solid fa-sparkles text-neo-amberHover"></i> <span>目前為「免登入極簡體驗模式」（不限次數免費試算）</span>
+            </div>
+            <p class="text-xs text-neo-muted">嚴守「一問一卦、問哪一項得哪一項」：選出單一領域起卦後，即刻獲得<strong>卦象簡介</strong>與<strong>核心結論</strong>；註冊訪客可解鎖下方心法導引與完整解析。</p>
+          </div>
+          <button type="button" onclick="openRegisterModal('網站訪客')" class="px-3.5 py-2 rounded-xl bg-neo-indigo hover:bg-neo-indigoLight text-white text-xs font-bold whitespace-nowrap shadow-2xs transition cursor-pointer">
+            免費註冊解鎖心法 ➔
+          </button>
         </div>
 
         <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-5">
@@ -615,15 +664,15 @@
             <div>
               <span class="text-xs font-mono text-neo-amberHover font-bold tracking-wider">STEP 2 / ISSUE SELECTION</span>
               <h2 class="text-lg sm:text-xl font-serif font-bold text-neo-indigo mt-0.5">請先選擇所求問之四大領域</h2>
-              <p class="text-xs sm:text-sm text-neo-muted mt-0.5">一問一卦原則：請先選定一個具體核心問題類別，點擊「心法」可展開側邊閱讀欄研讀。</p>
+              <p class="text-xs sm:text-sm text-neo-muted mt-0.5">一問一卦原則：每次只針對一個具體問題起卦，絕不混問。</p>
             </div>
-            <span id="daily-quota-badge" class="text-xs bg-neo-amberSoft text-neo-indigo px-3 py-1 rounded-full font-mono border border-neo-amber/50 font-bold">今日額度計算中</span>
+            <span id="daily-quota-badge" class="text-xs bg-neo-amberSoft text-neo-indigo px-3 py-1 rounded-full font-mono border border-neo-amber/50 font-bold">免登入・不限次數</span>
           </div>
 
           <details class="bg-neo-paper rounded-2xl border border-neo-border overflow-hidden group" open>
             <summary class="p-4 cursor-pointer flex items-center justify-between hover:bg-neo-amberSoft/30 transition select-none">
               <span class="font-serif font-bold text-neo-indigo text-sm flex items-center gap-2">
-                <i class="fa-solid fa-scroll text-neo-amber"></i> 【總則解說】易學總則與核心心法
+                <i class="fa-solid fa-scroll text-neo-amber"></i> 【總則解說預告】為什麼問題分成這四大領域？
               </span>
               <span class="text-xs text-neo-muted flex items-center gap-1.5">
                 <span>點選收合／展開</span>
@@ -647,7 +696,9 @@
                 </div>
               </div>
               <div class="flex items-center gap-2 flex-shrink-0">
-                <button type="button" onclick="openGuidanceDrawer(event, 'personality', '個性與人情處理')" class="px-2.5 py-1.5 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo font-serif font-bold text-xs border border-neo-amber/60 transition cursor-pointer"><i class="fa-solid fa-book-open mr-1"></i>心法</button>
+                <button type="button" onclick="handleGuidanceClick(event, 'personality', '個性與人情處理')" class="guidance-lock-btn px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-neo-amberSoft text-neo-indigo font-serif font-bold text-xs border border-neo-border transition cursor-pointer">
+                  <i class="fa-solid fa-lock text-neo-cinnabar mr-1"></i>心法導引 🔒
+                </button>
                 <div class="check-icon w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
               </div>
             </div>
@@ -661,7 +712,9 @@
                 </div>
               </div>
               <div class="flex items-center gap-2 flex-shrink-0">
-                <button type="button" onclick="openGuidanceDrawer(event, 'career', '事業與學業競爭')" class="px-2.5 py-1.5 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo font-serif font-bold text-xs border border-neo-amber/60 transition cursor-pointer"><i class="fa-solid fa-book-open mr-1"></i>心法</button>
+                <button type="button" onclick="handleGuidanceClick(event, 'career', '事業與學業競爭')" class="guidance-lock-btn px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-neo-amberSoft text-neo-indigo font-serif font-bold text-xs border border-neo-border transition cursor-pointer">
+                  <i class="fa-solid fa-lock text-neo-cinnabar mr-1"></i>心法導引 🔒
+                </button>
                 <div class="check-icon w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
               </div>
             </div>
@@ -675,7 +728,9 @@
                 </div>
               </div>
               <div class="flex items-center gap-2 flex-shrink-0">
-                <button type="button" onclick="openGuidanceDrawer(event, 'relationship', '感情與婚姻生活')" class="px-2.5 py-1.5 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo font-serif font-bold text-xs border border-neo-amber/60 transition cursor-pointer"><i class="fa-solid fa-book-open mr-1"></i>心法</button>
+                <button type="button" onclick="handleGuidanceClick(event, 'relationship', '感情與婚姻生活')" class="guidance-lock-btn px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-neo-amberSoft text-neo-indigo font-serif font-bold text-xs border border-neo-border transition cursor-pointer">
+                  <i class="fa-solid fa-lock text-neo-cinnabar mr-1"></i>心法導引 🔒
+                </button>
                 <div class="check-icon w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
               </div>
             </div>
@@ -689,7 +744,9 @@
                 </div>
               </div>
               <div class="flex items-center gap-2 flex-shrink-0">
-                <button type="button" onclick="openGuidanceDrawer(event, 'health', '身體與健康')" class="px-2.5 py-1.5 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo font-serif font-bold text-xs border border-neo-amber/60 transition cursor-pointer"><i class="fa-solid fa-book-open mr-1"></i>心法</button>
+                <button type="button" onclick="handleGuidanceClick(event, 'health', '身體與健康')" class="guidance-lock-btn px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-neo-amberSoft text-neo-indigo font-serif font-bold text-xs border border-neo-border transition cursor-pointer">
+                  <i class="fa-solid fa-lock text-neo-cinnabar mr-1"></i>心法導引 🔒
+                </button>
                 <div class="check-icon w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center text-xs text-transparent"><i class="fa-solid fa-check"></i></div>
               </div>
             </div>
@@ -700,14 +757,13 @@
               <i class="fa-solid fa-lock" id="proceed-icon"></i>
               <span id="proceed-text">請先在上方選擇一項問題領域（尚未選取）</span>
             </button>
-            <p class="text-xs text-neo-muted text-center font-serif">※ 依陳亮老師教學規範：選題後須先完成易學三義心法與發問邏輯檢驗。</p>
+            <p class="text-xs text-neo-muted text-center font-serif">※ 依陳亮老師教學規範：選題後須先完成易學三義心法與發問邏輯檢驗，方能進入起卦。</p>
           </div>
         </div>
       </section>
 
-      <!-- 發問邏輯嚴格檢驗過渡頁 -->
+      <!-- 步驟 2.5：發問邏輯嚴格檢驗過渡頁 -->
       <section id="p3-principles" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goToStep('p2-categories')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
             <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回重選四大領域</span>
@@ -755,14 +811,13 @@
         </div>
       </section>
 
-      <!-- 電腦隨機取卦台 -->
+      <!-- 步驟 3：電腦隨機取卦台（回歸原版琥珀金大按鈕風格，純本卦略筮法） -->
       <section id="view-divination" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goToStep('p2-categories')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
             <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回重選四大領域</span>
           </button>
-          <span class="text-xs text-neo-muted font-serif">步驟 3 / 4：電腦隨機取卦</span>
+          <span class="text-xs text-neo-muted font-serif">步驟 3 / 4：正統略筮法取卦</span>
         </div>
 
         <div class="bg-white p-4 rounded-2xl border border-neo-border shadow-xs flex flex-wrap items-center justify-between gap-2">
@@ -782,14 +837,14 @@
                 <h3 class="font-bold text-base text-neo-indigo flex items-center gap-2">
                   <i class="fa-solid fa-yin-yang text-neo-amber"></i> 靜心起卦要訣
                 </h3>
-                <span class="text-xs bg-neo-indigoSoft text-neo-indigo px-2.5 py-0.5 rounded-full font-bold">統一電腦取卦</span>
+                <span class="text-xs bg-neo-indigoSoft text-neo-indigo px-2.5 py-0.5 rounded-full font-bold">純本卦略筮法</span>
               </div>
               <p class="text-xs sm:text-sm text-neo-indigoLight leading-relaxed">
-                為確保占卜客觀性與數理純粹性，本系統無論訪客、會員或高階學員，一律採用<strong>「誠心默念問題 ➔ 電腦隨機取卦」</strong>。
+                為確保占卜客觀性與數理純粹性，本系統一律採用<strong>「誠心默念單一問題 ➔ 電腦隨機取卦」</strong>。
               </p>
               <div class="p-3 rounded-xl bg-neo-amberSoft/60 border border-neo-amber/40 text-xs text-neo-indigo space-y-1">
-                <strong class="block font-bold"><i class="fa-solid fa-arrow-up-from-bracket text-neo-amberHover mr-1"></i>排卦順序原則：由下而上！</strong>
-                <p class="text-neo-muted leading-relaxed">點擊右側「電腦隨機取卦」後，系統將嚴格依序自初爻（底）至上爻（頂）生成六爻陰陽卦象。</p>
+                <strong class="block font-bold"><i class="fa-solid fa-arrow-up-from-bracket text-neo-amberHover mr-1"></i>本門原則：由下而上、純論本卦！</strong>
+                <p class="text-neo-muted leading-relaxed">點擊右側「電腦隨機取卦」後，系統將嚴格依序自初爻（底）至上爻（頂）生成六爻本卦，不論變爻。</p>
               </div>
             </div>
 
@@ -813,12 +868,13 @@
           </div>
 
           <div class="lg:col-span-7 bg-white p-5 sm:p-6 rounded-2xl border border-neo-border shadow-xs space-y-5">
+            <!-- 原版風格：琥珀金電腦隨機取卦大按鈕 -->
             <div class="space-y-2">
               <button id="btn-execute-random" onclick="executeRandomGua()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-neo-amber to-amber-500 hover:from-neo-amberHover hover:to-amber-600 text-neo-indigo font-serif font-bold text-base sm:text-lg tracking-wider shadow-md transition flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer">
                 <i class="fa-solid fa-compass"></i> <span id="random-btn-text">電腦隨機取卦</span>
               </button>
               <div class="flex justify-between items-center text-xs text-neo-muted px-1 font-serif">
-                <span>請默念所求問之事，點擊上方按鈕一次即可</span>
+                <span id="toss-status-hint">請默念所求問之事，點擊上方按鈕一次即可</span>
                 <button onclick="resetGuaBoard()" class="hover:text-neo-cinnabar underline font-bold cursor-pointer">清空重來</button>
               </div>
             </div>
@@ -849,19 +905,141 @@
         </div>
       </section>
 
-      <!-- 分層次卦象解答與分享圖卡 -->
+      <!-- 步驟 4：卦象解答（雙模切換：免登入新中式神諭決策卡 / 登入者三層次詳解） -->
       <section id="view-result" class="view-panel hidden space-y-5">
-        <!-- 返回上一步導覽列 -->
         <div class="flex items-center justify-between">
           <button type="button" onclick="goToStep('view-divination')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold shadow-2xs transition cursor-pointer">
-            <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回隨機取卦台</span>
+            <i class="fa-solid fa-arrow-left text-neo-amber"></i> <span>返回起卦台</span>
           </button>
           <button type="button" onclick="goToStep('p2-categories')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neo-paper hover:bg-neo-amberSoft text-neo-indigo border border-neo-border text-xs font-serif font-bold transition cursor-pointer">
-            <i class="fa-solid fa-rotate-left"></i> <span>重新選題</span>
+            <i class="fa-solid fa-rotate-left"></i> <span>重新選題占問</span>
           </button>
         </div>
 
-        <div class="bg-white p-5 sm:p-7 rounded-3xl border border-neo-border shadow-xs space-y-5">
+        <!-- ============================================================
+             模式 A：第 0 階「免登入極簡版・新中式決策神諭卡」（太極圖騰＋本卦六爻，只呈現卦的簡介與單一領域解答）
+             ============================================================ -->
+        <div id="guest-oracle-result-wrapper" class="hidden space-y-5">
+          <div class="oracle-card-frame rounded-3xl overflow-hidden">
+            <div class="oracle-corner-tl"></div>
+            <div class="oracle-corner-tr"></div>
+            <div class="oracle-corner-bl"></div>
+            <div class="oracle-corner-br"></div>
+
+            <!-- 頂部雙欄對稱：左「太極陰陽圖騰」＋ 右「單一本卦六爻圖形與卦名」（純本卦、無變爻） -->
+            <div class="p-6 sm:p-8 pb-5 border-b border-neo-border/80 flex flex-col sm:flex-row items-center justify-around gap-6">
+              <!-- 左側太極圖騰徽章 -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-24 h-24 rounded-full bg-neo-paper border-4 border-neo-border shadow-inner flex items-center justify-center p-2">
+                  <svg class="w-full h-full" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="46" fill="#FAF7F2" stroke="#16324F" stroke-width="5"/>
+                    <path d="M 50 4 A 46 46 0 0 1 50 96 A 23 23 0 0 1 50 50 A 23 23 0 0 0 50 4 Z" fill="#16324F"/>
+                    <circle cx="50" cy="27" r="7" fill="#FAF7F2"/>
+                    <circle cx="50" cy="73" r="7" fill="#D99B26"/>
+                  </svg>
+                </div>
+                <span class="text-[11px] font-serif text-neo-muted tracking-widest">正統略筮・純論本卦</span>
+              </div>
+
+              <!-- 右側單一本卦六爻圖形 -->
+              <div class="flex flex-col items-center space-y-2">
+                <span id="oracle-domain-pill" class="px-3 py-0.5 rounded-full bg-neo-indigo text-neo-amber text-xs font-serif font-bold tracking-wider">求問領域：--</span>
+                <div id="oracle-mini-hexagram" class="w-36 space-y-1.5 py-1"></div>
+                <div class="text-center">
+                  <h2 id="oracle-gua-name" class="text-2xl sm:text-3xl font-serif font-bold text-neo-indigo tracking-wider">-- 卦</h2>
+                  <p id="oracle-gua-nature" class="text-xs text-neo-muted font-serif mt-0.5">外卦-- / 內卦--</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卡片核心內容區：嚴格只呈現 (1) 卦的簡介 + (2) 該單一領域解答（全數動態讀取試算表） -->
+            <div id="oracle-content-body" class="p-6 sm:p-8 space-y-6 font-serif protected-text-zone">
+              <div class="py-8 text-center text-neo-muted">
+                <i class="fa-solid fa-spinner fa-spin text-neo-amber text-2xl mb-2 block"></i>
+                <span>正在為您讀取本卦極簡解析...</span>
+              </div>
+            </div>
+
+            <!-- 卡片底部深青藍品牌底座 -->
+            <div class="bg-neo-indigo text-white px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 border-t-2 border-neo-amber">
+              <div class="text-center sm:text-left">
+                <div class="font-serif font-bold text-sm sm:text-base text-neo-amber tracking-wider">用正統易經略筮法・為人生重要抉擇推演生機</div>
+                <div class="text-[11px] text-blue-100 mt-0.5">一問一卦 · 不談怪力亂神 · 臺大三學院思維 × 三十年實證</div>
+              </div>
+              <div class="px-3.5 py-1.5 rounded-xl bg-white/10 border border-neo-amber/50 text-center flex-shrink-0">
+                <div class="font-serif font-bold text-xs text-white">陳亮老師易經占卜教室</div>
+                <div class="text-[10px] text-neo-amber font-mono">LINE: @129uiadu</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分享圖卡與一鍵帶卦象進 LINE@ 快捷操作列 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button type="button" onclick="generateAndOpenShareCard()" class="py-3.5 px-4 rounded-2xl bg-gradient-to-r from-neo-amber to-amber-500 hover:from-neo-amberHover hover:to-amber-600 text-neo-indigo font-serif font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-image text-base"></i> <span>製作同款「卦象神諭圖卡」分享</span>
+            </button>
+            <button type="button" onclick="copyGuaAndOpenLine()" class="py-3.5 px-4 rounded-2xl bg-[#06c755] hover:bg-[#05b34c] text-white font-serif font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-brands fa-line text-lg"></i> <span>複製本卦結果 ➔ 傳 LINE 問老師</span>
+            </button>
+          </div>
+
+          <!-- 痛點留白收網鉤子：半透明預告 ＋ 免費註冊半年體驗 ＋ 贈送親批 1 題 -->
+          <div class="bg-white rounded-3xl border-2 border-neo-cinnabar/80 p-5 sm:p-6 shadow-md space-y-4 font-serif relative overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full bg-neo-cinnabar text-white text-xs font-bold tracking-wider">
+                <i class="fa-solid fa-lock-open mr-1"></i> 想看更深層的完整局勢與具體對策？
+              </span>
+              <span class="text-xs font-bold text-neo-cinnabar">限時免費開放領取</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-neo-paper border border-neo-border space-y-2 relative">
+              <div class="text-xs font-bold text-neo-indigo flex items-center gap-1.5">
+                <i class="fa-solid fa-lock text-neo-amberHover"></i> <span>【已鎖定】本卦完整客觀局勢剖析（約 250 字）＋ 發問心法禁忌 ＋ 周易古文原典</span>
+              </div>
+              <p class="text-xs text-neo-muted leading-relaxed blur-[1.5px] select-none">
+                此卦在現實執行層面暗藏關鍵轉折點，若只看表面吉凶極易誤判時機；進退之間必須先釐清客觀底線與資源配置……
+              </p>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-base sm:text-lg font-bold text-neo-indigo">
+                免費註冊「網站訪客」，立即解鎖四大專屬特權：
+              </h3>
+              <ul class="text-xs sm:text-sm text-neo-indigoLight space-y-1.5 pl-1">
+                <li><i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i><strong>體驗期大方加倍：</strong>審核通過即享 <strong>半年（180 天）</strong> 每日 5 題完整客觀局勢解析。</li>
+                <li><i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i><strong>解鎖心法與原典：</strong>立即開啟「四大領域心法導引」、周易古文原典與學員留言板提問權。</li>
+                <li><i class="fa-solid fa-gift text-neo-cinnabar mr-1.5"></i><strong>首登特別加贈：</strong>首次註冊登入，再送您<strong>【陳亮老師親自文字解卦 1 題】</strong>（寫明具體處境並同意去識別化公開案例即可兌換）！</li>
+              </ul>
+            </div>
+
+            <div class="pt-1 flex flex-col sm:flex-row gap-2.5">
+              <button type="button" onclick="openRegisterModal('網站訪客')" class="flex-grow py-3.5 px-5 rounded-2xl bg-neo-cinnabar hover:bg-red-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-user-plus"></i> <span>30 秒免費註冊「網站訪客」（領半年體驗＋親批 1 題）➔</span>
+              </button>
+              <button type="button" onclick="goToAccountGate()" class="py-3.5 px-4 rounded-2xl bg-neo-indigoSoft hover:bg-neo-indigo hover:text-white text-neo-indigo font-bold text-xs transition cursor-pointer">
+                已有帳號？立即登入
+              </button>
+            </div>
+          </div>
+
+          <!-- 本機近期占問紀錄匣 -->
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-neo-border shadow-xs space-y-3 font-serif">
+            <div class="flex items-center justify-between border-b border-neo-border pb-2">
+              <span class="text-xs sm:text-sm font-bold text-neo-indigo flex items-center gap-1.5">
+                <i class="fa-solid fa-clock-rotate-left text-neo-amber"></i> <span>您的本機近期占問紀錄（僅暫存最近 3 卦）</span>
+              </span>
+              <span class="text-[11px] text-neo-muted">註冊帳號可永久留存紀錄</span>
+            </div>
+            <div id="guest-local-history-list" class="space-y-2 text-xs text-neo-muted">
+              暫無歷史紀錄。
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             模式 B：第 1～3 階「已登入身分（網站訪客／網站會員／高階學員）」完整分層解析
+             ============================================================ -->
+        <div id="member-tiered-result-wrapper" class="hidden bg-white p-5 sm:p-7 rounded-3xl border border-neo-border shadow-xs space-y-5">
           <div class="border-b border-neo-border pb-4 flex flex-wrap justify-between items-start gap-3">
             <div>
               <span class="text-xs font-mono text-neo-amberHover font-bold tracking-wider">STEP 4 / DIVINATION RESULT</span>
@@ -882,24 +1060,34 @@
             <span class="font-mono text-xs bg-neo-amberSoft text-neo-indigo border border-neo-amber/50 px-3 py-1 rounded-xl font-bold" id="result-gua-numbers">--</span>
           </div>
 
-          <!-- 分享圖卡與推廣 -->
           <div class="p-4 rounded-2xl bg-neo-amberSoft/70 border border-neo-amber/50 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div class="text-xs sm:text-sm font-serif text-neo-indigo">
               <strong class="block"><i class="fa-solid fa-scroll text-neo-amberHover mr-1"></i> 覺得卦象分析很有啟發？</strong>
-              <span class="text-xs text-neo-muted">製作專屬卦象語錄分享圖卡，直接轉傳 LINE 群組或 FB 貼文！</span>
+              <span class="text-xs text-neo-muted">製作專屬卦象語錄分享圖卡，或將卦象傳送至官方 LINE 與老師討論！</span>
             </div>
             <div class="flex items-center gap-2 w-full sm:w-auto flex-shrink-0">
               <button type="button" onclick="generateAndOpenShareCard()" class="flex-grow sm:flex-grow-0 px-4 py-2.5 rounded-xl bg-neo-amber hover:bg-neo-amberHover text-neo-indigo font-serif font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-image"></i> <span>製作精美分享圖卡</span>
+                <i class="fa-solid fa-image"></i> <span>製作分享圖卡</span>
               </button>
-              <button type="button" onclick="copyShareUrl()" class="px-3.5 py-2.5 rounded-xl bg-white hover:bg-neo-indigoSoft text-neo-indigo border border-neo-border font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-link"></i> <span>複製連結</span>
+              <button type="button" onclick="copyGuaAndOpenLine()" class="px-3.5 py-2.5 rounded-xl bg-[#06c755] hover:bg-[#05b34c] text-white font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <i class="fa-brands fa-line"></i> <span>傳 LINE</span>
               </button>
             </div>
           </div>
 
-          <!-- 三層次可收合解析區 -->
           <div id="result-tiered-content-container" class="space-y-4 protected-text-zone"></div>
+
+          <div id="result-gift-consult-card" class="hidden p-5 rounded-2xl bg-gradient-to-r from-neo-amberSoft to-white border-2 border-neo-amber space-y-2.5 font-serif">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-neo-cinnabar text-white text-xs font-bold"><i class="fa-solid fa-gift mr-1"></i> 網站訪客首登禮遇</span>
+              <span class="text-xs text-neo-muted">每組帳號限兌換 1 次</span>
+            </div>
+            <h4 class="font-bold text-base text-neo-indigo">對這支卦仍有疑問？使用您的「免費文字親批 1 題」額度！</h4>
+            <p class="text-xs text-neo-indigoLight leading-relaxed">只要將您的具體處境與抉擇點寫清楚，並同意去識別化後作為網站公開案例或電子報教學分享，陳亮老師將親自用文字為您回覆。</p>
+            <button type="button" onclick="openGiftConsultModal()" class="px-4 py-2.5 rounded-xl bg-neo-indigo hover:bg-neo-indigoLight text-white font-bold text-xs shadow-xs transition cursor-pointer">
+              <i class="fa-solid fa-pen-nib text-neo-amber mr-1"></i> 帶入本卦「<span id="gift-card-gua-name"></span>」立即提問 ➔
+            </button>
+          </div>
           
           <div class="pt-3 border-t border-neo-border space-y-3">
             <button type="button" onclick="openCurrentHexClassicDrawer()" class="w-full py-4 px-5 rounded-2xl bg-neo-indigo hover:bg-neo-indigoLight text-white font-serif font-bold text-sm sm:text-base transition flex items-center justify-center gap-2.5 shadow-md cursor-pointer">
@@ -957,8 +1145,11 @@
 
             <div id="msg-form-container" class="bg-neo-paper p-4 rounded-2xl border border-neo-border space-y-3">
               <div id="msg-login-warning" class="text-xs sm:text-sm text-neo-indigo font-bold text-center py-2 space-y-2 hidden">
-                <p>公開留言板歡迎自由閱覽；若要張貼提問留言，請先登入帳號。</p>
-                <button type="button" onclick="goToDivinationGate()" class="px-4 py-1.5 rounded-xl bg-neo-amber text-neo-indigo text-xs font-bold cursor-pointer">前往登入 / 申請帳號 ➔</button>
+                <p>公開留言板歡迎自由閱覽；若要張貼提問留言，請先免費註冊「網站訪客」或登入帳號。</p>
+                <div class="flex items-center justify-center gap-2">
+                  <button type="button" onclick="openRegisterModal('網站訪客')" class="px-4 py-1.5 rounded-xl bg-neo-cinnabar text-white text-xs font-bold cursor-pointer">免費註冊領半年體驗</button>
+                  <button type="button" onclick="goToAccountGate()" class="px-4 py-1.5 rounded-xl bg-neo-amber text-neo-indigo text-xs font-bold cursor-pointer">前往登入 ➔</button>
+                </div>
               </div>
               <div id="msg-form-area" class="space-y-3">
                 <div class="grid grid-cols-2 gap-2.5">
@@ -985,7 +1176,7 @@
     </main>
   </div>
 
-  <!-- 全平台通用：底部 4 標籤固定導覽列 (手機與電腦版皆顯示) -->
+  <!-- 全平台通用：底部 4 標籤固定導覽列 -->
   <nav class="fixed bottom-0 left-0 right-0 bg-[#181818]/95 backdrop-blur-md text-slate-300 border-t border-stone-800 z-40 flex items-center justify-center h-16 px-2 shadow-2xl">
     <div class="w-full max-w-2xl flex items-center justify-around h-full">
       <button type="button" onclick="goToStep('p1-home')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-neo-amber font-bold transition cursor-pointer" data-target="p1-home">
@@ -994,7 +1185,7 @@
       <button type="button" onclick="goToStep('view-columns')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-white transition cursor-pointer" data-target="view-columns">
         <i class="fa-solid fa-newspaper text-base"></i><span class="text-xs mt-1 font-serif tracking-wider">文章影音</span>
       </button>
-      <button type="button" onclick="goToDivinationGate()" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-white transition cursor-pointer" data-target="view-divination-gate">
+      <button type="button" onclick="startDivinationDirect()" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-white transition cursor-pointer" data-target="p2-categories">
         <i class="fa-solid fa-compass text-base"></i><span class="text-xs mt-1 font-serif tracking-wider">線上占卜</span>
       </button>
       <button type="button" onclick="goToStep('view-courses')" class="bot-nav-btn flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-white transition cursor-pointer" data-target="view-courses">
@@ -1003,9 +1194,7 @@
     </div>
   </nav>
 
-  <!-- ============================================================
-       免跳頁右側滑出閱讀欄
-       ============================================================ -->
+  <!-- 免跳頁右側滑出閱讀欄 -->
   <div id="slide-drawer-root" class="fixed inset-0 z-50 hidden drawer-closed">
     <div id="slide-drawer-backdrop" onclick="closeSlideDrawer()" class="fixed inset-0 bg-neo-indigo/45 backdrop-blur-xs opacity-0"></div>
     <div id="slide-drawer-panel" class="fixed top-0 right-0 bottom-0 w-full max-w-xl bg-neo-paper shadow-2xl border-l-2 border-neo-amber flex flex-col justify-between z-10">
@@ -1038,14 +1227,12 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       精美卦象與重點語錄分享圖卡彈出視窗 (HTML5 Canvas)
-       ============================================================ -->
+  <!-- 精美卦象分享圖卡彈出視窗 (HTML5 Canvas - 太極圖騰＋本卦神諭卡) -->
   <div id="modal-share-card" class="fixed inset-0 bg-neo-indigo/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-neo-border relative space-y-4 text-center">
       <button onclick="closeShareCardModal()" class="absolute top-4 right-4 text-neo-muted hover:text-neo-indigo cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       <div>
-        <h3 class="text-lg font-serif font-bold text-neo-indigo">專屬卦象語錄分享圖卡</h3>
+        <h3 class="text-lg font-serif font-bold text-neo-indigo">專屬卦象神諭分享圖卡</h3>
         <p class="text-xs text-neo-muted mt-0.5">長按圖片即可儲存，或點擊下方按鈕下載轉傳 LINE / FB</p>
       </div>
       <div class="bg-neo-paper p-3 rounded-2xl border border-neo-border flex justify-center">
@@ -1063,9 +1250,59 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       登入、註冊、邏輯核對與 QR Code 彈出視窗
-       ============================================================ -->
+  <!-- 網站訪客首登贈送「陳亮老師親自文字解卦 1 題」結構化提問彈窗 -->
+  <div id="modal-gift-consult" class="fixed inset-0 bg-neo-indigo/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border-2 border-neo-amber relative space-y-4 my-6 font-serif">
+      <button onclick="closeGiftConsultModal()" class="absolute top-4 right-4 text-neo-muted hover:text-neo-indigo cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+      
+      <div class="border-b border-neo-border pb-3 space-y-1">
+        <span class="px-2.5 py-0.5 rounded-full bg-neo-cinnabar text-white text-[11px] font-bold">網站訪客首登專屬禮遇 · 限領 1 次</span>
+        <h3 class="text-lg sm:text-xl font-bold text-neo-indigo">陳亮老師親自文字解卦（免費贈送 1 題）</h3>
+        <p class="text-xs text-neo-muted font-sans">請務必將「背景現況」與「具體抉擇點」寫清楚，陳亮老師將於 3～5 個工作天內透過 Email 或官方 LINE 回覆您。</p>
+      </div>
+
+      <form onsubmit="submitGiftConsultForm(event)" class="space-y-3 text-xs sm:text-sm">
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-bold text-neo-indigo mb-1">求問領域 *</label>
+            <select id="gift-domain" class="w-full p-2.5 rounded-xl border border-neo-border bg-neo-paper font-bold text-neo-indigo outline-none">
+              <option value="事業與學業競爭">事業與學業競爭</option>
+              <option value="感情與婚姻生活">感情與婚姻生活</option>
+              <option value="個性與人情處理">個性與人情處理</option>
+              <option value="身體與健康">身體與健康</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-neo-indigo mb-1">抽到的本卦（選填）</label>
+            <input type="text" id="gift-gua-name" placeholder="例如：天澤履卦" class="w-full p-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-neo-indigo mb-1">問題背景與具體抉擇點（至少 30 字）*</label>
+          <textarea id="gift-question-detail" rows="4" required placeholder="範例：目前任職科技業主管 5 年，近期朋友邀約合夥開設咖啡烘焙工作室，資金需投入 150 萬。我想問這項合夥投資是否可行？我最擔心的是合夥人個性強勢導致理念不合……（嚴禁只問「我今年運勢好不好」）" class="w-full p-3 rounded-xl border border-neo-border bg-neo-paper outline-none focus:border-neo-indigo leading-relaxed font-sans"></textarea>
+          <div class="flex justify-between text-[11px] text-neo-muted mt-1 font-sans">
+            <span>※ 問得越具體，老師越能為您精準剖析</span>
+            <span id="gift-char-count">0 / 30 字以上</span>
+          </div>
+        </div>
+
+        <label class="flex items-start gap-2.5 p-3.5 rounded-2xl border-2 border-neo-amber bg-neo-amberSoft/50 cursor-pointer">
+          <input type="checkbox" id="gift-consent-chk" required class="w-4 h-4 mt-0.5 rounded flex-shrink-0">
+          <span class="text-xs text-neo-indigo leading-relaxed font-bold">
+            我同意陳亮老師將本次提問背景與文字回覆內容「去識別化（完全隱去真實姓名、電話與個資）」後，公開發表於《陳亮易經互動網》精選解卦手記、社群或 Email 電子報中作為易學推廣案例。*
+          </span>
+        </label>
+
+        <div class="pt-1 flex gap-2.5">
+          <button type="button" onclick="closeGiftConsultModal()" class="w-1/3 py-3 rounded-xl bg-neo-paper text-neo-muted font-bold cursor-pointer">取消</button>
+          <button type="submit" id="gift-submit-btn" class="w-2/3 py-3 rounded-xl bg-neo-cinnabar hover:bg-red-700 text-white font-bold shadow-sm cursor-pointer">確認送出・兌換老師親批 1 題</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 登入、註冊、心法鎖頭提示、邏輯核對與 QR Code 彈出視窗 -->
   <div id="modal-login" class="fixed inset-0 bg-neo-indigo/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-neo-border relative space-y-4">
       <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-neo-muted hover:text-neo-indigo cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -1082,6 +1319,11 @@
         <button onclick="closeLoginModal()" class="py-2.5 rounded-xl bg-neo-paper text-neo-muted text-xs font-bold cursor-pointer">取消</button>
         <button onclick="submitUserLoginModal()" class="py-2.5 rounded-xl bg-neo-amber hover:bg-neo-amberHover text-neo-indigo font-bold text-xs shadow-xs cursor-pointer">確認登入</button>
       </div>
+      <div class="text-center pt-1 border-t border-neo-border">
+        <button type="button" onclick="closeLoginModal(); openRegisterModal('網站訪客');" class="text-xs text-neo-cinnabar font-bold hover:underline cursor-pointer">
+          還沒有帳號？30 秒免費註冊（享半年體驗＋親批 1 題）➔
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1090,18 +1332,19 @@
       <button onclick="closeRegisterModal()" class="absolute top-4 right-4 text-neo-muted hover:text-neo-indigo cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       <div class="text-center pt-1 border-b border-neo-border pb-3">
         <h3 class="text-lg font-serif font-bold text-neo-indigo">線上帳號申請</h3>
+        <p class="text-xs text-neo-muted mt-0.5">填寫真實資料，審核通過即享專屬權益與影音通知</p>
       </div>
       <form onsubmit="handleRegistrationSubmit(event)" class="space-y-3 text-xs sm:text-sm">
         <input type="text" id="reg-name" required placeholder="真實姓名 *" class="w-full px-3.5 py-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
-        <input type="tel" id="reg-phone" required placeholder="手機號碼 *" class="w-full px-3.5 py-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
-        <input type="email" id="reg-email" required placeholder="Email 電子信箱 *" class="w-full px-3.5 py-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
+        <input type="tel" id="reg-phone" required placeholder="手機號碼（接收開通與課程簡訊）*" class="w-full px-3.5 py-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
+        <input type="email" id="reg-email" required placeholder="Email 電子信箱（接收影音與解答通知）*" class="w-full px-3.5 py-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
         <input type="text" id="reg-pin" required maxlength="6" inputmode="numeric" placeholder="自訂 6 位數通行碼 *" class="w-full px-3.5 py-2.5 rounded-xl border border-neo-border bg-neo-paper outline-none">
         <select id="reg-tier-select" onchange="updateRegNotice()" class="w-full px-3 py-2.5 rounded-xl border border-neo-border bg-neo-paper font-bold text-neo-indigo outline-none">
-          <option value="網站訪客">網站訪客（免費體驗 90 天）</option>
-          <option value="網站會員" selected>網站會員（年費 2,500 元）</option>
-          <option value="高階學員">高階學員（實體/線上課程學員）</option>
+          <option value="網站訪客" selected>網站訪客（免費體驗半年 180 天＋贈親批 1 題）</option>
+          <option value="網站會員">網站會員（年費 2,500 元・每日 10 題）</option>
+          <option value="高階學員">高階學員（實體/線上正式課程學員申請）</option>
         </select>
-        <div id="reg-tier-notice" class="p-3 rounded-xl bg-neo-amberSoft text-xs border border-neo-amber/50 text-neo-indigo">會員說明</div>
+        <div id="reg-tier-notice" class="p-3 rounded-xl bg-neo-amberSoft text-xs border border-neo-amber/50 text-neo-indigo leading-relaxed">會員說明</div>
         <div class="pt-1 flex gap-2.5">
           <button type="button" onclick="closeRegisterModal()" class="w-1/2 py-2.5 rounded-xl bg-neo-paper text-neo-muted font-bold cursor-pointer">取消</button>
           <button type="submit" id="reg-submit-btn" class="w-1/2 py-2.5 rounded-xl bg-neo-cinnabar text-white font-bold cursor-pointer">送出申請</button>
@@ -1113,10 +1356,37 @@
   <div id="modal-reg-success-line" class="fixed inset-0 bg-neo-indigo/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border-2 border-emerald-500 relative space-y-4 font-serif text-center">
       <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto"><i class="fa-solid fa-check"></i></div>
-      <h3 class="text-lg font-bold text-neo-indigo">申請資料已送出！</h3>
-      <p class="text-xs sm:text-sm text-neo-muted">申請人：<span id="reg-success-user-name" class="font-bold text-neo-cinnabar"></span>（<span id="reg-success-user-role"></span>）<br>請加入官方 LINE 告知姓名以完成審核開通。</p>
-      <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" class="w-full py-3 rounded-xl bg-[#06c755] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm"><i class="fa-brands fa-line text-lg"></i> 開啟 LINE 加入官方帳號</a>
-      <button onclick="closeRegSuccessModal()" class="w-full py-2.5 rounded-xl bg-neo-paper text-neo-muted text-xs font-bold cursor-pointer">我已回傳姓名，關閉視窗</button>
+      <h3 class="text-lg font-bold text-neo-indigo">申請資料已成功送出！</h3>
+      <div class="p-3.5 rounded-2xl bg-neo-paper border border-neo-border text-xs sm:text-sm text-neo-indigoLight leading-relaxed space-y-1.5">
+        <p>申請人：<span id="reg-success-user-name" class="font-bold text-neo-cinnabar"></span>（<span id="reg-success-user-role"></span>）</p>
+        <p class="font-bold text-neo-indigo">最後一步（人工核准開通）：</p>
+        <p>請點擊下方綠色按鈕加入陳亮老師官方 LINE（<span class="font-mono font-bold">@129uiadu</span>），傳送您的<strong>「姓名＋手機末三碼」</strong>，老師確認後立即為您開通半年體驗與親批禮遇！</p>
+      </div>
+      <a href="https://line.me/R/ti/p/@129uiadu" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 rounded-xl bg-[#06c755] hover:bg-[#05b34c] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition">
+        <i class="fa-brands fa-line text-xl"></i> <span>立即加入官方 LINE (@129uiadu) 開通</span>
+      </a>
+      <button onclick="closeRegSuccessModal()" class="w-full py-2.5 rounded-xl bg-neo-paper text-neo-muted text-xs font-bold cursor-pointer">我已加入並傳送訊息，關閉視窗</button>
+    </div>
+  </div>
+
+  <div id="modal-guidance-locked" class="fixed inset-0 bg-neo-indigo/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border-2 border-neo-amber relative space-y-4 font-serif text-center">
+      <button onclick="closeGuidanceLockedModal()" class="absolute top-4 right-4 text-neo-muted hover:text-neo-indigo cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="w-12 h-12 rounded-full bg-neo-amberSoft text-neo-amberHover flex items-center justify-center text-xl mx-auto border border-neo-amber">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h3 class="text-lg font-bold text-neo-indigo" id="locked-guidance-title">【領域心法導引】為會員專屬內容</h3>
+      <p class="text-xs sm:text-sm text-neo-indigoLight leading-relaxed">
+        問每個領域都有不同的眉角、現實邊界與發問禁忌。只要花 30 秒免費註冊為「網站訪客」，審核通過即享 <strong>半年（180 天）</strong> 完整心法導引、客觀局勢解析，再加贈<strong>陳亮老師親自文字解卦 1 題</strong>！
+      </p>
+      <div class="space-y-2 pt-1">
+        <button type="button" onclick="closeGuidanceLockedModal(); openRegisterModal('網站訪客');" class="w-full py-3 rounded-xl bg-neo-cinnabar hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-sm cursor-pointer">
+          免費註冊「網站訪客」（領半年體驗＋親批 1 題）➔
+        </button>
+        <button type="button" onclick="closeGuidanceLockedModal(); openLoginModal('guest');" class="w-full py-2.5 rounded-xl bg-neo-indigoSoft hover:bg-neo-indigo hover:text-white text-neo-indigo font-bold text-xs cursor-pointer">
+          我已註冊，立即登入解鎖心法
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1137,7 +1407,7 @@
   <div id="modal-guest-daily-rules" class="fixed inset-0 bg-neo-indigo/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-neo-border space-y-4">
       <h3 class="text-lg font-serif font-bold text-neo-indigo text-center">網站訪客使用規範</h3>
-      <p class="text-xs sm:text-sm text-neo-indigoLight bg-neo-paper p-3.5 rounded-xl border border-neo-border">每日限 5 題免費發問（不可遞延），統一由系統隨機排卦。</p>
+      <p class="text-xs sm:text-sm text-neo-indigoLight bg-neo-paper p-3.5 rounded-xl border border-neo-border">半年（180 天）體驗期間，每日限 5 題完整客觀局勢解析（不可遞延），統一由系統隨機排卦。</p>
       <label class="flex items-start gap-2.5 p-3 rounded-xl border border-neo-amber bg-neo-amberSoft/40 cursor-pointer"><input type="checkbox" id="chk-guest-daily-agreed" onchange="onGuestDailyCheckChange()" class="w-4 h-4 mt-0.5 rounded"><span class="font-bold text-xs text-neo-indigo">我同意上述使用規範</span></label>
       <button id="btn-guest-daily-confirm" onclick="confirmGuestDailyRules()" disabled class="w-full py-3 rounded-xl bg-stone-200 text-stone-500 font-bold text-xs">請先勾選同意</button>
     </div>
@@ -1172,9 +1442,10 @@
   <div id="toast" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-neo-indigo text-white px-5 py-2.5 rounded-full shadow-xl border border-neo-amber text-xs sm:text-sm z-50 transition-opacity duration-300 opacity-0 pointer-events-none flex items-center gap-2">
     <i class="fa-solid fa-circle-info text-neo-amber"></i> <span id="toast-text">提示文字</span>
   </div>
- <script>
+
+  <script>
     // ============================================================
-    // API 連線設定與全域變數
+    // API 連線設定與全域變數（所有卦象與專欄文本 100% 由試算表動態讀取）
     // ============================================================
     const CLASSIC_API_URL = "https://script.google.com/macros/s/AKfycbzailXGSYgFkkaEMAhLip5CvcYSt5pSxOZnj17slQ-Ot3owjwbz-0zCrvMbULSP6CFo/exec";
     const AUTH_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby3YV_5TIBDKuClv19sWIjgZ3-Dxovq2K6p2312xys9etQWqIWNrgs70ELsMulR8_2H/exec";
@@ -1183,7 +1454,6 @@
       return window.location.origin + window.location.pathname;
     }
 
-    // HTML 特殊字元跳脫，防堵 XSS 注入風險
     function escapeHtml(str) {
       if (str === null || str === undefined) return '';
       return String(str)
@@ -1194,7 +1464,6 @@
         .replace(/'/g, '&#39;');
     }
 
-    // 封裝附帶 15 秒逾時保護的 fetch (Timeout Safeguard)
     async function safeFetch(url, options = {}) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), 15000);
@@ -1208,7 +1477,7 @@
       }
     }
 
-    let currentUser = { isLoggedIn: false, token: "", role: "", name: "", isAdvanced: false };
+    let currentUser = { isLoggedIn: false, token: "", role: "", name: "", phone: "", email: "", isAdvanced: false };
     let selectedCategory = null; 
     let currentYaoLines = [null, null, null, null, null, null]; 
     let hasVerifiedLogic = false;
@@ -1216,7 +1485,7 @@
     let currentContentFontSize = 16;
     let cachedFeaturedHandnotes = [];
     let cachedColumnsData = [];
-    let lastDivinationSummary = { guaName: "", domain: "", nature: "", quote: "" };
+    let lastDivinationSummary = { guaName: "", domain: "", nature: "", intro: "", quote: "" };
 
     const TRIGRAMS = {
       1: { name: '乾', nature: '天', lines: [1, 1, 1] }, 2: { name: '兌', nature: '澤', lines: [1, 1, 0] },
@@ -1247,7 +1516,6 @@
     const CLASSIC_DATABASE = {};
 
     window.onload = function () {
-      // 嚴格檢查登入狀態
       try {
         const savedAuth = localStorage.getItem('iching_auth_user');
         if (savedAuth) {
@@ -1266,8 +1534,8 @@
       updateRoleDisplay();
       renderBoardYaoSlots();
       checkGuaCompletionStatus();
+      renderGuestLocalHistory();
       
-      // 載入公開 CMS 內容
       loadFeaturedHandnotes();
       loadColumnsFrontEnd();
       loadGeneralRules();
@@ -1278,7 +1546,19 @@
         new QRCode(qrBox, { text: getCanonicalSiteUrl(), width: 160, height: 160, colorDark: "#16324F", colorLight: "#FAF7F2" });
       }
 
-      ['result-tiered-content-container', 'drawer-body'].forEach(id => {
+      const giftTextarea = document.getElementById('gift-question-detail');
+      if (giftTextarea) {
+        giftTextarea.addEventListener('input', function() {
+          const len = this.value.trim().length;
+          const counter = document.getElementById('gift-char-count');
+          if (counter) {
+            counter.innerText = len >= 30 ? `${len} 字（已達標）` : `${len} / 30 字以上`;
+            counter.className = len >= 30 ? 'text-emerald-700 font-bold' : 'text-neo-cinnabar font-bold';
+          }
+        });
+      }
+
+      ['result-tiered-content-container', 'oracle-content-body', 'drawer-body'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
           el.addEventListener('contextmenu', e => e.preventDefault());
@@ -1291,7 +1571,7 @@
     };
 
     // ==========================================
-    // 嚴格身分驗證判斷與頁面切換
+    // 身分驗證判斷與頁面切換
     // ==========================================
     function hasValidLoginSession() {
       return Boolean(
@@ -1303,25 +1583,24 @@
       );
     }
 
-    function goToDivinationGate() {
+    function goToAccountGate() {
       goToStep('view-divination-gate');
     }
 
-    function proceedToCategoriesStep() {
-      if (!hasValidLoginSession()) {
-        showToast("請先完成登入驗證，方可進入四大主題！");
-        goToStep('view-divination-gate');
-        return;
-      }
+    function startDivinationDirect() {
       goToStep('p2-categories');
     }
 
-    // 記錄瀏覽歷史，支援手機/電腦瀏覽器實體「返回鍵」與畫面返回按鈕
+    function startDivinationWithCategory(catKey) {
+      goToStep('p2-categories');
+      setTimeout(() => { selectCategory(catKey); }, 60);
+    }
+
     let stepHistory = ['p1-home'];
 
     function goBackStep() {
       if (stepHistory.length > 1) {
-        stepHistory.pop(); // 移除當前頁
+        stepHistory.pop();
         const prevView = stepHistory[stepHistory.length - 1];
         goToStep(prevView, false);
       } else {
@@ -1329,7 +1608,6 @@
       }
     }
 
-    // 監聽瀏覽器內建的上一頁（返回鍵）
     window.addEventListener('popstate', function (e) {
       if (e.state && e.state.viewId) {
         goToStep(e.state.viewId, false);
@@ -1339,15 +1617,12 @@
     });
 
     function goToStep(viewId, pushHistory = true) {
-      const protectedViews = ['p2-categories', 'p3-principles', 'view-divination', 'view-result'];
-      if (protectedViews.includes(viewId) && !hasValidLoginSession()) {
-        showToast("欲開始發問卜卦，請先在此登入三種身分之一或申請帳號！");
-        viewId = 'view-divination-gate';
-      }
-      
       if (viewId === 'view-courses') {
         loadCoursesFrontEnd();
         loadMessagesFrontEnd();
+      }
+      if (viewId === 'p2-categories') {
+        updateCategoryGuidanceLocks();
       }
 
       document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
@@ -1364,11 +1639,10 @@
         try { history.pushState({ viewId: viewId }, '', '#' + viewId); } catch (err) {}
       }
 
-      const activeGroup = ['view-divination-gate', 'p2-categories', 'p3-principles', 'view-divination', 'view-result'].includes(viewId)
-        ? 'view-divination-gate'
+      const activeGroup = ['p2-categories', 'p3-principles', 'view-divination', 'view-result'].includes(viewId)
+        ? 'p2-categories'
         : viewId;
 
-      // 同步更新底部黑金導覽列狀態
       document.querySelectorAll('.bot-nav-btn').forEach(btn => {
         if (btn.dataset.target === activeGroup) {
           btn.classList.remove('text-slate-400');
@@ -1379,7 +1653,6 @@
         }
       });
 
-      // 同步更新桌面左側導覽欄狀態
       document.querySelectorAll('.desk-nav-btn').forEach(btn => {
         if (btn.dataset.target === activeGroup) {
           btn.classList.add('bg-neo-indigo', 'text-white', 'shadow-sm');
@@ -1438,11 +1711,9 @@
     function extractYoutubeLinkHtml(ytLink) {
       if (!ytLink) return '';
       let url = ytLink;
-      if (ytLink.includes('v=')) {
-          // original format is fine
-      } else if (ytLink.includes('youtu.be/')) {
-          const vid = ytLink.split('youtu.be/')[1].split('?')[0];
-          url = `https://www.youtube.com/watch?v=${vid}`;
+      if (ytLink.includes('youtu.be/')) {
+        const vid = ytLink.split('youtu.be/')[1].split('?')[0];
+        url = `https://www.youtube.com/watch?v=${vid}`;
       }
       return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="my-3 block p-4 rounded-xl bg-gradient-to-r from-red-50 to-white border border-red-200 shadow-sm hover:shadow-md transition group text-center cursor-pointer">
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -1464,13 +1735,13 @@
         cachedColumnsData = Array.isArray(data) ? data : [];
         if (cachedColumnsData.length === 0) {
           if (container) container.innerHTML = `<div class="col-span-full text-center text-neo-muted text-sm py-8">目前尚無公開專欄文章。</div>`;
-          if (gatePreview) gatePreview.innerHTML = `<div class="col-span-full text-center text-neo-muted text-xs py-4">暫無最新發表文章，請於下方登入後開始占卜。</div>`;
+          if (gatePreview) gatePreview.innerHTML = `<div class="col-span-full text-center text-neo-muted text-xs py-4">暫無最新發表文章。</div>`;
           return;
         }
         
         const formatText = (text) => {
-            if (!text) return '';
-            return escapeHtml(text).split(String.fromCharCode(10)).join('<br>');
+          if (!text) return '';
+          return escapeHtml(text).split(String.fromCharCode(10)).join('<br>');
         };
         
         if (container) {
@@ -1545,7 +1816,7 @@
       openSlideDrawer({ tag: col.category || '易學專欄', title: col.title, htmlContent: html });
     }
 
-   async function loadFeaturedHandnotes() {
+    async function loadFeaturedHandnotes() {
       const container = document.getElementById('featured-handnotes-container');
       if (!container) return;
       try {
@@ -1636,7 +1907,7 @@
           </details>
         `).join('');
       } catch(e) {
-          container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線逾時。</div>`; 
+        container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線逾時。</div>`; 
       }
     }
 
@@ -1686,7 +1957,7 @@
           `;
         }).join('');
       } catch(e) {
-          container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線逾時。</div>`; 
+        container.innerHTML = `<div class="text-center text-neo-cinnabar text-sm py-6">連線逾時。</div>`; 
       }
     }
 
@@ -1715,7 +1986,7 @@
     }
 
     // ==========================================
-    // 四大領域心法導引與總則
+    // 四大領域心法導引（未登入鎖頭控制 ＋ 登入後直接閱讀）
     // ==========================================
     async function loadGeneralRules() {
       const container = document.getElementById('general-rules-content');
@@ -1729,13 +2000,46 @@
           return;
         }
       } catch (err) { }
-      container.innerHTML = `<p class="pt-2"><strong>易經三義心法：</strong>「不易」為客觀環境之底線；「簡易」為自然規律；「變易」乃自主抉擇與應變空間。</p>`;
+      container.innerHTML = `<p class="pt-2"><strong>易經三義心法：</strong>「不易」為客觀環境之底線；「簡易」為自然規律；「變易」乃自主抉擇與應變空間。請先選定單一領域起卦；註冊「網站訪客」即可解鎖各領域心法禁忌。</p>`;
+    }
+
+    function updateCategoryGuidanceLocks() {
+      const isLogged = hasValidLoginSession();
+      const guestBanner = document.getElementById('guest-lite-mode-banner');
+      if (guestBanner) {
+        if (isLogged) guestBanner.classList.add('hidden');
+        else guestBanner.classList.remove('hidden');
+      }
+
+      document.querySelectorAll('.guidance-lock-btn').forEach(btn => {
+        if (isLogged) {
+          btn.className = "guidance-lock-btn px-2.5 py-1.5 rounded-xl bg-neo-amberSoft hover:bg-neo-amber text-neo-indigo font-serif font-bold text-xs border border-neo-amber/60 transition cursor-pointer";
+          btn.innerHTML = `<i class="fa-solid fa-book-open mr-1"></i>心法導引`;
+        } else {
+          btn.className = "guidance-lock-btn px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-neo-amberSoft text-neo-indigo font-serif font-bold text-xs border border-neo-border transition cursor-pointer";
+          btn.innerHTML = `<i class="fa-solid fa-lock text-neo-cinnabar mr-1"></i>心法導引 🔒`;
+        }
+      });
+    }
+
+    function handleGuidanceClick(e, domainKey, catName) {
+      if (e) e.stopPropagation();
+      if (!hasValidLoginSession()) {
+        document.getElementById('locked-guidance-title').innerText = `【${catName}・心法導引】為會員專屬內容`;
+        document.getElementById('modal-guidance-locked').classList.remove('hidden');
+        return;
+      }
+      openGuidanceDrawer(e, domainKey, catName);
+    }
+
+    function closeGuidanceLockedModal() {
+      document.getElementById('modal-guidance-locked').classList.add('hidden');
     }
 
     async function openGuidanceDrawer(e, domainKey, catName) {
       if (e) e.stopPropagation();
       let roleCode = currentUser.isAdvanced ? 'student' : (currentUser.role === '網站會員' ? 'member' : 'guest');
-      let roleLabel = currentUser.isAdvanced ? '高階學員專屬深造指導' : (currentUser.role === '網站會員' ? '網站會員系統綱領' : '網站訪客前言引言');
+      let roleLabel = currentUser.isAdvanced ? '高階學員專屬深造指導' : (currentUser.role === '網站會員' ? '網站會員系統綱領' : '網站訪客心法導引');
       
       openSlideDrawer({
         tag: roleLabel,
@@ -1763,7 +2067,7 @@
     }
 
     // ==========================================
-    // 占卜流程：四大領域 ➔ 論理檢驗 ➔ 全體電腦隨機取卦 ➔ 答案
+    // 占卜流程：四大領域 ➔ 論理檢驗 ➔ 電腦隨機取卦 ➔ 雙模結果頁
     // ==========================================
     function selectCategory(catKey) {
       const catNames = { 'personality':'個性與人情處理', 'career':'事業與學業競爭', 'romance':'感情與婚姻生活', 'health':'身體與健康' };
@@ -1788,26 +2092,44 @@
     }
 
     function proceedToPrinciples() {
-      if (!hasValidLoginSession()) { goToStep('view-divination-gate'); return; }
       if (!selectedCategory) { showToast("請先選擇問題領域！"); return; }
+      if (!hasValidLoginSession()) {
+        goToStep('p3-principles');
+        return;
+      }
       if (!checkCanAskQuestion()) return;
       if (!triggerDailyFirstQuestionModal()) { goToStep('p3-principles'); }
     }
 
+    let isTossingNow = false;
     function executeRandomGua() {
-      if (!hasValidLoginSession()) { goToStep('view-divination-gate'); return; }
-      if (!checkCanAskQuestion()) return;
+      if (isTossingNow) return;
+      if (hasValidLoginSession() && !checkCanAskQuestion()) return;
+
+      isTossingNow = true;
       resetGuaBoard();
-      
+
+      const btnText = document.getElementById('random-btn-text');
+      const statusHint = document.getElementById('toss-status-hint');
+      const yaoLabels = ['初爻（底）', '二爻（地）', '三爻（人）', '四爻（人）', '五爻（尊）', '上爻（天）'];
+
+      if (btnText) btnText.innerText = '由下而上排卦中...';
+
       for (let i = 0; i < 6; i++) {
         setTimeout(() => {
           currentYaoLines[i] = Math.random() >= 0.5 ? 1 : 0;
           renderBoardYaoSlots(i);
+          if (statusHint) {
+            statusHint.innerText = `排卦中：${yaoLabels[i]} 生成【${currentYaoLines[i] === 1 ? '陽爻' : '陰爻'}】`;
+          }
           if (i === 5) {
+            isTossingNow = false;
+            if (btnText) btnText.innerText = '電腦隨機取卦';
+            if (statusHint) statusHint.innerText = '六爻由下而上已成定局！請點擊下方查看解答';
             checkGuaCompletionStatus();
             showToast("六爻成卦完畢！請點擊下方查看卦象解答");
           }
-        }, i * 110);
+        }, (i + 1) * 140);
       }
     }
 
@@ -1829,6 +2151,10 @@
 
     function resetGuaBoard() {
       currentYaoLines = [null, null, null, null, null, null];
+      const btnText = document.getElementById('random-btn-text');
+      const statusHint = document.getElementById('toss-status-hint');
+      if (btnText) btnText.innerText = '電腦隨機取卦';
+      if (statusHint) statusHint.innerText = '請默念所求問之事，點擊上方按鈕一次即可';
       renderBoardYaoSlots(); 
       checkGuaCompletionStatus();
     }
@@ -1856,11 +2182,30 @@
       return 1;
     }
 
+    function renderMiniHexagramHtml(lines) {
+      let html = '';
+      for (let idx = 5; idx >= 0; idx--) {
+        if (lines[idx] === 1) {
+          html += `<div class="w-full h-2.5 rounded-xs bg-neo-amber"></div>`;
+        } else {
+          html += `<div class="w-full flex justify-between gap-2"><div class="w-1/2 h-2.5 rounded-xs bg-neo-indigo"></div><div class="w-1/2 h-2.5 rounded-xs bg-neo-indigo"></div></div>`;
+        }
+      }
+      return html;
+    }
+
+    function splitFirstSentence(text) {
+      const clean = String(text || '').trim();
+      const match = clean.match(/^([^。！？!?]+[。！？!?])(.*)$/s);
+      if (match) {
+        return { headline: match[1].trim(), rest: match[2].trim() };
+      }
+      return { headline: clean, rest: '' };
+    }
+
     async function goToResultPage() {
-      if (!hasValidLoginSession()) { goToStep('view-divination-gate'); return; }
       const isComplete = currentYaoLines.every(v => v !== null);
       if (!isComplete) { showToast("請先完成隨機取卦！"); return; }
-      if (!checkCanAskQuestion()) return;
 
       const lowerCode = matchCodeFrom3Lines([currentYaoLines[0], currentYaoLines[1], currentYaoLines[2]]);
       const upperCode = matchCodeFrom3Lines([currentYaoLines[3], currentYaoLines[4], currentYaoLines[5]]);
@@ -1875,8 +2220,71 @@
         guaName: `${guaInfo.name} 卦`,
         domain: domain,
         nature: `外卦${upTri.name}(${upTri.nature})、內卦${lowTri.name}(${lowTri.nature})`,
+        intro: "",
         quote: "以理性拆解迷局，用易經推演生機。"
       };
+
+      const guestWrapper = document.getElementById('guest-oracle-result-wrapper');
+      const memberWrapper = document.getElementById('member-tiered-result-wrapper');
+
+      // 分流 1：第 0 階「免登入極簡體驗」
+      if (!hasValidLoginSession()) {
+        memberWrapper.classList.add('hidden');
+        guestWrapper.classList.remove('hidden');
+
+        document.getElementById('oracle-domain-pill').innerText = `求問領域：${domain}`;
+        document.getElementById('oracle-mini-hexagram').innerHTML = renderMiniHexagramHtml(currentYaoLines);
+        document.getElementById('oracle-gua-name').innerText = `${guaInfo.name} 卦`;
+        document.getElementById('oracle-gua-nature').innerText = `外卦${upTri.name}(${upTri.nature}) · 內卦${lowTri.name}(${lowTri.nature}) · 先天數 [${upperCode}, ${lowerCode}]`;
+
+        const oracleBody = document.getElementById('oracle-content-body');
+        oracleBody.innerHTML = `<div class="py-8 text-center text-neo-muted"><i class="fa-solid fa-spinner fa-spin text-neo-amber text-2xl mb-2 block"></i><span>正在從雲端試算表讀取本卦極簡解析...</span></div>`;
+        goToStep('view-result');
+
+        saveGuestLocalHistory({ guaName: `${guaInfo.name} 卦`, domain: domain });
+
+        try {
+          const res = await safeFetch(`${CLASSIC_API_URL}?action=getGuestLiteContent&gua=${encodeURIComponent(guaInfo.name)}&category=${encodeURIComponent(domain)}`);
+          const data = await res.json();
+          if (data && data.success) {
+            const introText = data.intro || "";
+            const ansText = data.answer || "";
+            const { headline, rest } = splitFirstSentence(ansText);
+
+            lastDivinationSummary.intro = introText;
+            lastDivinationSummary.quote = ansText;
+
+            oracleBody.innerHTML = `
+              <div class="p-4 sm:p-5 rounded-2xl bg-neo-paper border border-neo-border space-y-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md bg-neo-indigo text-neo-amber font-bold text-xs tracking-wider">【卦象大意・局勢底色】</span>
+                </div>
+                <p class="text-sm sm:text-base text-neo-indigoLight leading-relaxed pt-1">${escapeHtml(introText)}</p>
+              </div>
+
+              <div class="p-5 sm:p-6 rounded-2xl bg-neo-amberSoft/60 border-2 border-neo-amber/60 space-y-2.5 text-center sm:text-left">
+                <div class="flex items-center justify-center sm:justify-start gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md bg-neo-cinnabar text-white font-bold text-xs tracking-wider">【${escapeHtml(domain)}・核心斷語】</span>
+                </div>
+                <div class="text-xl sm:text-2xl font-bold text-neo-indigo leading-snug pt-1">
+                  ${escapeHtml(headline)}
+                </div>
+                ${rest ? `<p class="text-sm sm:text-base text-neo-indigoLight leading-relaxed">${escapeHtml(rest)}</p>` : ''}
+              </div>
+            `;
+          } else {
+            oracleBody.innerHTML = `<div class="p-5 text-center text-sm text-neo-cinnabar">${escapeHtml((data && data.message) || "無法取得極簡解析，請稍後再試。")}</div>`;
+          }
+        } catch (err) {
+          oracleBody.innerHTML = `<div class="p-5 text-center text-sm text-neo-cinnabar">雲端連線逾時，請稍後重試。</div>`;
+        }
+        return;
+      }
+
+      // 分流 2：第 1～3 階「已登入身分」
+      if (!checkCanAskQuestion()) return;
+      guestWrapper.classList.add('hidden');
+      memberWrapper.classList.remove('hidden');
 
       const usage = getTodayUsage();
       usage.count += 1;
@@ -1889,6 +2297,16 @@
       document.getElementById('result-gua-numbers').innerText = `先天數 [${upperCode}, ${lowerCode}]`;
       document.getElementById('result-gua-nature').innerText = `外卦${upTri.name}(${upTri.nature})、內卦${lowTri.name}(${lowTri.nature})`;
       document.getElementById('result-user-badge').innerText = `${currentUser.role} · ${currentUser.name}`;
+
+      const giftCard = document.getElementById('result-gift-consult-card');
+      if (giftCard) {
+        if (currentUser.role === '網站訪客' && !hasUsedGiftConsult()) {
+          giftCard.classList.remove('hidden');
+          document.getElementById('gift-card-gua-name').innerText = `${guaInfo.name} 卦`;
+        } else {
+          giftCard.classList.add('hidden');
+        }
+      }
 
       const tieredContainer = document.getElementById('result-tiered-content-container');
       tieredContainer.innerHTML = `<div class="p-8 text-center space-y-2 font-serif text-neo-muted"><i class="fa-solid fa-spinner fa-spin text-neo-amber text-2xl"></i><p>正在載入專屬層次解答...</p></div>`;
@@ -1966,11 +2384,160 @@
       });
     }
 
+    function saveGuestLocalHistory(item) {
+      try {
+        const raw = localStorage.getItem('iching_guest_recent_3');
+        const list = raw ? JSON.parse(raw) : [];
+        const timeStr = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+        list.unshift({ guaName: item.guaName, domain: item.domain, time: timeStr });
+        localStorage.setItem('iching_guest_recent_3', JSON.stringify(list.slice(0, 3)));
+        renderGuestLocalHistory();
+      } catch (e) {}
+    }
+
+    function renderGuestLocalHistory() {
+      const box = document.getElementById('guest-local-history-list');
+      if (!box) return;
+      try {
+        const raw = localStorage.getItem('iching_guest_recent_3');
+        const list = raw ? JSON.parse(raw) : [];
+        if (list.length === 0) {
+          box.innerHTML = `<div class="text-neo-muted">尚無占問紀錄，每次起卦將自動為您暫存最近 3 筆。</div>`;
+          return;
+        }
+        box.innerHTML = list.map((it, idx) => `
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-neo-paper border border-neo-border">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-neo-indigo text-neo-amber text-[11px] flex items-center justify-center font-mono">${idx + 1}</span>
+              <span class="font-bold text-neo-indigo">${escapeHtml(it.guaName)}</span>
+              <span class="text-neo-muted">（${escapeHtml(it.domain)}）</span>
+            </div>
+            <span class="font-mono text-[11px] text-neo-muted">${escapeHtml(it.time)}</span>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    function copyGuaAndOpenLine() {
+      const msg = `陳亮老師您好，我剛在「陳亮易經互動網」占問【${lastDivinationSummary.domain || '人生決策'}】，抽到【${lastDivinationSummary.guaName || '本卦'}】（${lastDivinationSummary.nature || ''}），想向老師請教！`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).catch(() => {});
+      }
+      showToast("已自動複製您的卦象訊息！即將開啟官方 LINE（貼上即可傳送）");
+      setTimeout(() => {
+        window.open("https://line.me/R/ti/p/@129uiadu", "_blank", "noopener,noreferrer");
+      }, 650);
+    }
+
+    // ==========================================
+    // 網站訪客首登贈送「文字親批 1 題」結構化表單邏輯
+    // ==========================================
+    function getGiftConsultKey() {
+      return `iching_gift_consult_used_${currentUser.token || currentUser.name || 'guest'}`;
+    }
+    function hasUsedGiftConsult() {
+      try { return localStorage.getItem(getGiftConsultKey()) === '1'; } catch (e) { return false; }
+    }
+
+    function openGiftConsultModal() {
+      if (!hasValidLoginSession()) {
+        openRegisterModal('網站訪客');
+        return;
+      }
+      if (hasUsedGiftConsult()) {
+        showToast("您的帳號已兌換過首登贈送的「文字親批 1 題」禮遇囉！");
+        return;
+      }
+      const catNames = { 'career':'事業與學業競爭', 'romance':'感情與婚姻生活', 'personality':'個性與人情處理', 'health':'身體與健康' };
+      if (selectedCategory && catNames[selectedCategory]) {
+        document.getElementById('gift-domain').value = catNames[selectedCategory];
+      }
+      if (lastDivinationSummary.guaName) {
+        document.getElementById('gift-gua-name').value = lastDivinationSummary.guaName;
+      }
+      document.getElementById('modal-gift-consult').classList.remove('hidden');
+    }
+
+    function closeGiftConsultModal() {
+      document.getElementById('modal-gift-consult').classList.add('hidden');
+    }
+
+    async function submitGiftConsultForm(e) {
+      e.preventDefault();
+      if (!hasValidLoginSession()) return;
+      if (hasUsedGiftConsult()) {
+        showToast("每組帳號限兌換 1 次親批禮遇！");
+        closeGiftConsultModal();
+        return;
+      }
+
+      const domain = document.getElementById('gift-domain').value;
+      const guaName = document.getElementById('gift-gua-name').value.trim() || "尚未起卦";
+      const detail = document.getElementById('gift-question-detail').value.trim();
+      const consent = document.getElementById('gift-consent-chk').checked;
+
+      if (detail.length < 30) {
+        showToast("請至少填寫 30 字以上，把背景現況與抉擇點寫清楚喔！");
+        return;
+      }
+      if (!consent) {
+        showToast("請先勾選同意去識別化公開案例授權條款！");
+        return;
+      }
+
+      const btn = document.getElementById('gift-submit-btn');
+      btn.disabled = true;
+      btn.innerText = "正在傳送給陳亮老師...";
+
+      const formattedContent = [
+        `【領域】${domain}｜【本卦】${guaName}`,
+        `【聯絡資訊】電話：${currentUser.phone || '見會員表'}｜信箱：${currentUser.email || '見會員表'}`,
+        `【去識別化公開授權】已明確同意（可去識別化刊登於網站手記或電子報）`,
+        `【具體問題詳述】\n${detail}`
+      ].join('\n');
+
+      try {
+        const res = await safeFetch(CLASSIC_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            action: "addMessage",
+            token: currentUser.token,
+            userName: currentUser.name,
+            type: "【訪客首登・免費親批1題】",
+            content: formattedContent
+          })
+        });
+        const data = await res.json();
+        btn.disabled = false;
+        btn.innerText = "確認送出・兌換老師親批 1 題";
+
+        if (data && data.success) {
+          try { localStorage.setItem(getGiftConsultKey(), '1'); } catch (err) {}
+          closeGiftConsultModal();
+          updateRoleDisplay();
+          const card = document.getElementById('result-gift-consult-card');
+          if (card) card.classList.add('hidden');
+          showToast("提問已送達！陳亮老師將於 3～5 個工作天內為您文字親批回覆。");
+        } else {
+          showToast((data && data.message) || "送出失敗，請稍後再試！");
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerText = "確認送出・兌換老師親批 1 題";
+        showToast("網路連線逾時，請稍後再試一次！");
+      }
+    }
+
     // ==========================================
     // 最終步：查看本卦周易古文原典閱讀欄
     // ==========================================
     async function openCurrentHexClassicDrawer() {
-      if (!hasValidLoginSession() || currentYaoLines.some(v => v === null)) {
+      if (!hasValidLoginSession()) {
+        openRegisterModal('網站訪客');
+        return;
+      }
+      if (currentYaoLines.some(v => v === null)) {
         showToast("請先完成線上占卜並取得解答，方可查閱本卦原典！");
         return;
       }
@@ -2017,8 +2584,42 @@
     }
 
     // ==========================================
-    // 製作精美卦象與重點語錄分享圖卡 (Canvas)
+    // 製作精美新中式神諭分享圖卡 (Canvas - 太極圖騰＋本卦)
     // ==========================================
+    function drawTaijiOnCanvas(ctx, cx, cy, r) {
+      ctx.save();
+      // 外圓底色
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#FAF7F2';
+      ctx.fill();
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#16324F';
+      ctx.stroke();
+
+      // 深青藍右半太極陰魚
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 2, -Math.PI / 2, Math.PI / 2, false);
+      ctx.arc(cx, cy + (r - 2) / 2, (r - 2) / 2, Math.PI / 2, -Math.PI / 2, false);
+      ctx.arc(cx, cy - (r - 2) / 2, (r - 2) / 2, Math.PI / 2, -Math.PI / 2, true);
+      ctx.closePath();
+      ctx.fillStyle = '#16324F';
+      ctx.fill();
+
+      // 上魚眼（宣紙白）
+      ctx.beginPath();
+      ctx.arc(cx, cy - (r - 2) / 2, r * 0.14, 0, Math.PI * 2);
+      ctx.fillStyle = '#FAF7F2';
+      ctx.fill();
+
+      // 下魚眼（琥珀金）
+      ctx.beginPath();
+      ctx.arc(cx, cy + (r - 2) / 2, r * 0.14, 0, Math.PI * 2);
+      ctx.fillStyle = '#D99B26';
+      ctx.fill();
+      ctx.restore();
+    }
+
     function generateAndOpenShareCard() {
       const canvas = document.getElementById('share-card-canvas');
       const ctx = canvas.getContext('2d');
@@ -2028,76 +2629,100 @@
       ctx.fillRect(0, 0, W, H);
       ctx.strokeStyle = '#D99B26';
       ctx.lineWidth = 6;
-      ctx.strokeRect(28, 28, W - 56, H - 56);
+      ctx.strokeRect(24, 24, W - 48, H - 48);
       ctx.strokeStyle = '#16324F';
       ctx.lineWidth = 2;
-      ctx.strokeRect(42, 42, W - 84, H - 84);
+      ctx.strokeRect(38, 38, W - 76, H - 76);
 
-      ctx.fillStyle = '#16324F';
-      ctx.font = 'bold 28px "Noto Serif TC", serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('陳亮老師易經占卜教室', W / 2, 108);
+      // 頂部左「太極陰陽圖騰」
+      drawTaijiOnCanvas(ctx, 175, 162, 64);
 
-      ctx.fillStyle = '#5C6B7A';
-      ctx.font = '18px sans-serif';
-      ctx.fillText('臺大三學院思維 × 三十年易學實踐', W / 2, 142);
-
-      ctx.strokeStyle = '#E4DCCB';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(90, 170);
-      ctx.lineTo(W - 90, 170);
-      ctx.stroke();
-
-      ctx.fillStyle = '#FDF6E7';
-      ctx.fillRect(W / 2 - 150, 200, 300, 42);
-      ctx.fillStyle = '#16324F';
-      ctx.font = 'bold 20px sans-serif';
-      ctx.fillText(`求問領域：${lastDivinationSummary.domain || '人生決策'}`, W / 2, 228);
-
-      ctx.fillStyle = '#16324F';
-      ctx.font = 'bold 64px "Noto Serif TC", serif';
-      ctx.fillText(lastDivinationSummary.guaName || '周易卦象', W / 2, 325);
-
-      ctx.fillStyle = '#244B73';
-      ctx.font = 'bold 24px "Noto Serif TC", serif';
-      ctx.fillText(lastDivinationSummary.nature || '', W / 2, 372);
-
-      const startY = 415;
+      // 頂部右「單一本卦六爻圖形與卦名」（純本卦、無變爻）
+      const hexStartY = 92;
       for (let idx = 5; idx >= 0; idx--) {
-        const y = startY + (5 - idx) * 28;
+        const y = hexStartY + (5 - idx) * 18;
         const val = currentYaoLines[idx];
         if (val === 1) {
           ctx.fillStyle = '#D99B26';
-          ctx.fillRect(W / 2 - 120, y, 240, 16);
+          ctx.fillRect(390, y, 160, 11);
         } else {
           ctx.fillStyle = '#16324F';
-          ctx.fillRect(W / 2 - 120, y, 108, 16);
-          ctx.fillRect(W / 2 + 12, y, 108, 16);
+          ctx.fillRect(390, y, 72, 11);
+          ctx.fillRect(478, y, 72, 11);
         }
       }
+      ctx.fillStyle = '#16324F';
+      ctx.font = 'bold 34px "Noto Serif TC", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(lastDivinationSummary.guaName || '周易卦象', 470, 242);
 
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(76, 610, W - 152, 180);
+      // 分隔線
       ctx.strokeStyle = '#E4DCCB';
       ctx.lineWidth = 2;
-      ctx.strokeRect(76, 610, W - 152, 180);
+      ctx.beginPath();
+      ctx.moveTo(75, 275);
+      ctx.lineTo(W - 75, 275);
+      ctx.stroke();
+
+      // 求問領域標籤
+      ctx.fillStyle = '#16324F';
+      ctx.fillRect(W / 2 - 165, 300, 330, 42);
+      ctx.fillStyle = '#D99B26';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText(`求問領域：${lastDivinationSummary.domain || '人生決策'}`, W / 2, 328);
+
+      // 卦象大意簡介框
+      if (lastDivinationSummary.intro) {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(72, 365, W - 144, 130);
+        ctx.strokeStyle = '#E4DCCB';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(72, 365, W - 144, 130);
+
+        ctx.fillStyle = '#5C6B7A';
+        ctx.font = 'bold 17px sans-serif';
+        ctx.fillText('【卦象大意・局勢底色】', W / 2, 398);
+
+        ctx.fillStyle = '#244B73';
+        ctx.font = '20px "Noto Serif TC", serif';
+        const introLines = wrapCanvasText(ctx, lastDivinationSummary.intro, W - 185);
+        introLines.slice(0, 2).forEach((line, i) => {
+          ctx.fillText(line, W / 2, 434 + i * 32);
+        });
+      }
+
+      // 核心斷語大字框
+      const quoteBoxY = lastDivinationSummary.intro ? 520 : 385;
+      const quoteBoxH = lastDivinationSummary.intro ? 235 : 340;
+      ctx.fillStyle = '#FDF6E7';
+      ctx.fillRect(72, quoteBoxY, W - 144, quoteBoxH);
+      ctx.strokeStyle = '#D99B26';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(72, quoteBoxY, W - 144, quoteBoxH);
+
+      ctx.fillStyle = '#B83B2B';
+      ctx.font = 'bold 19px sans-serif';
+      ctx.fillText('【核心斷語】', W / 2, quoteBoxY + 38);
 
       ctx.fillStyle = '#16324F';
-      ctx.font = 'bold 22px "Noto Serif TC", serif';
+      ctx.font = 'bold 25px "Noto Serif TC", serif';
       const quoteText = lastDivinationSummary.quote || '以理性拆解迷局，用易經推演生機。';
-      const lines = wrapCanvasText(ctx, quoteText, W - 200);
+      const lines = wrapCanvasText(ctx, quoteText, W - 185);
       lines.slice(0, 4).forEach((line, i) => {
-        ctx.fillText(line, W / 2, 665 + i * 34);
+        ctx.fillText(line, W / 2, quoteBoxY + 86 + i * 40);
       });
 
+      // 底部深青藍品牌底座
       ctx.fillStyle = '#16324F';
-      ctx.font = 'bold 20px sans-serif';
-      ctx.fillText('官方 LINE 預約諮詢：@129uiadu', W / 2, 845);
+      ctx.fillRect(38, H - 150, W - 76, 112);
 
-      ctx.fillStyle = '#5C6B7A';
-      ctx.font = '16px monospace';
-      ctx.fillText(getCanonicalSiteUrl().replace(/^https?:\/\//, ''), W / 2, 882);
+      ctx.fillStyle = '#D99B26';
+      ctx.font = 'bold 23px "Noto Serif TC", serif';
+      ctx.fillText('陳亮老師易經占卜教室｜正統略筮法推演', W / 2, H - 102);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '18px sans-serif';
+      ctx.fillText('官方 LINE：@129uiadu  ｜  搜尋：陳亮易經互動網', W / 2, H - 64);
 
       const dataUrl = canvas.toDataURL('image/png');
       document.getElementById('share-card-preview-img').src = dataUrl;
@@ -2123,7 +2748,7 @@
 
     function downloadShareCardImage() {
       const link = document.createElement('a');
-      link.download = `陳亮易經互動網_${lastDivinationSummary.guaName || '卦象語錄'}.png`;
+      link.download = `陳亮易經互動網_${lastDivinationSummary.guaName || '卦象神諭卡'}.png`;
       link.href = document.getElementById('share-card-canvas').toDataURL('image/png');
       link.click();
       showToast("分享圖卡已下載，歡迎轉傳至 LINE 或 FB！");
@@ -2147,7 +2772,7 @@
     // ==========================================
     // 登入、註冊與每日額度管理
     // ==========================================
-    function openLoginModal(targetTier = 'member') {
+    function openLoginModal(targetTier = 'guest') {
       const title = document.getElementById('login-modal-title');
       const sub = document.getElementById('login-modal-sub');
       const hint = document.getElementById('login-device-hint');
@@ -2155,7 +2780,7 @@
       if (targetTier === 'guest') {
         title.innerText = "1. 網站訪客登入"; sub.innerText = "請輸入登記之手機/信箱與通行碼";
         hint.className = "p-3 rounded-xl text-xs font-serif bg-neo-paper border border-neo-border text-neo-indigo";
-        hint.innerHTML = `<i class="fa-solid fa-circle-info text-neo-amber"></i> 訪客每日限 5 題免費發問，開放閱覽第一層客觀局勢解析。`;
+        hint.innerHTML = `<i class="fa-solid fa-circle-info text-neo-amber"></i> 訪客享半年（180 天）體驗，每日限 5 題完整客觀局勢解析。`;
       } else if (targetTier === 'advanced') {
         title.innerText = "3. 高階學員登入"; sub.innerText = "請輸入高階學員帳號與專屬通行碼";
         hint.className = "p-3 rounded-xl text-xs font-serif bg-neo-amberSoft border border-neo-amber/50 text-neo-indigo";
@@ -2169,7 +2794,13 @@
       document.getElementById('modal-login').classList.remove('hidden');
     }
     function closeLoginModal() { document.getElementById('modal-login').classList.add('hidden'); }
-    function openRegisterModal() { document.getElementById('modal-register').classList.remove('hidden'); updateRegNotice(); }
+    
+    function openRegisterModal(defaultRole = '網站訪客') { 
+      document.getElementById('modal-register').classList.remove('hidden'); 
+      const sel = document.getElementById('reg-tier-select');
+      if (sel && defaultRole) sel.value = defaultRole;
+      updateRegNotice(); 
+    }
     function closeRegisterModal() { document.getElementById('modal-register').classList.add('hidden'); }
 
     async function submitUserLoginModal() {
@@ -2190,7 +2821,8 @@
             token: data.token, 
             role: data.user.role, 
             name: data.user.name, 
-            phone: data.user.phone, 
+            phone: data.user.phone || "", 
+            email: data.user.email || acc,
             isAdvanced: data.user.role === '高階學員' 
           };
           localStorage.setItem('iching_auth_user', JSON.stringify(currentUser));
@@ -2212,9 +2844,11 @@
       const dText = document.getElementById('desktop-role-text');
       const dInd = document.getElementById('desktop-role-indicator');
       const dQuota = document.getElementById('desktop-header-quota-pill');
+      const dBtnLabel = document.getElementById('desktop-login-btn-label');
       
       const gateOptions = document.getElementById('gate-login-options');
       const gateLogged = document.getElementById('gate-logged-in-panel');
+      const gateGift = document.getElementById('gate-gift-consult-banner');
       
       if (hasValidLoginSession()) {
         const shortLabel = `${currentUser.name} (${currentUser.role.substring(0,2)})`;
@@ -2226,12 +2860,17 @@
         if (dText) dText.innerText = `${currentUser.name}・${currentUser.role}`;
         if (dInd) dInd.className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
         if (dQuota) dQuota.innerText = quotaLabel;
+        if (dBtnLabel) dBtnLabel.innerText = "查看我的帳號與專屬禮遇";
 
         if (gateOptions) gateOptions.classList.add('hidden');
         if (gateLogged) {
           gateLogged.classList.remove('hidden');
           document.getElementById('gate-profile-name').innerText = `${currentUser.name}（${currentUser.role}）`;
-          document.getElementById('gate-profile-role').innerText = `憑證已驗證通過，可立即進入四大領域起卦`;
+          document.getElementById('gate-profile-role').innerText = `憑證已驗證通過，已解鎖四大領域心法導引與完整解析`;
+        }
+        if (gateGift) {
+          if (currentUser.role === '網站訪客' && !hasUsedGiftConsult()) gateGift.classList.remove('hidden');
+          else gateGift.classList.add('hidden');
         }
         const tag = document.getElementById('verify-status-tag');
         if (tag) {
@@ -2239,26 +2878,29 @@
           tag.innerText = currentUser.isAdvanced ? "高階學員已通過" : "待檢驗";
         }
       } else {
-        if (mText) mText.innerText = "登入/卜卦";
+        if (mText) mText.innerText = "登入/註冊";
         if (mInd) mInd.className = "w-2 h-2 rounded-full bg-neo-amber";
-        if (mQuota) mQuota.innerText = "未登入";
+        if (mQuota) mQuota.innerText = "免登入體驗";
 
-        if (dText) dText.innerText = "尚未登入卜卦身分";
-        if (dInd) dInd.className = "w-2.5 h-2.5 rounded-full bg-stone-400";
-        if (dQuota) dQuota.innerText = "未登入";
+        if (dText) dText.innerText = "免登入體驗模式";
+        if (dInd) dInd.className = "w-2.5 h-2.5 rounded-full bg-neo-amber";
+        if (dQuota) dQuota.innerText = "不限次數";
+        if (dBtnLabel) dBtnLabel.innerText = "登入帳號 / 免費領半年體驗";
 
         if (gateOptions) gateOptions.classList.remove('hidden');
         if (gateLogged) gateLogged.classList.add('hidden');
+        if (gateGift) gateGift.classList.add('hidden');
       }
+      updateCategoryGuidanceLocks();
       applyUserPermissionsToDivinationView();
       updateDailyQuotaDisplay();
     }
 
     function userLogout() {
-      currentUser = { isLoggedIn: false, token: "", role: "", name: "", isAdvanced: false };
+      currentUser = { isLoggedIn: false, token: "", role: "", name: "", phone: "", email: "", isAdvanced: false };
       localStorage.removeItem('iching_auth_user');
       resetGuaBoard();
-      showToast("已安全登出帳號"); 
+      showToast("已安全登出帳號，切換回免登入體驗模式"); 
       updateRoleDisplay(); 
       goToStep('p1-home');
     }
@@ -2266,9 +2908,13 @@
     function updateRegNotice() {
       const sel = document.getElementById('reg-tier-select').value;
       const n = document.getElementById('reg-tier-notice');
-      if (sel === '網站訪客') n.innerText = "審核通過享 90 天免費體驗，每日限 5 題電腦隨機取卦。";
-      else if (sel === '高階學員') n.innerText = "提問無限制，開放閱覽全三層次解析與判曰古文奧義。";
-      else n.innerText = "年費 2,500 元，開通每日 10 題與進階實戰策略解析。送出後請加官方 LINE 告知姓名開通。";
+      if (sel === '網站訪客') {
+        n.innerHTML = "<strong>免費體驗半年（180 天）：</strong>每日限 5 題完整客觀局勢解析、心法導引與古文原典，首次登入再加贈<strong>陳亮老師親自文字解卦 1 題</strong>！送出後請加官方 LINE（@129uiadu）告知姓名立即開通。";
+      } else if (sel === '高階學員') {
+        n.innerHTML = "<strong>高階學員專屬（需後台核准）：</strong>永久有效、提問無限制，開放閱覽全三層次解析與判曰古文奧義。送出後請加官方 LINE 通知老師核准開通。";
+      } else {
+        n.innerHTML = "<strong>網站會員（年費 2,500 元）：</strong>開通每日 10 題與進階實戰策略解析（第二層盲點與見招拆招）。送出後請加官方 LINE（@129uiadu）洽詢開通。";
+      }
     }
 
     async function handleRegistrationSubmit(e) {
@@ -2282,7 +2928,7 @@
         email: document.getElementById('reg-email').value.trim(),
         pin: document.getElementById('reg-pin').value.trim(),
         role: document.getElementById('reg-tier-select').value,
-        note: "使用者線上申請帳號"
+        note: "使用者線上申請帳號（半年180天體驗方案）"
       };
       try {
         const res = await safeFetch(AUTH_WEBAPP_URL, {
@@ -2316,14 +2962,24 @@
     function saveTodayUsage(data) { try { localStorage.setItem(getUserUsageKey(), JSON.stringify(data)); } catch (e) {} }
 
     function updateDailyQuotaDisplay() {
+      const badge = document.getElementById('daily-quota-badge');
+      const btn = document.getElementById('btn-execute-random');
+
+      if (!hasValidLoginSession()) {
+        if (badge) badge.innerText = "免登入・不限次數";
+        if (btn) {
+          btn.disabled = false;
+          document.getElementById('random-btn-text').innerText = "電腦隨機取卦";
+        }
+        return;
+      }
+
       const u = getTodayUsage();
       const remain = currentUser.isAdvanced ? "無限制" : (currentUser.role === '網站會員' ? Math.max(0, 10 - u.count) : Math.max(0, 5 - u.count));
-      const badge = document.getElementById('daily-quota-badge');
       if (badge) badge.innerText = `今日尚餘：${remain} 題`;
-      const btn = document.getElementById('btn-execute-random');
       if (btn) {
         if (remain === 0 && !currentUser.isAdvanced) {
-          btn.disabled = true; document.getElementById('random-btn-text').innerText = "今日額度已達上限";
+          btn.disabled = true; document.getElementById('random-btn-text').innerText = "今日額度已滿";
         } else {
           btn.disabled = false; document.getElementById('random-btn-text').innerText = "電腦隨機取卦";
         }
@@ -2331,10 +2987,11 @@
     }
 
     function checkCanAskQuestion() {
+      if (!hasValidLoginSession()) return true;
       const u = getTodayUsage();
       if (currentUser.isAdvanced) return true;
       if (currentUser.role === '網站會員' && u.count >= 10) { showToast("今日 10 題額度已用完！"); return false; }
-      if (currentUser.role !== '網站會員' && u.count >= 5) { showToast("今日 5 題免費額度已用完！"); return false; }
+      if (currentUser.role !== '網站會員' && u.count >= 5) { showToast("今日 5 題完整版額度已用完！"); return false; }
       return true;
     }
 
@@ -2368,17 +3025,18 @@
     }
 
     function openLogicVerificationModal() {
-      if (currentUser.isAdvanced) { hasVerifiedLogic = true; goToStep('view-divination'); return; }
+      if (hasValidLoginSession() && currentUser.isAdvanced) { hasVerifiedLogic = true; goToStep('view-divination'); return; }
       document.getElementById('modal-verify-logic').classList.remove('hidden');
       const hintBanner = document.getElementById('logic-user-hint-banner');
       hintBanner.className = "p-3 rounded-xl text-xs font-serif bg-neo-amberSoft border border-neo-amber/50 text-neo-indigo";
-      hintBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-neo-amberHover"></i> <strong>${currentUser.role}自檢：</strong>起卦前請逐項核對並勾選。`;
+      const roleTitle = hasValidLoginSession() ? currentUser.role : "免登入體驗訪客";
+      hintBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-neo-amberHover"></i> <strong>${roleTitle}自檢：</strong>起卦前請逐項核對並勾選。`;
     }
     function closeLogicVerificationModal() { document.getElementById('modal-verify-logic').classList.add('hidden'); }
     function onLogicCheckboxChange() {
       const c1 = document.getElementById('logic-chk-1').checked, c2 = document.getElementById('logic-chk-2').checked, c3 = document.getElementById('logic-chk-3').checked;
       const btn = document.getElementById('btn-confirm-logic');
-      if (c1 && c2 && c3) { btn.disabled = false; btn.innerText = "三項確認無誤，進入隨機取卦台 ➔"; btn.className = "w-full py-3 rounded-xl bg-neo-amber text-neo-indigo font-bold text-xs sm:text-sm shadow-xs cursor-pointer"; }
+      if (c1 && c2 && c3) { btn.disabled = false; btn.innerText = "三項確認無誤，進入起卦台 ➔"; btn.className = "w-full py-3 rounded-xl bg-neo-amber text-neo-indigo font-bold text-xs sm:text-sm shadow-xs cursor-pointer"; }
       else { btn.disabled = true; btn.innerText = "請完成三項勾選"; btn.className = "w-full py-3 rounded-xl bg-stone-200 text-stone-500 font-bold text-xs sm:text-sm"; }
     }
     function confirmLogicVerificationAndProceed() {
@@ -2392,15 +3050,18 @@
     function applyUserPermissionsToDivinationView() {
       const banner = document.getElementById('permission-hint-banner');
       if (!banner) return;
-      if (currentUser.isAdvanced) {
-        banner.innerHTML = `<span class="font-bold text-neo-indigo"><i class="fa-solid fa-crown text-neo-amber"></i> 高階學員（${currentUser.name}）：提問無限制，統一採用電腦隨機取卦。</span>`;
+      if (hasValidLoginSession() && currentUser.isAdvanced) {
+        banner.innerHTML = `<span class="font-bold text-neo-indigo"><i class="fa-solid fa-crown text-neo-amber"></i> 高階學員（${currentUser.name}）：提問無限制，統一採用正統略筮法取卦。</span>`;
         banner.className = "p-3.5 rounded-2xl text-xs sm:text-sm font-serif bg-neo-amberSoft border border-neo-amber/50";
-      } else if (currentUser.role === '網站會員') {
-        banner.innerHTML = `<span class="font-bold text-neo-indigo"><i class="fa-solid fa-circle-check text-emerald-600"></i> 網站會員（${currentUser.name}）：每日 10 題，統一採用電腦隨機取卦。</span>`;
+      } else if (hasValidLoginSession() && currentUser.role === '網站會員') {
+        banner.innerHTML = `<span class="font-bold text-neo-indigo"><i class="fa-solid fa-circle-check text-emerald-600"></i> 網站會員（${currentUser.name}）：每日 10 題，統一採用正統略筮法取卦。</span>`;
         banner.className = "p-3.5 rounded-2xl text-xs sm:text-sm font-serif bg-neo-indigoSoft border border-neo-indigo/20";
-      } else {
-        banner.innerHTML = `<span class="font-bold text-neo-indigoLight"><i class="fa-solid fa-circle-info text-neo-muted"></i> 網站訪客（${currentUser.name || '未登入'}）：每日限 5 題，統一採用電腦隨機取卦。</span>`;
+      } else if (hasValidLoginSession()) {
+        banner.innerHTML = `<span class="font-bold text-neo-indigoLight"><i class="fa-solid fa-circle-check text-emerald-600"></i> 網站訪客（${currentUser.name}）：半年體驗期每日限 5 題完整客觀局勢解析。</span>`;
         banner.className = "p-3.5 rounded-2xl text-xs sm:text-sm font-serif bg-white border border-neo-border";
+      } else {
+        banner.innerHTML = `<span class="font-bold text-neo-indigo"><i class="fa-solid fa-sparkles text-neo-amberHover"></i> 免登入體驗模式（不限次數）：成卦後立即呈現本卦簡介與核心結論。</span>`;
+        banner.className = "p-3.5 rounded-2xl text-xs sm:text-sm font-serif bg-neo-amberSoft/60 border border-neo-amber/50";
       }
     }
 
@@ -2413,7 +3074,7 @@
       document.getElementById('toast-text').innerText = text;
       t.classList.remove('opacity-0', 'pointer-events-none');
       if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2800);
+      toastTimer = setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 3000);
     }
   </script>
 </body>
