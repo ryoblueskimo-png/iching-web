@@ -23,45 +23,64 @@
     header .status-bar { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; }
     .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(255,255,255,0.2); font-weight: 500; }
     .badge.connected { background: #4caf50; color: #fff; }
-    nav.tab-nav { background: #fff; display: flex; border-bottom: 2px solid var(--border); padding: 0 1.5rem; gap: 0.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.02); overflow-x: auto; }
-    .tab-btn { padding: 0.9rem 1rem; background: none; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .badge-pill { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+    .badge-role-student { background: #fdf3dc; color: #8b5a00; border: 1px solid #d99b26; }
+    .badge-role-member { background: #e3edf7; color: #16324f; border: 1px solid #9ab5d1; }
+    .badge-role-visitor { background: #f3f0ea; color: #5c534c; border: 1px solid #d6cdc0; }
+    .badge-status-ok { background: #e8f5e9; color: #2e7d32; }
+    .badge-status-exp { background: #ffebee; color: #b71c1c; }
+    .badge-status-lock { background: #fff3e0; color: #e65100; }
+    .pending-dot { background: #d32f2f; color: #fff; font-size: 0.72rem; padding: 0.05rem 0.45rem; border-radius: 999px; margin-left: 0.2rem; }
+    nav.tab-nav { background: #fff; display: flex; border-bottom: 2px solid var(--border); padding: 0 1.5rem; gap: 0.4rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.02); overflow-x: auto; }
+    .tab-btn { padding: 0.9rem 0.9rem; background: none; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
     .tab-btn:hover { color: var(--primary); }
     .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
     main { flex: 1; padding: 1.5rem 2rem; max-width: 1580px; margin: 0 auto; width: 100%; }
     .tab-panel { display: none; } .tab-panel.active { display: block; }
     .card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); padding: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.03); margin-bottom: 1.5rem; }
-    .card-title { font-family: var(--font-serif); font-size: 1.15rem; color: var(--primary-dark); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.6rem; }
+    .card-title { font-family: var(--font-serif); font-size: 1.15rem; color: var(--primary-dark); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.6rem; flex-wrap: wrap; gap: 0.6rem; }
     .control-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem; }
     label { font-weight: 600; font-size: 0.88rem; color: var(--text-muted); }
-    select, input[type="text"], input[type="url"], textarea { width: 100%; padding: 0.55rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 0.92rem; background: #faf9f6; transition: border-color 0.2s; }
+    select, input[type="text"], input[type="url"], input[type="email"], input[type="tel"], textarea { width: 100%; padding: 0.55rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 0.92rem; background: #faf9f6; transition: border-color 0.2s; }
     select:focus, input:focus, textarea:focus { outline: none; border-color: var(--primary); background: #fff; }
     .btn { padding: 0.6rem 1.2rem; border-radius: var(--radius); border: none; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
     .btn:active { transform: translateY(1px); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-primary { background: var(--primary); color: #fff; }
     .btn-primary:hover { background: var(--primary-dark); }
+    .btn-success { background: #2e7d32; color: #fff; }
+    .btn-success:hover { background: #1b5e20; }
+    .btn-danger { background: #fff; color: #b71c1c; border: 1px solid #ef9a9a; }
+    .btn-danger:hover { background: #ffebee; }
     .btn-secondary { background: var(--accent-soft); color: var(--primary-dark); border: 1px solid var(--accent); }
     .btn-secondary:hover { background: #eedfc7; }
     .btn-fb { background: #1877f2; color: #fff; }
     .btn-fb:hover { background: #1464cc; }
     .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff; }
+    .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
     .sub-nav { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
     .sub-btn { padding: 0.45rem 1rem; border-radius: 4px; border: 1px solid var(--border); background: #fff; font-size: 0.88rem; cursor: pointer; }
     .sub-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
     .split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .text-box { display: flex; flex-direction: column; gap: 0.5rem; }
     .text-box textarea { resize: vertical; min-height: 380px; line-height: 1.7; }
-    .hex-meta { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.8rem; }
-    .hex-number { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
     .mobile-phone-sim { max-width: 380px; background: #f2eae0; border: 2px solid var(--border); border-radius: 16px; padding: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08); margin: 0 auto; }
     .mobile-card-preview { background: #fff; border-radius: 12px; border: 1px solid #dfd2bf; padding: 0.85rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04); font-family: var(--font-serif); }
     .table-container { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
     table.data-table { width: 100%; border-collapse: collapse; text-align: left; }
-    table.data-table th, table.data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-    table.data-table th { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; }
+    table.data-table th, table.data-table td { padding: 0.7rem 0.85rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; vertical-align: middle; }
+    table.data-table th { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; white-space: nowrap; }
     table.data-table tr:hover { background: #fdfbf7; }
-    .config-strip { background: #fff; border-top: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; flex-wrap: wrap; }
-    .config-strip input { max-width: 480px; font-size: 0.82rem; padding: 0.35rem 0.6rem; }
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: rgba(30, 30, 30, 0.92); color: #fff; padding: 0.75rem 1.4rem; border-radius: 6px; font-size: 0.9rem; z-index: 1000; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; pointer-events: none; }
+    .privacy-alert { background: #ffebee; border: 2px solid #c62828; color: #8e0000; padding: 0.9rem 1rem; border-radius: var(--radius); font-size: 0.88rem; margin-bottom: 1rem; line-height: 1.6; }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin-bottom: 1.2rem; }
+    .stat-box { background: var(--primary-light); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; }
+    .stat-box .stat-label { font-size: 0.8rem; color: var(--text-muted); }
+    .stat-box .stat-val { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--primary-dark); }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(43, 37, 32, 0.6); backdrop-filter: blur(3px); z-index: 1500; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto; }
+    .modal-box { background: #fff; border: 2px solid var(--accent); border-radius: 12px; max-width: 560px; width: 100%; padding: 1.5rem; box-shadow: 0 18px 40px rgba(0,0,0,0.25); }
+    .config-strip { background: #fff; border-top: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 0.82rem; flex-wrap: wrap; }
+    .config-strip input { max-width: 380px; font-size: 0.8rem; padding: 0.35rem 0.6rem; }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: rgba(30, 30, 30, 0.94); color: #fff; padding: 0.75rem 1.4rem; border-radius: 6px; font-size: 0.9rem; z-index: 2500; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; pointer-events: none; max-width: 90vw; }
     .toast.show { opacity: 1; transform: translateY(0); }
     .hidden { display: none !important; }
     .lock-overlay { position: fixed; inset: 0; background: rgba(43, 37, 32, 0.78); backdrop-filter: blur(6px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
@@ -74,6 +93,7 @@
       header h1 { font-size: 1.15rem; }
       main { padding: 1rem; }
       .split-container { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
       .card { padding: 1rem; }
       .config-strip { padding: 0.75rem 1rem; }
     }
@@ -81,7 +101,7 @@
 </head>
 <body>
 
-  <!-- 管理員金鑰解鎖視窗（金鑰不寫死於公開程式碼中，支援 iPad 直接安全登入） -->
+  <!-- 管理員金鑰解鎖視窗 -->
   <div id="adminLockOverlay" class="lock-overlay">
     <div class="lock-card">
       <div style="font-size: 2.2rem; margin-bottom: 0.4rem;">☯</div>
@@ -112,19 +132,19 @@
     <button class="tab-btn" onclick="switchTab('tab-video')">🎥 4. 影音連結庫</button>
     <button class="tab-btn" onclick="switchTab('tab-handnotes')">📖 5. 解卦手記</button>
     <button class="tab-btn" onclick="switchTab('tab-columns')">📰 6. 研究與專欄</button>
-    <button class="tab-btn" onclick="switchTab('tab-messages')">💬 7. 留言審核</button>
+    <button class="tab-btn" onclick="switchTab('tab-messages')">💬 7. 留言審核 <span id="msgPendingBadge" class="pending-dot hidden">0</span></button>
     <button class="tab-btn" onclick="switchTab('tab-courses')">🎓 8. 課程大綱</button>
+    <button class="tab-btn" onclick="switchTab('tab-members')">👥 9. 會員審批與管理 <span id="memberPendingBadge" class="pending-dot hidden">0</span></button>
   </nav>
 
   <main>
-    <!-- 頁籤 1: 易經文本與古文原典編修 (省略內容，維持原樣) -->
+    <!-- 頁籤 1: 易經文本與古文原典編修（維持原樣，不動免登入極簡版） -->
     <section id="tab-hex" class="tab-panel active">
       <div class="sub-nav">
         <button class="sub-btn active" id="btnModeInterpret" onclick="setHexMode('interpret')">三層次 × 四大領域解讀</button>
         <button class="sub-btn" id="btnModeClassic" onclick="setHexMode('classic')">64卦古文原典（卦辭／爻辭／象）</button>
       </div>
 
-      <!-- 模式 A: 三層次解讀雙欄對照 -->
       <div id="subview-interpret" class="card">
         <div class="control-row">
           <div style="flex: 1; min-width: 180px;"><label>選擇卦象：</label><select id="hexSelect" onchange="loadHexInterpretation()"></select></div>
@@ -138,7 +158,6 @@
         </div>
       </div>
 
-      <!-- 模式 B: 古文 -->
       <div id="subview-classic" class="card" style="display: none;">
         <div class="control-row" style="align-items: flex-end;">
           <div style="flex: 1.2; min-width: 180px;"><label>選擇卦象：</label><select id="classicHexSelect" onchange="loadClassicText()"></select></div>
@@ -151,7 +170,7 @@
       </div>
     </section>
 
-    <!-- 頁籤 2: 心法導引 (省略內容，維持原樣) -->
+    <!-- 頁籤 2: 心法導引 -->
     <section id="tab-guidance" class="tab-panel">
       <div class="card">
         <div class="card-title"><span>心法導引專題</span><button class="btn btn-primary" onclick="saveTopicGuidance()">寫入 Google 試算表</button></div>
@@ -164,7 +183,7 @@
       </div>
     </section>
 
-    <!-- 【大幅升級】頁籤 3: FB/IG 行銷與發布助手 -->
+    <!-- 頁籤 3: FB/IG 行銷與發布助手 -->
     <section id="tab-broadcast" class="tab-panel">
       <div class="card" style="border: 2px solid var(--accent); background: #fffdfa;">
         <div class="card-title" style="color: var(--accent); border-bottom-color: var(--accent);">
@@ -172,8 +191,7 @@
           <span style="font-size:0.8rem; background:#f4ede1; padding:2px 8px; border-radius:4px; font-weight:normal;">一鍵排版，破解演算法限制</span>
         </div>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-          <!-- 編輯區 -->
+        <div class="split-container">
           <div style="display: flex; flex-direction: column; gap: 0.9rem;">
             <div>
               <label>貼文／快訊標題：</label>
@@ -189,9 +207,7 @@
             </div>
           </div>
           
-          <!-- 雙平台預覽與複製區 -->
           <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <!-- FB 預覽 -->
             <div style="border: 1px solid #1877f2; border-radius: 8px; overflow: hidden; background: #fff;">
               <div style="background: #1877f2; color: #fff; padding: 0.4rem 0.8rem; font-weight: bold; font-size: 0.85rem; display: flex; justify-content: space-between;">
                 <span>Facebook 最佳化排版 (連結放留言)</span>
@@ -203,7 +219,6 @@
               </div>
             </div>
 
-            <!-- IG 預覽 -->
             <div style="border: 1px solid #cc2366; border-radius: 8px; overflow: hidden; background: #fff;">
               <div style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; padding: 0.4rem 0.8rem; font-weight: bold; font-size: 0.85rem; display: flex; justify-content: space-between;">
                 <span>Instagram 最佳化排版 (視覺+Hashtag)</span>
@@ -222,24 +237,26 @@
       </div>
     </section>
 
-    <!-- 頁籤 4: 影音連結庫 (省略內容，維持原樣) -->
+    <!-- 頁籤 4: 影音連結庫 -->
     <section id="tab-video" class="tab-panel">
       <div class="card">
         <div class="card-title">新增影音教材</div>
         <div class="control-row">
-          <div style="flex: 2;"><label>標題：</label><input type="text" id="vidTitle"></div>
-          <div style="flex: 2;"><label>URL：</label><input type="url" id="vidUrl"></div>
-          <div style="flex: 1;"><label>權限：</label><select id="vidAccess"><option value="public">公開</option><option value="student">高階學員專屬</option></select></div>
+          <div style="flex: 2; min-width: 200px;"><label>標題：</label><input type="text" id="vidTitle"></div>
+          <div style="flex: 2; min-width: 200px;"><label>URL：</label><input type="url" id="vidUrl"></div>
+          <div style="flex: 1; min-width: 140px;"><label>權限：</label><select id="vidAccess"><option value="public">公開</option><option value="student">高階學員專屬</option></select></div>
           <button class="btn btn-primary" onclick="addVideoEntry()">新增</button>
         </div>
       </div>
       <div class="card">
         <div class="card-title"><span>影音列表</span><button class="btn btn-secondary" onclick="loadVideoLibrary()">重整</button></div>
-        <table class="data-table"><thead><tr><th>#</th><th>標題</th><th>權限</th><th>連結</th><th>操作</th></tr></thead><tbody id="videoTableBody"></tbody></table>
+        <div class="table-container">
+          <table class="data-table"><thead><tr><th>#</th><th>標題</th><th>權限</th><th>連結</th><th>操作</th></tr></thead><tbody id="videoTableBody"></tbody></table>
+        </div>
       </div>
     </section>
 
-    <!-- 【新增按鈕串聯】頁籤 5: 解卦手記 -->
+    <!-- 頁籤 5: 解卦手記 -->
     <section id="tab-handnotes" class="tab-panel">
       <div class="card">
         <div class="card-title">
@@ -248,9 +265,8 @@
             <button class="btn btn-secondary" onclick="resetHandnoteToNew()">＋ 建立新案例</button>
             <button class="btn btn-secondary" onclick="loadHandnotesList()">從雲端重新整理</button>
             <button class="btn btn-primary" onclick="saveCurrentHandnote()">一鍵同步更新至試算表</button>
-            <!-- 串聯按鈕 -->
             <button class="btn btn-fb" onclick="sendHandnoteToBroadcast()">📣 將此篇送至 FB/IG 行銷助手</button>
-            <button class="btn btn-secondary" onclick="deleteCurrentHandnote()" id="btnDeleteHandnote" style="color: #b71c1c; border-color: #ef9a9a; display: none;">刪除</button>
+            <button class="btn btn-danger" onclick="deleteCurrentHandnote()" id="btnDeleteHandnote" style="display: none;">刪除</button>
           </div>
         </div>
 
@@ -270,7 +286,7 @@
             </div>
             <div><label>案例主標題：</label><input type="text" id="hnTitle" oninput="updateHandnotePreview()"></div>
             <div><input type="checkbox" id="hnIsFeatured" checked onchange="updateHandnotePreview()"> <label for="hnIsFeatured">在首頁公開展示</label></div>
-            <div class="text-box"><label>動態拆解摘要：</label><textarea id="hnSummary" style="min-height: 220px;" oninput="updateHandnotePreview()"></textarea></div>
+            <div class="text-box"><label>動態拆解摘要（可使用 === 分隔首頁摘要與側欄完整問答）：</label><textarea id="hnSummary" style="min-height: 220px;" oninput="updateHandnotePreview()"></textarea></div>
           </div>
           <div>
             <label style="display: block; margin-bottom: 0.6rem;">📱 手機首頁視覺模擬：</label>
@@ -285,7 +301,7 @@
       </div>
     </section>
 
-    <!-- 【新增按鈕串聯】頁籤 6: 研究與專欄庫 -->
+    <!-- 頁籤 6: 研究與專欄庫 -->
     <section id="tab-columns" class="tab-panel">
       <div class="card">
         <div class="card-title">
@@ -293,9 +309,8 @@
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <button class="btn btn-secondary" onclick="resetColumnToNew()">＋ 建立新專欄</button>
             <button class="btn btn-primary" onclick="saveCurrentColumn()">同步更新至試算表</button>
-            <!-- 串聯按鈕 -->
             <button class="btn btn-fb" onclick="sendColumnToBroadcast()">📣 將此篇送至 FB/IG 行銷助手</button>
-            <button class="btn btn-secondary" onclick="deleteCurrentColumn()" id="btnDeleteColumn" style="display: none; color: #b71c1c;">刪除</button>
+            <button class="btn btn-danger" onclick="deleteCurrentColumn()" id="btnDeleteColumn" style="display: none;">刪除</button>
           </div>
         </div>
 
@@ -323,30 +338,61 @@
       </div>
     </section>
 
-    <!-- 頁籤 7: 留言審核 (維持原樣) -->
+    <!-- 頁籤 7: 留言審核（升級：訪客免費親批 1 題隱私防呆 ＋ 一鍵去識別化轉存解卦手記） -->
     <section id="tab-messages" class="tab-panel">
       <div class="card">
         <div class="card-title">
-          <span>💬 互動留言審核區</span>
-          <div style="display: flex; gap: 0.5rem;"><button class="btn btn-secondary" onclick="loadMessagesList()">讀取最新留言</button><button class="btn btn-primary" onclick="saveCurrentMessage()">儲存回覆</button></div>
+          <span>💬 互動留言與「訪客免費親批 1 題」審核區</span>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="loadMessagesList()">讀取最新留言</button>
+            <button class="btn btn-success" id="btnConvertToHandnote" onclick="convertMessageToHandnote()" style="display: none;">📝 去識別化轉存至解卦手記</button>
+            <button class="btn btn-primary" onclick="saveCurrentMessage()">儲存回覆</button>
+            <button class="btn btn-danger" onclick="deleteCurrentMessage()">刪除</button>
+          </div>
         </div>
-        <div class="control-row" style="background: var(--primary-light); padding: 0.8rem 1rem; border-radius: var(--radius);"><div style="flex: 2;"><label>選擇留言：</label><select id="messageSelect" onchange="onMessageSelectChange()"></select></div></div>
-        <div class="split-container" style="margin-top: 1.2rem;">
-          <div style="background: #faf9f6; padding: 1rem; border-radius: var(--radius); border: 1px solid var(--border);">
-            <h4>學員留言內容</h4>
-            <div id="msgName" style="color:var(--primary); font-weight:bold; margin-top:1rem;">--</div>
-            <div id="msgContent" style="margin-top: 0.5rem;">--</div>
+
+        <div class="control-row" style="background: var(--primary-light); padding: 0.8rem 1rem; border-radius: var(--radius); border: 1px solid var(--border);">
+          <div style="flex: 2; min-width: 260px;"><label>選擇留言：</label><select id="messageSelect" onchange="onMessageSelectChange()"></select></div>
+          <div style="flex: 1; min-width: 180px;">
+            <label>篩選類型：</label>
+            <select id="messageFilterType" onchange="renderMessagesSelect()">
+              <option value="all">顯示全部留言</option>
+              <option value="gift">只看【訪客免費親批1題】</option>
+              <option value="pending">只看【待審】案件</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 親批案件隱私防呆警告橫幅 -->
+        <div id="msgPrivacyAlert" class="privacy-alert hidden">
+          <strong>⚠️ 個資隱私防呆提醒：</strong>此則為<strong>「訪客首登・免費親批 1 題」</strong>，內文附有提問者電話與 Email！<br>
+          • <strong>請勿直接將狀態改為「公開」</strong>（以免把對方電話與 Email 公開在前台留言板）。<br>
+          • 建議私下回覆完成後將狀態設為<strong>「隱藏（已私訊回覆）」</strong>；若要公開發表於網站首頁，請點擊上方綠色按鈕<strong>「📝 去識別化轉存至解卦手記」</strong>，系統會自動去除個資！
+        </div>
+
+        <div class="split-container" style="margin-top: 1rem;">
+          <div style="background: #faf9f6; padding: 1.1rem; border-radius: var(--radius); border: 1px solid var(--border);">
+            <h4>提問／留言內容</h4>
+            <div id="msgName" style="color:var(--primary); font-weight:bold; margin-top:0.8rem; font-size: 0.95rem;">--</div>
+            <div id="msgContent" style="margin-top: 0.7rem; white-space: pre-wrap; line-height: 1.75; font-size: 0.92rem;">--</div>
             <div id="msgId" class="hidden"></div><div id="msgTime" class="hidden"></div><div id="msgRole" class="hidden"></div><div id="msgType" class="hidden"></div>
           </div>
           <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <div><label>狀態：</label><select id="msgStatus"><option value="待審">待審</option><option value="公開">公開</option><option value="隱藏">隱藏</option></select></div>
-            <div class="text-box" style="flex: 1;"><label>老師回覆：</label><textarea id="msgReply" style="min-height: 250px;"></textarea></div>
+            <div>
+              <label>公開狀態：</label>
+              <select id="msgStatus">
+                <option value="待審">待審</option>
+                <option value="公開">公開（一般留言顯示於前台）</option>
+                <option value="隱藏">隱藏（不公開／親批已私訊回覆）</option>
+              </select>
+            </div>
+            <div class="text-box" style="flex: 1;"><label>老師文字回覆（若按轉存手記，此段會自動併入解卦內容）：</label><textarea id="msgReply" style="min-height: 260px;"></textarea></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 【大幅簡化】頁籤 8: 課程大綱 (已移除試閱連結輸入框) -->
+    <!-- 頁籤 8: 課程大綱 -->
     <section id="tab-courses" class="tab-panel">
       <div class="card">
         <div class="card-title">
@@ -383,18 +429,228 @@
       </div>
     </section>
 
+    <!-- 【全新】頁籤 9: 會員審批與管理（直連 AUTH_WEBAPP_URL，不含匯出名單） -->
+    <section id="tab-members" class="tab-panel">
+      <!-- 數據總覽 -->
+      <div class="stat-grid">
+        <div class="stat-box" style="border-left: 4px solid #c62828;">
+          <div class="stat-label">待審核新申請</div>
+          <div class="stat-val" id="statPending">0</div>
+        </div>
+        <div class="stat-box" style="border-left: 4px solid #c48b36;">
+          <div class="stat-label">高階學員（永久）</div>
+          <div class="stat-val" id="statStudent">0</div>
+        </div>
+        <div class="stat-box" style="border-left: 4px solid #16324f;">
+          <div class="stat-label">網站會員（年費2500／特邀）</div>
+          <div class="stat-val" id="statMember">0</div>
+        </div>
+        <div class="stat-box" style="border-left: 4px solid #2e7d32;">
+          <div class="stat-label">網站訪客（半年180天體驗）</div>
+          <div class="stat-val" id="statVisitor">0</div>
+        </div>
+      </div>
+
+      <!-- 區塊 A：新申請帳號審批區 -->
+      <div class="card" style="border: 2px solid var(--primary);">
+        <div class="card-title">
+          <span>🔔 新申請帳號審批區（核准後自動移入對應分頁）</span>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="loadMembersData()">🔄 重新同步名冊</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>申請時間</th>
+                <th>姓名</th>
+                <th>手機 / Email</th>
+                <th>自訂通行碼</th>
+                <th>核准身分設定</th>
+                <th>備註 / 狀態</th>
+                <th>審批操作</th>
+              </tr>
+            </thead>
+            <tbody id="pendingTableBody">
+              <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">載入中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 區塊 B：現有會員管理（查詢、身分升降級、改通行碼、續期、解鎖） -->
+      <div class="card">
+        <div class="card-title">
+          <span>👥 現有會員名冊管理（支援一鍵升降級、修改通行碼、續期與解除鎖定）</span>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-sm" onclick="openAddMemberModal()">＋ 直接手動建檔</button>
+            <button class="btn btn-secondary btn-sm" onclick="loadMembersData()">🔄 重新整理</button>
+          </div>
+        </div>
+
+        <div class="control-row" style="background: var(--primary-light); padding: 0.85rem 1rem; border-radius: var(--radius); border: 1px solid var(--border);">
+          <div style="flex: 1; min-width: 150px;">
+            <label>身分篩選：</label>
+            <select id="filterMemberRole" onchange="renderMembersTable()">
+              <option value="all">全部身分</option>
+              <option value="高階學員">高階學員</option>
+              <option value="網站會員">網站會員</option>
+              <option value="網站訪客">網站訪客</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 150px;">
+            <label>帳號狀態：</label>
+            <select id="filterMemberStatus" onchange="renderMembersTable()">
+              <option value="all">全部狀態</option>
+              <option value="已開通">已開通</option>
+              <option value="已過期">已過期</option>
+              <option value="已停權">已停權</option>
+              <option value="locked">僅看密碼鎖定中</option>
+            </select>
+          </div>
+          <div style="flex: 2; min-width: 220px;">
+            <label>關鍵字搜尋（姓名 / 手機 / Email）：</label>
+            <input type="text" id="filterMemberKeyword" placeholder="輸入姓名、手機或信箱即時過濾..." oninput="renderMembersTable()">
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>身分資格</th>
+                <th>姓名</th>
+                <th>手機 / Email</th>
+                <th>通行碼</th>
+                <th>開通狀態</th>
+                <th>累計發問</th>
+                <th>開通時間</th>
+                <th>備註</th>
+                <th>管理</th>
+              </tr>
+            </thead>
+            <tbody id="membersTableBody">
+              <tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">載入中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
 
+  <!-- 編輯現有會員／升降級彈窗 -->
+  <div id="modalEditMember" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="card-title" style="margin-bottom: 0.9rem;">
+        <span>✏️ 編輯會員資料與身分升降級</span>
+        <button class="btn btn-secondary btn-sm" onclick="closeEditMemberModal()">✕ 關閉</button>
+      </div>
+      <form onsubmit="submitEditMember(event)" style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <input type="hidden" id="editOrigSheet">
+        <input type="hidden" id="editRowIndex">
+        <input type="hidden" id="editOrigName">
+
+        <div class="control-row" style="margin-bottom: 0;">
+          <div style="flex: 1; min-width: 160px;">
+            <label>身分資格（變更即自動搬移分頁）：</label>
+            <select id="editRole">
+              <option value="網站訪客">網站訪客（半年180天・每日5題）</option>
+              <option value="網站會員">網站會員（年費2500／特邀・每日10題）</option>
+              <option value="高階學員">高階學員（永久有效・無限制）</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 140px;">
+            <label>開通狀態：</label>
+            <select id="editStatus">
+              <option value="已開通">已開通</option>
+              <option value="已過期">已過期</option>
+              <option value="已停權">已停權</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-row" style="margin-bottom: 0;">
+          <div style="flex: 1; min-width: 160px;"><label>姓名：</label><input type="text" id="editName" required></div>
+          <div style="flex: 1; min-width: 160px;"><label>6 位數通行碼：</label><input type="text" id="editPin" maxlength="6" required></div>
+        </div>
+
+        <div class="control-row" style="margin-bottom: 0;">
+          <div style="flex: 1; min-width: 160px;"><label>手機號碼：</label><input type="tel" id="editPhone"></div>
+          <div style="flex: 1.4; min-width: 200px;"><label>Email：</label><input type="email" id="editEmail"></div>
+        </div>
+
+        <div>
+          <label>備註 / 修業備註（若寫入日期如 2027-06-30，到期排程將優先依此日期計算）：</label>
+          <input type="text" id="editNote" placeholder="例如：老師特邀免費體驗 VIP 至 2027-05-31">
+        </div>
+
+        <div style="background: var(--primary-light); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.45rem;">
+          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-main);">
+            <input type="checkbox" id="editResetOpenTime" style="width: auto;"> 🔄 將「開通時間」重設為今天（用於訪客重新續期 180 天或會員續約）
+          </label>
+          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-main);">
+            <input type="checkbox" id="editClearLock" style="width: auto;"> 🔓 解除密碼錯誤鎖定並歸零錯誤次數
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.4rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeEditMemberModal()">取消</button>
+          <button type="submit" id="btnSaveEditMember" class="btn btn-primary">儲存變更並同步試算表</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 直接手動新增會員彈窗 -->
+  <div id="modalAddMember" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="card-title" style="margin-bottom: 0.9rem;">
+        <span>＋ 直接手動新增會員（免審批立即開通）</span>
+        <button class="btn btn-secondary btn-sm" onclick="closeAddMemberModal()">✕ 關閉</button>
+      </div>
+      <form onsubmit="submitAddMember(event)" style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <div class="control-row" style="margin-bottom: 0;">
+          <div style="flex: 1;">
+            <label>建檔身分：</label>
+            <select id="addRole">
+              <option value="網站訪客">網站訪客（免費體驗半年 180 天）</option>
+              <option value="網站會員">網站會員（年費 2,500 元／特邀）</option>
+              <option value="高階學員">高階學員（正式課程學員）</option>
+            </select>
+          </div>
+          <div style="flex: 1;"><label>姓名 *：</label><input type="text" id="addName" required></div>
+        </div>
+        <div class="control-row" style="margin-bottom: 0;">
+          <div style="flex: 1;"><label>手機號碼：</label><input type="tel" id="addPhone" placeholder="09xxxxxxxx"></div>
+          <div style="flex: 1;"><label>Email：</label><input type="email" id="addEmail"></div>
+        </div>
+        <div class="control-row" style="margin-bottom: 0;">
+          <div style="flex: 1;"><label>6 位數通行碼（留空則系統亂數產生）：</label><input type="text" id="addPin" maxlength="6" placeholder="例如 123456"></div>
+          <div style="flex: 1.5;"><label>備註：</label><input type="text" id="addNote" value="老師後台直接建檔"></div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.4rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddMemberModal()">取消</button>
+          <button type="submit" id="btnSaveAddMember" class="btn btn-primary">確認建檔開通</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer class="config-strip">
-    <label>Google Apps Script (Web App URL)：</label>
+    <label>文本資料庫 API：</label>
     <input type="text" id="gasEndpoint" placeholder="https://script.google.com/macros/s/.../exec">
-    <button class="btn btn-secondary" onclick="saveConfig()" style="padding: 0.35rem 0.8rem; font-size: 0.8rem;">儲存設定</button>
+    <label>會員資料庫 API：</label>
+    <input type="text" id="authEndpoint" placeholder="https://script.google.com/macros/s/.../exec">
+    <button class="btn btn-secondary btn-sm" onclick="saveConfig()">儲存設定</button>
   </footer>
 
   <div id="toast" class="toast"></div>
 
   <script>
     const DEFAULT_WORKBENCH_URL = "https://script.google.com/macros/s/AKfycbzailXGSYgFkkaEMAhLip5CvcYSt5pSxOZnj17slQ-Ot3owjwbz-0zCrvMbULSP6CFo/exec";
+    const DEFAULT_AUTH_URL = "https://script.google.com/macros/s/AKfycby3YV_5TIBDKuClv19sWIjgZ3-Dxovq2K6p2312xys9etQWqIWNrgs70ELsMulR8_2H/exec";
     let ACTIVE_ADMIN_KEY = "";
 
     const HEXAGRAM_LIST = [
@@ -407,6 +663,16 @@
       "澤火革","火風鼎","震為雷","艮為山","風山漸","雷澤歸妹","雷火豐","火山旅",
       "巽為風","兌為澤","風水渙","水澤節","風澤中孚","雷山小過","水火既濟","火水未濟"
     ];
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
 
     const _origFetch = window.fetch;
     window.fetch = function(resource, init) {
@@ -424,12 +690,13 @@
     let cachedColumns = [];
     let cachedMessages = [];
     let cachedCourses = [];
+    let cachedPendingApplicants = [];
+    let cachedMembers = [];
 
     window.addEventListener("DOMContentLoaded", () => {
       loadSavedConfig();
       initHexSelects();
 
-      // 若這台 iPad / 電腦之前勾選過「記住這台裝置」，自動帶入驗證
       const savedKey = localStorage.getItem("iching_admin_key") || sessionStorage.getItem("iching_admin_key") || "";
       if (savedKey) {
         document.getElementById("adminKeyInput").value = savedKey;
@@ -469,7 +736,6 @@
 
       const endpoint = document.getElementById("gasEndpoint").value.trim() || DEFAULT_WORKBENCH_URL;
       try {
-        // 透過 getAllHandnotes 驗證金鑰是否正確（後端不區分大小寫）
         const res = await _origFetch(`${endpoint}?action=getAllHandnotes&adminKey=${encodeURIComponent(key)}`);
         const data = await res.json();
         if (data && data.success) {
@@ -485,7 +751,6 @@
           badge.innerText = "已連線";
           badge.classList.add("connected");
 
-          // 載入所有資料
           cachedHandnotes = data.handnotes || [];
           renderHandnotesSelect();
           loadHexInterpretation();
@@ -494,6 +759,7 @@
           loadColumnsList();
           loadMessagesList();
           loadCoursesList();
+          loadMembersData();
           if (!isAuto) showToast("解鎖成功，歡迎陳老師！");
         } else {
           if (isAuto) {
@@ -526,26 +792,32 @@
       document.getElementById(tabId).classList.add("active");
       const clickedBtn = Array.from(document.querySelectorAll(".tab-btn")).find(b => b.getAttribute("onclick").includes(tabId));
       if (clickedBtn) clickedBtn.classList.add("active");
+      if (tabId === "tab-members") loadMembersData();
     }
 
+    let toastTimer = null;
     function showToast(msg) {
       const t = document.getElementById("toast");
       t.innerText = msg;
       t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2800);
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove("show"), 3200);
     }
 
     function saveConfig() {
       const url = document.getElementById("gasEndpoint").value.trim() || DEFAULT_WORKBENCH_URL;
+      const authUrl = document.getElementById("authEndpoint").value.trim() || DEFAULT_AUTH_URL;
       document.getElementById("gasEndpoint").value = url;
+      document.getElementById("authEndpoint").value = authUrl;
       localStorage.setItem("iching_gas_url", url);
+      localStorage.setItem("iching_auth_url", authUrl);
       showToast("試算表 API 網址設定已儲存");
       testConnection();
     }
 
     function loadSavedConfig() {
-      const saved = localStorage.getItem("iching_gas_url") || DEFAULT_WORKBENCH_URL;
-      document.getElementById("gasEndpoint").value = saved;
+      document.getElementById("gasEndpoint").value = localStorage.getItem("iching_gas_url") || DEFAULT_WORKBENCH_URL;
+      document.getElementById("authEndpoint").value = localStorage.getItem("iching_auth_url") || DEFAULT_AUTH_URL;
     }
 
     function testConnection() {
@@ -556,7 +828,7 @@
           if (data && data.success) {
             badge.innerText = "已連線";
             badge.classList.add("connected");
-            showToast("連線成功");
+            showToast("文本庫連線成功");
           } else {
             showToast("連線異常");
           }
@@ -677,7 +949,7 @@
         .catch(() => showToast("寫入逾時"));
     }
 
-    // ==================== 3. FB/IG 社群發布助手邏輯 ====================
+    // ==================== 3. FB/IG 社群發布助手 ====================
     function updateSocialPreview() {
       const title = document.getElementById("fbTitle").value.trim();
       const content = document.getElementById("fbContent").value.trim();
@@ -755,7 +1027,7 @@
           tbody.innerHTML = "";
           cachedVideos.forEach((v, idx) => {
             const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${idx + 1}</td><td></td><td>${v.access === "student" ? "高階學員專屬" : "公開"}</td><td><a href="${encodeURI(v.url || '#')}" target="_blank">開啟影片</a></td><td><button class="btn btn-secondary" style="padding:0.25rem 0.6rem;font-size:0.8rem;color:#b71c1c;" onclick="deleteVideoEntry('${String(v.id).replace(/'/g, '')}')">刪除</button></td>`;
+            tr.innerHTML = `<td>${idx + 1}</td><td></td><td>${v.access === "student" ? "高階學員專屬" : "公開"}</td><td><a href="${encodeURI(v.url || '#')}" target="_blank">開啟影片</a></td><td><button class="btn btn-danger btn-sm" onclick="deleteVideoEntry('${String(v.id).replace(/'/g, '')}')">刪除</button></td>`;
             tr.children[1].textContent = v.title || "";
             tbody.appendChild(tr);
           });
@@ -817,7 +1089,8 @@
     function updateHandnotePreview() {
       document.getElementById("simTitle").innerText = document.getElementById("hnTitle").value || "標題預覽";
       document.getElementById("simTag").innerText = document.getElementById("hnTag").value || "";
-      document.getElementById("simSummary").innerText = document.getElementById("hnSummary").value || "摘要...";
+      const raw = document.getElementById("hnSummary").value || "摘要...";
+      document.getElementById("simSummary").innerText = raw.includes("===") ? raw.split("===")[0].trim() : raw;
     }
     function saveCurrentHandnote() {
       fetch(document.getElementById("gasEndpoint").value, {
@@ -885,26 +1158,53 @@
       }).then(() => { showToast("已刪除專欄"); resetColumnToNew(); loadColumnsList(); });
     }
 
-    // ==================== 7. 留言審核 ====================
+    // ==================== 7. 留言審核（含親批隱私防呆與一鍵去識別化轉存手記） ====================
+    function isGiftConsultMessage(m) {
+      if (!m) return false;
+      return String(m.type || "").includes("親批") || String(m.content || "").includes("【聯絡資訊】");
+    }
+
     function loadMessagesList() {
       fetch(`${document.getElementById("gasEndpoint").value}?action=getMessages`)
         .then(r => r.json())
         .then(data => {
           cachedMessages = Array.isArray(data) ? data : [];
-          const sel = document.getElementById("messageSelect");
-          sel.innerHTML = "";
-          if (cachedMessages.length === 0) {
-            sel.innerHTML = '<option value="">（目前尚無留言）</option>';
-            return;
+          const pendingCount = cachedMessages.filter(m => (m.status || "待審") === "待審").length;
+          const badge = document.getElementById("msgPendingBadge");
+          if (badge) {
+            badge.innerText = pendingCount;
+            badge.classList.toggle("hidden", pendingCount === 0);
           }
-          cachedMessages.forEach(m => {
-            const o = document.createElement("option");
-            o.value = m.id;
-            o.innerText = `[${m.status || "待審"}] ${m.userName || "學員"} - ${(m.content || "").slice(0, 24)}`;
-            sel.appendChild(o);
-          });
-          onMessageSelectChange();
+          renderMessagesSelect();
         });
+    }
+
+    function renderMessagesSelect() {
+      const filter = document.getElementById("messageFilterType").value;
+      const sel = document.getElementById("messageSelect");
+      sel.innerHTML = "";
+      let list = cachedMessages;
+      if (filter === "gift") list = cachedMessages.filter(isGiftConsultMessage);
+      else if (filter === "pending") list = cachedMessages.filter(m => (m.status || "待審") === "待審");
+
+      if (list.length === 0) {
+        sel.innerHTML = '<option value="">（目前無符合條件之留言）</option>';
+        document.getElementById("msgId").innerText = "";
+        document.getElementById("msgName").innerText = "--";
+        document.getElementById("msgContent").innerText = "--";
+        document.getElementById("msgReply").value = "";
+        document.getElementById("msgPrivacyAlert").classList.add("hidden");
+        document.getElementById("btnConvertToHandnote").style.display = "none";
+        return;
+      }
+      list.forEach(m => {
+        const o = document.createElement("option");
+        o.value = m.id;
+        const prefix = isGiftConsultMessage(m) ? "🎁親批 " : "";
+        o.innerText = `${prefix}[${m.status || "待審"}] ${m.userName || "學員"} - ${(m.content || "").replace(/\s+/g, " ").slice(0, 26)}`;
+        sel.appendChild(o);
+      });
+      onMessageSelectChange();
     }
 
     function onMessageSelectChange() {
@@ -912,27 +1212,86 @@
       const m = cachedMessages.find(x => String(x.id) === String(id));
       if (!m) return;
       document.getElementById("msgId").innerText = m.id || "";
+      document.getElementById("msgType").innerText = m.type || "";
       document.getElementById("msgName").innerText = `${m.userName || "學員"}（${m.role || ""} · ${m.type || ""} · ${m.time || ""}）`;
       document.getElementById("msgContent").innerText = m.content || "";
       document.getElementById("msgStatus").value = m.status || "待審";
       document.getElementById("msgReply").value = m.reply || "";
+
+      const isGift = isGiftConsultMessage(m);
+      document.getElementById("msgPrivacyAlert").classList.toggle("hidden", !isGift);
+      document.getElementById("btnConvertToHandnote").style.display = isGift ? "inline-flex" : "none";
     }
 
     function saveCurrentMessage() {
       const id = document.getElementById("msgId").innerText.trim();
       if (!id) { showToast("請先選擇一則留言"); return; }
+      const m = cachedMessages.find(x => String(x.id) === String(id));
+      const newStatus = document.getElementById("msgStatus").value;
+
+      if (isGiftConsultMessage(m) && newStatus === "公開") {
+        const ok = confirm("⚠️ 隱私警示！\n這則「免費親批 1 題」內文含有提問者的電話與 Email，設為「公開」將會直接暴露於前台留言板！\n\n建議改設為「隱藏」，再點「去識別化轉存至解卦手記」。確定仍要直接設為公開嗎？");
+        if (!ok) return;
+      }
+
       fetch(document.getElementById("gasEndpoint").value, {
         method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           action: "updateMessage",
           id,
-          status: document.getElementById("msgStatus").value,
+          status: newStatus,
           reply: document.getElementById("msgReply").value
         })
       }).then(r => r.json()).then(data => {
         showToast(data && data.success ? "留言審核與回覆已儲存！" : ((data && data.message) || "儲存失敗"));
         loadMessagesList();
       });
+    }
+
+    function deleteCurrentMessage() {
+      const id = document.getElementById("msgId").innerText.trim();
+      if (!id || !confirm("確定要永久刪除這則留言嗎？")) return;
+      fetch(document.getElementById("gasEndpoint").value, {
+        method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ action: "deleteMessage", id })
+      }).then(r => r.json()).then(data => {
+        showToast(data && data.success ? "已刪除該則留言" : "刪除失敗");
+        loadMessagesList();
+      });
+    }
+
+    // 一鍵將「免費親批 1 題」自動去除聯絡電話／Email，轉入解卦手記草稿
+    function convertMessageToHandnote() {
+      const rawContent = document.getElementById("msgContent").innerText || "";
+      const teacherReply = document.getElementById("msgReply").value.trim();
+
+      // 擷取領域與本卦，並自動剔除含【聯絡資訊】與【去識別化公開授權】行
+      let domainLabel = "實戰問卦";
+      let guaLabel = "本卦解析";
+      const domainMatch = rawContent.match(/【領域】([^｜\n]+)/);
+      if (domainMatch) domainLabel = domainMatch[1].trim();
+      const guaMatch = rawContent.match(/【本卦】([^\n]+)/);
+      if (guaMatch) guaLabel = guaMatch[1].trim();
+
+      const cleanedQuestion = rawContent
+        .split("\n")
+        .filter(line => !line.includes("【聯絡資訊】") && !line.includes("【去識別化公開授權】") && !line.includes("【領域】"))
+        .join("\n")
+        .replace(/【具體問題詳述】\s*/g, "")
+        .trim();
+
+      const shortIntro = cleanedQuestion.length > 65 ? cleanedQuestion.slice(0, 65) + "……" : cleanedQuestion;
+      const handnoteBody = `${shortIntro}\n===\n【提問者背景（已去識別化）】\n${cleanedQuestion}\n\n【陳亮老師文字親批】\n${teacherReply || "（請在此填入您的解卦回覆內容）"}`;
+
+      resetHandnoteToNew();
+      document.getElementById("hnCategory").value = domainLabel;
+      document.getElementById("hnTag").value = guaLabel;
+      document.getElementById("hnTitle").value = `${guaLabel}｜${domainLabel}實戰問答`;
+      document.getElementById("hnSummary").value = handnoteBody;
+      document.getElementById("hnIsFeatured").checked = true;
+      updateHandnotePreview();
+      switchTab("tab-handnotes");
+      showToast("已自動去除電話與 Email 並轉入解卦手記草稿，潤飾後即可同步公開！");
     }
 
     // ==================== 8. 課程大綱 ====================
@@ -966,6 +1325,296 @@
           outline: document.getElementById("crsOutline").value
         })
       }).then(() => { showToast("已成功寫入！"); loadCoursesList(); });
+    }
+
+    // ==================== 9. 會員審批與管理（直連 AUTH_WEBAPP_URL） ====================
+    function getAuthApiUrl() {
+      return document.getElementById("authEndpoint").value.trim() || DEFAULT_AUTH_URL;
+    }
+
+    async function loadMembersData() {
+      const pendingBody = document.getElementById("pendingTableBody");
+      const membersBody = document.getElementById("membersTableBody");
+      if (pendingBody) pendingBody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:1.2rem;">正在同步會員資料庫...</td></tr>`;
+      if (membersBody) membersBody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:1.2rem;">正在同步會員資料庫...</td></tr>`;
+
+      try {
+        const res = await fetch(`${getAuthApiUrl()}?action=adminGetAllMembers`);
+        const data = await res.json();
+        if (!data || !data.success) {
+          showToast((data && data.message) || "無法讀取會員資料庫，請確認會員 Apps Script 已部署新版本！");
+          return;
+        }
+        cachedPendingApplicants = Array.isArray(data.pending) ? data.pending : [];
+        cachedMembers = Array.isArray(data.members) ? data.members : [];
+        updateMemberStats();
+        renderPendingTable();
+        renderMembersTable();
+      } catch (err) {
+        showToast("會員資料庫連線逾時，請稍後重試");
+      }
+    }
+
+    function updateMemberStats() {
+      const activePending = cachedPendingApplicants.filter(x => x.status !== "不批准").length;
+      const students = cachedMembers.filter(x => x.role === "高階學員").length;
+      const members = cachedMembers.filter(x => x.role === "網站會員").length;
+      const visitors = cachedMembers.filter(x => x.role === "網站訪客").length;
+
+      document.getElementById("statPending").innerText = activePending;
+      document.getElementById("statStudent").innerText = students;
+      document.getElementById("statMember").innerText = members;
+      document.getElementById("statVisitor").innerText = visitors;
+
+      const badge = document.getElementById("memberPendingBadge");
+      if (badge) {
+        badge.innerText = activePending;
+        badge.classList.toggle("hidden", activePending === 0);
+      }
+    }
+
+    function renderPendingTable() {
+      const tbody = document.getElementById("pendingTableBody");
+      if (!tbody) return;
+      if (cachedPendingApplicants.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:1.5rem;">🎉 目前沒有待審核的新帳號申請！</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = cachedPendingApplicants.map((item, idx) => {
+        const isRejected = item.status === "不批准";
+        const roleSelId = `approve-role-${idx}`;
+        return `
+          <tr style="${isRejected ? 'opacity:0.55;' : ''}">
+            <td style="font-size:0.8rem;white-space:nowrap;">${escapeHtml(item.applyTime)}</td>
+            <td style="font-weight:700;color:var(--primary-dark);">${escapeHtml(item.name)}</td>
+            <td style="font-size:0.82rem;">
+              <div>${escapeHtml(item.phone)}</div>
+              <div style="color:var(--text-muted);">${escapeHtml(item.email)}</div>
+            </td>
+            <td style="font-family:monospace;font-weight:700;">${escapeHtml(item.pin || "自動產生")}</td>
+            <td>
+              <select id="${roleSelId}" style="padding:0.35rem 0.5rem;font-size:0.82rem;min-width:120px;">
+                <option value="網站訪客" ${item.role === "網站訪客" ? "selected" : ""}>網站訪客 (180天)</option>
+                <option value="網站會員" ${item.role === "網站會員" ? "selected" : ""}>網站會員 (VIP)</option>
+                <option value="高階學員" ${item.role === "高階學員" ? "selected" : ""}>高階學員 (永久)</option>
+              </select>
+            </td>
+            <td style="font-size:0.8rem;">
+              <span class="badge-pill ${isRejected ? 'badge-status-exp' : 'badge-status-lock'}">${escapeHtml(item.status)}</span>
+              <div style="color:var(--text-muted);margin-top:0.2rem;">${escapeHtml(item.note)}</div>
+            </td>
+            <td style="white-space:nowrap;">
+              <button class="btn btn-success btn-sm" onclick="reviewApplicant(${idx}, 'approve')">✅ 核准開通</button>
+              ${!isRejected ? `<button class="btn btn-danger btn-sm" style="margin-left:0.3rem;" onclick="reviewApplicant(${idx}, 'reject')">❌ 不批准</button>` : ""}
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    async function reviewApplicant(idx, decision) {
+      const item = cachedPendingApplicants[idx];
+      if (!item) return;
+      const targetRole = document.getElementById(`approve-role-${idx}`)?.value || item.role;
+      const actionLabel = decision === "approve" ? `核准「${item.name}」開通為【${targetRole}】` : `將「${item.name}」標記為【不批准】`;
+      if (!confirm(`確定要${actionLabel}嗎？`)) return;
+
+      showToast("正在處理審批作業...");
+      try {
+        const res = await fetch(getAuthApiUrl(), {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            action: "adminReviewApplicant",
+            adminKey: ACTIVE_ADMIN_KEY,
+            rowIndex: item.rowIndex,
+            decision,
+            targetRole,
+            note: item.note || "",
+            pin: item.pin || ""
+          })
+        });
+        const data = await res.json();
+        showToast((data && data.message) || (data && data.success ? "審批完成！" : "審批失敗"));
+        loadMembersData();
+      } catch (err) {
+        showToast("連線逾時，請稍後再試");
+      }
+    }
+
+    function renderMembersTable() {
+      const tbody = document.getElementById("membersTableBody");
+      if (!tbody) return;
+
+      const roleFilter = document.getElementById("filterMemberRole").value;
+      const statusFilter = document.getElementById("filterMemberStatus").value;
+      const kw = (document.getElementById("filterMemberKeyword").value || "").trim().toLowerCase();
+
+      const filtered = cachedMembers.filter(m => {
+        if (roleFilter !== "all" && m.role !== roleFilter) return false;
+        if (statusFilter === "locked") {
+          if (!m.isLocked && m.errCount === 0) return false;
+        } else if (statusFilter !== "all" && m.status !== statusFilter) {
+          return false;
+        }
+        if (kw) {
+          const hay = `${m.name} ${m.phone} ${m.email} ${m.note}`.toLowerCase();
+          if (!hay.includes(kw)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:1.5rem;">查無符合條件的會員資料。</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(m => {
+        const origIdx = cachedMembers.indexOf(m);
+        const roleCls = m.role === "高階學員" ? "badge-role-student" : (m.role === "網站會員" ? "badge-role-member" : "badge-role-visitor");
+        const statusCls = m.status === "已開通" ? "badge-status-ok" : "badge-status-exp";
+        const lockTag = m.isLocked ? `<span class="badge-pill badge-status-lock" style="margin-left:0.25rem;">🔒 鎖定中</span>` : "";
+
+        return `
+          <tr>
+            <td><span class="badge-pill ${roleCls}">${escapeHtml(m.role)}</span></td>
+            <td style="font-weight:700;color:var(--primary-dark);white-space:nowrap;">${escapeHtml(m.name)}</td>
+            <td style="font-size:0.82rem;">
+              <div>${escapeHtml(m.phone)}</div>
+              <div style="color:var(--text-muted);">${escapeHtml(m.email)}</div>
+            </td>
+            <td style="font-family:monospace;font-weight:700;">${escapeHtml(m.pin)}</td>
+            <td style="white-space:nowrap;"><span class="badge-pill ${statusCls}">${escapeHtml(m.status)}</span>${lockTag}</td>
+            <td style="font-family:monospace;text-align:center;">${m.totalQuestions} 題</td>
+            <td style="font-size:0.8rem;white-space:nowrap;">${escapeHtml(m.openTime)}</td>
+            <td style="font-size:0.8rem;color:var(--text-muted);max-width:200px;">${escapeHtml(m.note)}</td>
+            <td style="white-space:nowrap;">
+              <button class="btn btn-secondary btn-sm" onclick="openEditMemberModal(${origIdx})">✏️ 編輯 / 升降級</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function openEditMemberModal(idx) {
+      const m = cachedMembers[idx];
+      if (!m) return;
+      document.getElementById("editOrigSheet").value = m.sheetName;
+      document.getElementById("editRowIndex").value = m.rowIndex;
+      document.getElementById("editOrigName").value = m.name;
+      document.getElementById("editRole").value = m.role;
+      document.getElementById("editStatus").value = m.status || "已開通";
+      document.getElementById("editName").value = m.name || "";
+      document.getElementById("editPin").value = m.pin || "";
+      document.getElementById("editPhone").value = m.phone || "";
+      document.getElementById("editEmail").value = m.email || "";
+      document.getElementById("editNote").value = m.note || "";
+      document.getElementById("editResetOpenTime").checked = false;
+      document.getElementById("editClearLock").checked = Boolean(m.isLocked || m.errCount > 0);
+      document.getElementById("modalEditMember").classList.remove("hidden");
+    }
+
+    function closeEditMemberModal() {
+      document.getElementById("modalEditMember").classList.add("hidden");
+    }
+
+    async function submitEditMember(e) {
+      e.preventDefault();
+      const btn = document.getElementById("btnSaveEditMember");
+      btn.disabled = true;
+      btn.innerText = "同步更新中...";
+
+      const payload = {
+        action: "adminUpdateMember",
+        adminKey: ACTIVE_ADMIN_KEY,
+        sheetName: document.getElementById("editOrigSheet").value,
+        rowIndex: document.getElementById("editRowIndex").value,
+        origName: document.getElementById("editOrigName").value,
+        newRole: document.getElementById("editRole").value,
+        name: document.getElementById("editName").value.trim(),
+        phone: document.getElementById("editPhone").value.trim(),
+        email: document.getElementById("editEmail").value.trim(),
+        status: document.getElementById("editStatus").value,
+        note: document.getElementById("editNote").value.trim(),
+        pin: document.getElementById("editPin").value.trim(),
+        resetOpenTime: document.getElementById("editResetOpenTime").checked ? "true" : "false",
+        clearLock: document.getElementById("editClearLock").checked ? "true" : "false"
+      };
+
+      try {
+        const res = await fetch(getAuthApiUrl(), {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(payload)
+        });
+        const data = await res.json();
+        if (data && data.success) {
+          showToast(data.message || "會員資料已更新！");
+          closeEditMemberModal();
+          loadMembersData();
+        } else {
+          showToast((data && data.message) || "更新失敗");
+        }
+      } catch (err) {
+        showToast("連線逾時，請稍後重試");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "儲存變更並同步試算表";
+      }
+    }
+
+    function openAddMemberModal() {
+      document.getElementById("addRole").value = "網站訪客";
+      document.getElementById("addName").value = "";
+      document.getElementById("addPhone").value = "";
+      document.getElementById("addEmail").value = "";
+      document.getElementById("addPin").value = "";
+      document.getElementById("addNote").value = "老師後台直接建檔";
+      document.getElementById("modalAddMember").classList.remove("hidden");
+    }
+
+    function closeAddMemberModal() {
+      document.getElementById("modalAddMember").classList.add("hidden");
+    }
+
+    async function submitAddMember(e) {
+      e.preventDefault();
+      const btn = document.getElementById("btnSaveAddMember");
+      btn.disabled = true;
+      btn.innerText = "建檔中...";
+
+      const payload = {
+        action: "adminAddMember",
+        adminKey: ACTIVE_ADMIN_KEY,
+        role: document.getElementById("addRole").value,
+        name: document.getElementById("addName").value.trim(),
+        phone: document.getElementById("addPhone").value.trim(),
+        email: document.getElementById("addEmail").value.trim(),
+        pin: document.getElementById("addPin").value.trim(),
+        note: document.getElementById("addNote").value.trim()
+      };
+
+      try {
+        const res = await fetch(getAuthApiUrl(), {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(payload)
+        });
+        const data = await res.json();
+        if (data && data.success) {
+          showToast(data.message || "已成功新增會員！");
+          closeAddMemberModal();
+          loadMembersData();
+        } else {
+          showToast((data && data.message) || "建檔失敗");
+        }
+      } catch (err) {
+        showToast("連線逾時，請稍後重試");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "確認建檔開通";
+      }
     }
   </script>
 </body>
